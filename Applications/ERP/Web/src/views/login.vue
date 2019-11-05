@@ -3,7 +3,7 @@
         width: 400px;
         margin: 0 auto;
     }
-    .login h4 {
+    .login h2 {
         margin-bottom: 10px;
     }
     .login .login-copyright {
@@ -24,7 +24,7 @@
         <div class="login-logo">
             <!-- TODO 放个logo图片这里 -->
         </div>
-        <h4>登录</h4>
+        <h2>登录</h2>
         <el-form>
             <el-form-item label="用户名">
                 <el-input v-model="username"></el-input>
@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         login() {
-            console.log(this.username,this.password)
+            console.log(this.username,this.password,this.isRememberPassword)
         }
     }
 }
