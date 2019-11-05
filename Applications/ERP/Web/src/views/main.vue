@@ -14,7 +14,7 @@
             <el-header>
                 <el-row type="flex" class="row-bg" justify="space-between">
                     <el-col :span="6">
-                        <h4>零售云SAAS</h4>
+                        <h4>Retail ERP</h4>
                     </el-col>
                     <el-col :span="6">
                     </el-col>
