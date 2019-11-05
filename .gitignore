@@ -1,0 +1,8 @@
+
+# dotnet
+**/bin
+**/obj
+**/.vs
+
+# node
+package-lock.json
