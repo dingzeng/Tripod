@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS `menu` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `parent_id` INT NULL,
+  `path` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `is_leaf` TINYINT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
