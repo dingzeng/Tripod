@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "Applications\\ERP\\API"
+		},
+		{
+			"path": "Applications\\ERP\\Web"
+		},
+		{
+			"path": "Services\\System"
+		},
+		{
+			"path": "Services\\Archive"
+		}
+	]
+}
