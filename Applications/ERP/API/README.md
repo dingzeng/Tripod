@@ -1,33 +1,34 @@
+
 # API
 
+## 身份认证
 
+- POST  /login
+- POST  /logout
 
-## QuickStart
+## 系统模块
 
-<!-- add docs here for user -->
+### 菜单数据
 
-see [egg docs][egg] for more detail.
+- GET   /system/menus
 
-### Development
+### 角色管理
 
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
+- GET   /system/roles
+- GET   /system/role/{id}
+- POST  /system/role
+- PUT   /system/role
+- DEL   /system/role/{id}
+- GET   /system/role/{id}/permissions
+- PUT   /system/role/{id}/permissions
 
-### Deploy
+### 用户管理
 
-```bash
-$ npm start
-$ npm stop
-```
+- GET   /system/users
+- GET   /system/user/{id}
+- POST  /system/user
+- PUT   /system/user/info
+- PUT   /system/user/permission
+- PUT   /system/user/roles
+- PUT   /system/user/password
 
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org

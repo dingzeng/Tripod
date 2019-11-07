@@ -1,0 +1,10 @@
+syntax = "proto3";
+option csharp_namespace = "Tripod.Service.System";
+package System;
+import "message.proto";
+
+service SystemSrv {
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);
+    rpc GetAllRoles(Empty) returns (GetAllRolesResponse);
+    rpc GetAllMenus(Empty) returns (GetAllMenusResponse);
+}

@@ -15,5 +15,3 @@ ENGINE = InnoDB;
 
 INSERT INTO `user`(branch_code,username,`password`,`name`,mobile,`status`,item_department_permission_flag,supplier_permission_flag) 
 values('00','admin','123456','管理员','15812345678',1,0,0);
-
-SELECT * FROM `user`;

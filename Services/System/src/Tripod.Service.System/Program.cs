@@ -10,14 +10,14 @@ namespace Tripod.Service.System
             const int Port = 50051;
             Server server = new Server
             {
-                Services = { Users.BindService(new UserService()) },
+                Services = { SystemSrv.BindService(new SystemService()) },
                 Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
             };
             server.Start();
 
             Console.WriteLine("Greeter server listening on port " + Port);
             Console.WriteLine("Press any key to stop the server...");
-            Console.ReadKey();
+            Console.Read();
 
             server.ShutdownAsync().Wait();
         }

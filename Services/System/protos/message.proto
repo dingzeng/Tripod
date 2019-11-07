@@ -1,0 +1,66 @@
+syntax = "proto3";
+option csharp_namespace = "Tripod.Service.System";
+package System;
+
+message Empty { }
+
+// Menu
+message MenuDTO {
+    int32 Id = 1;
+    int32 ParentId = 2;
+    string Path = 3;
+    string Name = 4;
+    bool IsLeaf = 5;
+}
+
+message GetAllMenusResponse {
+    repeated MenuDTO Menus = 1;
+}
+
+// Permission
+enum PermissionType {
+    VIEW = 0;
+    CREATE = 1;
+    UPDATE = 2;
+    DELETE = 3;
+    APPROVE = 4;
+    OTHER = 9;
+}
+
+message PermissionDTO {
+    int32 Id = 1;
+    int32 MenuId = 2;
+    PermissionType Type = 3;
+    string Name = 4;
+    string Url = 5;
+}
+
+// PermissionApi
+
+// Role
+message RoleDTO {
+    int32 Id = 1;
+    string Name = 2;
+    string Memo = 3; 
+}
+
+message GetAllRolesResponse {
+    repeated RoleDTO Roles = 1;
+}
+
+// User
+message GetUserByUsernameRequest {
+    string Username = 1;
+}
+
+message UserDTO {
+    sint64 Id = 1;
+    string BranchCode = 2;
+    string Username = 3;
+    string Password = 4;
+    string Name = 5;
+    string Mobile = 6;
+    bool Status = 7;
+    bool ItemDepartmentPermissionFlag = 8;
+    bool SupplierPermissionFlag = 9;
+}

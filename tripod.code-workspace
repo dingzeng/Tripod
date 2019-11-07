@@ -1,16 +1,16 @@
 {
 	"folders": [
 		{
-			"path": "Applications\\ERP\\API"
+			"path": "Services/System"
 		},
 		{
-			"path": "Applications\\ERP\\Web"
+			"path": "Services/Archive"
+		}，
+		{
+			"path": "Applications/ERP/API"
 		},
 		{
-			"path": "Services\\System"
-		},
-		{
-			"path": "Services\\Archive"
+			"path": "Applications/ERP/Web"
 		}
 	]
 }
