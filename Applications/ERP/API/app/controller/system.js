@@ -1,8 +1,8 @@
 'use strict';
 
-const Service = require('egg').Service;
+const Controller = require('egg').Controller;
 
-class SystemService extends Service {
+class SystemController extends Controller {
     async getMenus() {
         
     }
@@ -68,4 +68,4 @@ class SystemService extends Service {
     }
 }
 
-module.exports = SystemService;
+module.exports = SystemController;
