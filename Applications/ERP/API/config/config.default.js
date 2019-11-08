@@ -23,6 +23,20 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  config.security = {
+    csrf: {
+      ignore: ctx => true
+    }
+  };
+
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 7001,
+      hostname: '0.0.0.0',
+    }
+  };
+
   return {
     ...config,
     ...userConfig,

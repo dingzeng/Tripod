@@ -3,11 +3,17 @@ option csharp_namespace = "Tripod.Service.System";
 package System;
 
 message Empty { }
+message KeyObject {
+    string Body = 1;
+}
+message BooleanObject {
+    bool Body = 1;
+}
 
 // Menu
 message MenuDTO {
-    int32 Id = 1;
-    int32 ParentId = 2;
+    string Code = 1;
+    string ParentCode = 2;
     string Path = 3;
     string Name = 4;
     bool IsLeaf = 5;
@@ -36,6 +42,12 @@ message PermissionDTO {
 }
 
 // PermissionApi
+message PermissionApiDTO {
+    int32 Id = 1;
+    string PermissionCode = 2;
+    string Url = 3;
+    string Method = 4;
+}
 
 // Role
 message RoleDTO {

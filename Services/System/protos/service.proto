@@ -4,7 +4,20 @@ package System;
 import "message.proto";
 
 service SystemSrv {
-    rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);
-    rpc GetAllRoles(Empty) returns (GetAllRolesResponse);
+    // Menu
     rpc GetAllMenus(Empty) returns (GetAllMenusResponse);
+
+    // Permission
+
+    // PermissionApi
+
+    // Role
+    rpc GetAllRoles(Empty) returns (GetAllRolesResponse);
+    rpc GetRoleById(KeyObject) returns (RoleDTO);
+    rpc CreateRole(RoleDTO) returns (RoleDTO);
+    rpc DeleteRoleById(KeyObject) returns (BooleanObject);
+    rpc UpdateRole(RoleDTO) returns (BooleanObject);
+
+    // User
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);
 }

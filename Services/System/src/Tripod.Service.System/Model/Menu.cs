@@ -1,9 +1,11 @@
 using System;
+using Dapper.Contrib.Extensions;
 
 namespace Tripod.Service.System.Model
 {
-    public class Menu
+    public class Menu : Entity
     {
+        [ExplicitKey]
         public string Code { get; set; }
 
         public string ParentCode { get; set; }

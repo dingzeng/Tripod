@@ -6,7 +6,7 @@ using Dapper;
 
 namespace Tripod.Service.System.DAL
 {
-    public class RoleDAO : BaseDAO
+    public class RoleDAO : BaseDAO<Role>
     {
         public List<Role> GetRolesByUserId(long userId)
         {

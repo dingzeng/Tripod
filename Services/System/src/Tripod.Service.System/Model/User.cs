@@ -1,9 +1,11 @@
 using System;
+using Dapper.Contrib.Extensions;
 
 namespace Tripod.Service.System.Model
 {
-    public class User
+    public class User : Entity
     {
+        [Key]
         public long Id { get; set; }
 
         public string BranchCode { get; set; }

@@ -1,14 +1,15 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const BaseController = require('./base');
 
-class SystemController extends Controller {
+class SystemController extends BaseController {
     async getMenus() {
         
     }
 
-    async getAddRoles() {
-    
+    async getAllRoles() {
+        const roles = await this.service.system.getAllRoles()
+        this.ctx.body = roles
     }
   
     async getRole() {

@@ -17,7 +17,7 @@ module.exports = app => {
   router.get('/system/menus', controller.system.getMenus)
   
   // role
-  router.get('/system/roles', controller.system.getAddRoles);
+  router.get('/system/roles', controller.system.getAllRoles);
   router.get('/system/role/{id}', controller.system.getRole);
   router.post('/system/role', controller.system.createRole);
   router.put('/system/role', controller.system.updateRole);
