@@ -19,12 +19,11 @@ var client = new System.SystemSrv('127.0.0.1:50051', grpc.credentials.createInse
 const Service = require('egg').Service;
 
 class SystemService extends Service {
-  async getUserByUsername(username) {
+  async getAllMenus() {
     return new Promise(function(resolve, reject){
-      client.GetUserByUsername({ Username: username }, function(error, feature){
+      client.GetAllMenus({}, function(error, feature){
         if(error){
-          console.log(error)
-          resolve(null)
+          reject(error)
         }else{
           resolve(feature)
         }
@@ -72,9 +71,10 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.DeleteRoleById({ Body: id }, function(error, feature){
         if(error){
-          reject(error)
+          console.log(error)
+          resolve(false)
         }else{
-          resolve(feature)
+          resolve(feature.Body)
         }
       });
     })
@@ -84,6 +84,19 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.UpdateRole(role, function(error, feature){
         if(error){
+          console.log(error)
+          resolve(false)
+        }else{
+          resolve(feature.Body)
+        }
+      });
+    })
+  }
+
+  async getRolePermissions(roleId) {
+    return new Promise(function(resolve, reject){
+      client.GetRolePermissions({ Body: roleId }, function(error, feature){
+        if(error){
           reject(error)
         }else{
           resolve(feature)
@@ -91,6 +104,34 @@ class SystemService extends Service {
       });
     })
   }
+
+  async updateRolePermissions({RoleId, PermissionCodes}) {
+    return new Promise(function(resolve, reject){
+      client.UpdateRolePermissions({ RoleId: RoleId, PermissionCodes: PermissionCodes }, function(error, feature){
+        if(error){
+          console.log(error)
+          resolve(false)
+        }else{
+          resolve(feature.Body)
+        }
+      });
+    })
+  }
+
+  async getUserByUsername(username) {
+    return new Promise(function(resolve, reject){
+      client.GetUserByUsername({ Username: username }, function(error, feature){
+        if(error){
+          console.log(error)
+          resolve(null)
+        }else{
+          resolve(feature)
+        }
+      });
+    })
+  }
+
+
 }
 
 module.exports = SystemService;

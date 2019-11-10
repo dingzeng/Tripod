@@ -3,6 +3,7 @@ using Dapper.Contrib.Extensions;
 
 namespace Tripod.Service.System.Model
 {
+    [Table("permission_api")]
     public class PermissionApi : Entity
     {
         [Key]

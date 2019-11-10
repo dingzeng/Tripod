@@ -11,11 +11,13 @@ namespace Tripod.Service.System
     public class SystemService : SystemSrv.SystemSrvBase
     {
         private readonly MenuDAO _menuDao;
+        private readonly PermissionDAO _permissionDao;
         private readonly UserDAO _userDao;
         private readonly RoleDAO _roleDao;
         public SystemService()
         {
             _menuDao = new MenuDAO();
+            _permissionDao = new PermissionDAO();
             _userDao = new UserDAO();
             _roleDao = new RoleDAO();
         }
@@ -66,15 +68,31 @@ namespace Tripod.Service.System
             bool success = _roleDao.Update(request.ToEntity());
             return Task.FromResult(new BooleanObject { Body = success });
         }
-            
+
+        public override Task<GetRolePermissionsResponse> GetRolePermissions(KeyObject request, ServerCallContext context)
+        {
+            var roleId = Convert.ToInt32(request.Body);
+            var permissions = _permissionDao.GetPermissionsByRoleId(roleId);
+            var res = new GetRolePermissionsResponse();
+            res.Permissions.AddRange(permissions.Select(p => p.ToDto()));
+            return Task.FromResult(res);
+        }
+
+        public override Task<BooleanObject> UpdateRolePermissions(UpdateRolePermissionsRequest request, ServerCallContext context)
+        {
+            bool success = _roleDao.UpdateRolePermissions(request.RoleId, request.PermissionCodes);
+            return Task.FromResult(new BooleanObject { Body = success });
+        }
+
         #endregion
-        
+
         #region User
 
         public override Task<UserDTO> GetUserByUsername(GetUserByUsernameRequest request, ServerCallContext context)
         {
             var user = _userDao.GetUserByUsername(request.Username);
-            var result = new UserDTO(){
+            var result = new UserDTO()
+            {
                 Id = user.Id,
                 BranchCode = user.BranchCode,
                 Username = user.Username,
@@ -88,7 +106,7 @@ namespace Tripod.Service.System
 
             return Task.FromResult(result);
         }
-            
+
         #endregion
     }
 }

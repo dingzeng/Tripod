@@ -34,8 +34,8 @@ enum PermissionType {
 }
 
 message PermissionDTO {
-    int32 Id = 1;
-    int32 MenuId = 2;
+    string Code = 1;
+    string MenuCode = 2;
     PermissionType Type = 3;
     string Name = 4;
     string Url = 5;
@@ -58,6 +58,15 @@ message RoleDTO {
 
 message GetAllRolesResponse {
     repeated RoleDTO Roles = 1;
+}
+
+message GetRolePermissionsResponse {
+    repeated PermissionDTO Permissions = 1;
+}
+
+message UpdateRolePermissionsRequest {
+    int32 RoleId = 1;
+    repeated string PermissionCodes = 2;
 }
 
 // User

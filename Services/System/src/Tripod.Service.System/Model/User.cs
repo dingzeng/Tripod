@@ -3,6 +3,7 @@ using Dapper.Contrib.Extensions;
 
 namespace Tripod.Service.System.Model
 {
+    [Table("user")]
     public class User : Entity
     {
         [Key]

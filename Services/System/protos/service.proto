@@ -17,6 +17,8 @@ service SystemSrv {
     rpc CreateRole(RoleDTO) returns (RoleDTO);
     rpc DeleteRoleById(KeyObject) returns (BooleanObject);
     rpc UpdateRole(RoleDTO) returns (BooleanObject);
+    rpc GetRolePermissions(KeyObject) returns (GetRolePermissionsResponse);
+    rpc UpdateRolePermissions(UpdateRolePermissionsRequest) returns (BooleanObject);
 
     // User
     rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);

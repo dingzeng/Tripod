@@ -1,5 +1,5 @@
 <style scoped>
-    .el-header { 
+    .el-header {
         background-color: rgb(0, 120, 215); 
         color: white;
         line-height: 60px;
