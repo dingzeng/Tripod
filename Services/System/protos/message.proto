@@ -2,12 +2,17 @@ syntax = "proto3";
 option csharp_namespace = "Tripod.Service.System";
 package System;
 
+// Commons
 message Empty { }
 message KeyObject {
     string Body = 1;
 }
 message BooleanObject {
     bool Body = 1;
+}
+message PagingRequest {
+    int32 PageIndex = 1;
+    int32 PageSize = 2;
 }
 
 // Menu
@@ -41,12 +46,20 @@ message PermissionDTO {
     string Url = 5;
 }
 
+message GetAllPermissionsResponse {
+    repeated PermissionDTO Permissions = 1;
+}
+
 // PermissionApi
 message PermissionApiDTO {
     int32 Id = 1;
     string PermissionCode = 2;
     string Url = 3;
     string Method = 4;
+}
+
+message GetAllPermissionApisResponse {
+    repeated PermissionApiDTO PermissionApis = 1;
 }
 
 // Role
@@ -84,4 +97,9 @@ message UserDTO {
     bool Status = 7;
     bool ItemDepartmentPermissionFlag = 8;
     bool SupplierPermissionFlag = 9;
+}
+
+message GetUsersResponse {
+    int32 TotalCount = 1;
+    repeated UserDTO Users = 2;
 }

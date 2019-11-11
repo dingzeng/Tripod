@@ -8,8 +8,10 @@ service SystemSrv {
     rpc GetAllMenus(Empty) returns (GetAllMenusResponse);
 
     // Permission
+    rpc GetAllPermissions(Empty) returns (GetAllPermissionsResponse);
 
     // PermissionApi
+    rpc GetAllPermissionApis(Empty) returns (GetAllPermissionApisResponse);
 
     // Role
     rpc GetAllRoles(Empty) returns (GetAllRolesResponse);
@@ -22,4 +24,9 @@ service SystemSrv {
 
     // User
     rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);
+    rpc GetUsers(PagingRequest) returns (GetUsersResponse);
+    rpc GetUserById(KeyObject) returns (UserDTO);
+    rpc CreateUser(UserDTO) returns (UserDTO);
+    rpc UpdateUSer(UserDTO) returns (BooleanObject);
+    rpc DeleteUserById(KeyObject) returns(BooleanObject);
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Data;
+using System.Text;
+using System.Linq;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Dapper;
@@ -63,6 +65,39 @@ namespace Tripod.Service.System.DAL
         {
             return Run(conn => {
                 return conn.Update(entity);
+            });
+        }
+
+        public PagedList<T> GetPaging<T>(string innerQuery, int pageIndex = 1, int pageSize = int.MaxValue, string conditions = "", string projection = "*", object param = null)
+            where T : class
+        {
+            if(string.IsNullOrEmpty(innerQuery))
+            {
+                throw new ArgumentNullException(nameof(innerQuery));
+            }
+
+            StringBuilder builder = new StringBuilder();
+            builder.Append($"SELECT COUNT(1) as totalCount FROM ({innerQuery}) as temp WHERE 1 = 1 {conditions};");
+
+            int start = (pageIndex - 1) * pageSize;
+            int end = pageIndex * pageSize;
+            builder.Append($"SELECT {projection} FROM ({innerQuery}) as temp WHERE 1 = 1 {conditions} LIMIT {start},{end};");
+
+            return Run(conn => {
+                string sql = builder.ToString();
+                using(var multi = conn.QueryMultiple(sql, param))
+                {
+                    int totalCount = multi.Read<int>().Single();
+                    var list = multi.Read<T>().ToList();
+                    
+                    return new PagedList<T>()
+                    {
+                        PageIndex = pageIndex,
+                        PageSize = pageSize,
+                        TotalCount = totalCount,
+                        List = list
+                    };
+                }
             });
         }
     }

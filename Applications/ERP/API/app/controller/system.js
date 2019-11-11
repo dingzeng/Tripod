@@ -84,23 +84,93 @@ class SystemController extends BaseController {
     }
 
     async getUsers() {
-    
+        const { query } = this.ctx;
+        const rules = {
+            pageIndex: { type: 'int', min: 1, convertType: 'int' },
+            pageSize: { type: 'int', convertType: 'int' }
+        }
+        const errors = this.app.validator.validate(rules, query);
+        if(errors){
+            this.validationFailed(errors);
+            return;
+        }
+
+        const pagingResult = await this.service.system.getUsers(query.pageIndex, query.pageSize);
+        this.success({
+            totalCount: pagingResult.TotalCount,
+            list: pagingResult.Users
+        });
     }
   
     async getUser() {
-      
+        const id = this.ctx.params.id;
+        const user = await this.service.system.getUserById(id);
+        this.success(user);
     }
   
     async createUser() {
-      
+        const rules = {
+            branchCode: 'string',
+            username: 'string',
+            password: 'string',
+            name: 'string',
+            mobile: { type: 'string', required: false }
+        }
+        const model = this.ctx.request.body;
+        const errors = this.app.validator.validate(rules, model);
+        if(errors){
+            this.validationFailed(errors);
+            return;
+        }
+        const user = await this.service.system.createUser(model);
+        this.success(user);
     }
   
     async updateUserInfo() {
-      
+        const rules = {
+            id: 'id',
+            branchCode: 'string',
+            username: 'string',
+            password: 'string',
+            name: 'string',
+            mobile: { type: 'string', required: false }
+        }
+        const model = this.ctx.request.body;
+        const errors = this.app.validator.validate(rules, model);
+        if(errors){
+            this.validationFailed(errors);
+            return;
+        }
+        var user = await this.service.system.getUserById(model.id);
+        if(!user){
+            this.failed('用户不存在');
+            return;
+        }
+        Object.assign(user, model);
+        user = await this.service.system.updateUserInfo(user);
+        this.success(user);
     }
   
     async updateUserPermission() {
-      
+        const rules = {
+            id: 'id',
+            itemDepartmentPermissionFlag: 'bool',
+            supplierPermissionFlag: 'bool'
+        }
+        const model = this.ctx.request.body;
+        const errors = this.app.validator.validate(rules, model);
+        if(errors){
+            this.validationFailed(errors);
+            return;
+        }
+        var user = await this.service.system.getUserById(model.id);
+        if(!user){
+            this.failed('用户不存在');
+            return;
+        }
+        Object.assign(user, model);
+        user = await this.service.system.updateUserInfo(user);
+        this.success(user);
     }
   
     async updateUserRoles() {
@@ -108,11 +178,31 @@ class SystemController extends BaseController {
     }
   
     async updateUserPassword() {
-      
+        const rules = {
+            id: 'id',
+            password: 'string'
+        }
+        const model = this.ctx.request.body;
+        const errors = this.app.validator.validate(rules, model);
+        if(errors){
+            this.validationFailed(errors);
+            return;
+        }
+        var user = await this.service.system.getUserById(model.id);
+        if(!user){
+            this.failed('用户不存在');
+            return;
+        }
+        Object.assign(user, model);
+        user = await this.service.system.updateUserInfo(user);
+        this.success(user);
     }
 
     async deleteUser() {
-        
+        const id = this.ctx.params.id;
+        const success = await this.service.system.deleteUserById(id);
+
+        success ? this.success() : this.failed();
     }
 }
 

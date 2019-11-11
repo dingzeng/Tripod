@@ -29,17 +29,6 @@ namespace Tripod.Service.System
             };
         }
 
-        public static Permission ToEntity(this PermissionDTO dto)
-        {
-            return new Permission()
-            {
-                Code = dto.Code,
-                MenuCode = dto.MenuCode,
-                Type = (Tripod.Service.System.Model.PermissionType)dto.Type,
-                Name = dto.Name
-            };
-        }
-
         public static PermissionDTO ToDto(this Permission entity)
         {
             return new PermissionDTO()
@@ -48,6 +37,17 @@ namespace Tripod.Service.System
                 MenuCode = entity.MenuCode,
                 Type = (PermissionType)entity.Type,
                 Name = entity.Name
+            };
+        }
+
+        public static PermissionApiDTO ToDto(this PermissionApi entity)
+        {
+            return new PermissionApiDTO()
+            {
+                Id = entity.Id,
+                PermissionCode = entity.PermissionCode,
+                Url = entity.Url,
+                Method = entity.Method
             };
         }
 
@@ -68,6 +68,38 @@ namespace Tripod.Service.System
                 Id = entity.Id,
                 Name = entity.Name,
                 Memo = entity.Memo
+            };
+        }
+
+        public static User ToEntity(this UserDTO dto)
+        {
+            return new User()
+            {
+                Id = dto.Id,
+                BranchCode = dto.BranchCode,
+                Username = dto.Username,
+                Password = dto.Password,
+                Name = dto.Name,
+                Mobile = dto.Mobile,
+                Status = dto.Status,
+                ItemDepartmentPermissionFlag = dto.ItemDepartmentPermissionFlag,
+                SupplierPermissionFlag = dto.SupplierPermissionFlag
+            };
+        }
+
+        public static UserDTO ToDto(this User entity)
+        {
+            return new UserDTO()
+            {
+                Id = entity.Id,
+                BranchCode = entity.BranchCode,
+                Username = entity.Username,
+                Password = entity.Password,
+                Name = entity.Name,
+                Mobile = entity.Mobile,
+                Status = entity.Status,
+                ItemDepartmentPermissionFlag = entity.ItemDepartmentPermissionFlag,
+                SupplierPermissionFlag = entity.SupplierPermissionFlag
             };
         }
     }

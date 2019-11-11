@@ -131,6 +131,70 @@ class SystemService extends Service {
     })
   }
 
+  async getUsers(pageIndex = 1, pageSize = 20) {
+    return new Promise(function(resolve, reject){
+      client.GetUsers({ PageIndex: pageIndex, PageSize: pageSize }, function(error, feature){
+        if(error){
+          console.log(error)
+          resolve(null)
+        }else{
+          resolve(feature)
+        }
+      });
+    })
+  }
+
+  async getUserById(userId) {
+    return new Promise(function(resolve, reject){
+      client.GetUserById({ Body: userId }, function(error, feature){
+        if(error){
+          console.log(error)
+          resolve(null)
+        }else{
+          resolve(feature)
+        }
+      });
+    })
+  }
+
+  async createUser(user) {
+    return new Promise(function(resolve, reject){
+      client.CreateUser(user, function(error, feature){
+        if(error){
+          console.log(error)
+          resolve(null)
+        }else{
+          resolve(feature)
+        }
+      });
+    })
+  }
+
+  async updateUSer(user) {
+    return new Promise(function(resolve, reject){
+      client.UpdateUSer(user, function(error, feature){
+        if(error){
+          console.log(error)
+          resolve(false)
+        }else{
+          resolve(feature.Body)
+        }
+      });
+    })
+  }
+
+  async deleteUserById(userId) {
+    return new Promise(function(resolve, reject){
+      client.DeleteUserById({ Body: userId }, function(error, feature){
+        if(error){
+          console.log(error)
+          resolve(false)
+        }else{
+          resolve(feature.Body)
+        }
+      });
+    })
+  }
 
 }
 

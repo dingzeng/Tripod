@@ -12,12 +12,14 @@ namespace Tripod.Service.System
     {
         private readonly MenuDAO _menuDao;
         private readonly PermissionDAO _permissionDao;
+        private readonly PermissionApiDAO _permissionApiDao;
         private readonly UserDAO _userDao;
         private readonly RoleDAO _roleDao;
         public SystemService()
         {
             _menuDao = new MenuDAO();
             _permissionDao = new PermissionDAO();
+            _permissionApiDao = new PermissionApiDAO();
             _userDao = new UserDAO();
             _roleDao = new RoleDAO();
         }
@@ -32,6 +34,22 @@ namespace Tripod.Service.System
         }
 
         // Permission
+        public override Task<GetAllPermissionsResponse> GetAllPermissions(Empty request, ServerCallContext context)
+        {
+            var permissions = _permissionDao.GetAll();
+            var res = new GetAllPermissionsResponse();
+            res.Permissions.AddRange(permissions.Select(p => p.ToDto()));
+            return Task.FromResult(res);
+        }
+
+        // PermissionApi
+        public override Task<GetAllPermissionApisResponse> GetAllPermissionApis(Empty request, ServerCallContext context)
+        {
+            var permissionApis = _permissionApiDao.GetAll();
+            var res = new GetAllPermissionApisResponse();
+            res.PermissionApis.AddRange(permissionApis.Select(pa => pa.ToDto()));
+            return Task.FromResult(res);
+        }
 
         #region Role
 
@@ -105,6 +123,42 @@ namespace Tripod.Service.System
             };
 
             return Task.FromResult(result);
+        }
+
+        public override Task<GetUsersResponse> GetUsers(PagingRequest request, ServerCallContext context)
+        {
+            var pagingResult = _userDao.GetUserPaging(request.PageIndex, request.PageSize);
+            var res = new GetUsersResponse();
+            res.TotalCount = pagingResult.TotalCount;
+            res.Users.AddRange(pagingResult.List.Select(u => u.ToDto()));
+
+            return Task.FromResult(res);
+        }
+
+        public override Task<UserDTO> GetUserById(KeyObject request, ServerCallContext context)
+        {
+            var user = _userDao.Get(request.Body);
+            return Task.FromResult(user.ToDto());
+        }
+
+        public override Task<UserDTO> CreateUser(UserDTO request, ServerCallContext context)
+        {
+            var id = _userDao.Insert(request.ToEntity());
+            var user = _userDao.Get(id);
+            return Task.FromResult(user.ToDto());
+        }
+
+        public override Task<BooleanObject> UpdateUSer(UserDTO reqeust, ServerCallContext context)
+        {
+            bool success = _userDao.Update(reqeust.ToEntity());
+            return Task.FromResult(new BooleanObject { Body = success });
+        }
+
+        public override Task<BooleanObject> DeleteUserById(KeyObject reqeust, ServerCallContext context)
+        {
+            int userId = Convert.ToInt32(reqeust.Body);
+            bool success = _userDao.Delete(new User { Id = userId});
+            return Task.FromResult(new BooleanObject { Body = success });
         }
 
         #endregion
