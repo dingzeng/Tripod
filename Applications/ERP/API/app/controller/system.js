@@ -110,11 +110,11 @@ class SystemController extends BaseController {
   
     async createUser() {
         const rules = {
-            branchCode: 'string',
-            username: 'string',
-            password: 'string',
-            name: 'string',
-            mobile: { type: 'string', required: false }
+            BranchCode: 'string',
+            Username: 'string',
+            Password: 'string',
+            Name: 'string',
+            Mobile: { type: 'string', required: false }
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);

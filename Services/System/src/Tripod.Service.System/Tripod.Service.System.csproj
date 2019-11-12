@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.30" />
-    <PackageReference Include="Dapper.Contrib" Version="2.0.30" />
     <PackageReference Include="Google.Protobuf" Version="3.10.1" />
     <PackageReference Include="Grpc" Version="2.24.0" />
     <PackageReference Include="Grpc.Tools" Version="2.24.0">
@@ -20,6 +19,10 @@
   <ItemGroup>
     <Protobuf Include="../../protos/message.proto" />
     <Protobuf Include="../../protos/service.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Framework\src\Tripod.Framework.DapperExtentions\Tripod.Framework.DapperExtentions.csproj" />
   </ItemGroup>
 
 </Project>

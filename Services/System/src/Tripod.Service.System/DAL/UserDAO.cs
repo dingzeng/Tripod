@@ -2,8 +2,6 @@ using System;
 using System.Text;
 using Tripod.Service.System.Model;
 using Dapper;
-using Dapper.Contrib;
-using Dapper.Contrib.Extensions;
 
 namespace Tripod.Service.System.DAL
 {

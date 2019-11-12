@@ -4,7 +4,6 @@ using System.Text;
 using System.Collections.Generic;
 using Tripod.Service.System.Model;
 using Dapper;
-using Dapper.Contrib.Extensions;
 
 namespace Tripod.Service.System.DAL
 {
