@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tripod.Service.System", "Tripod.Service.System\Tripod.Service.System.csproj", "{A1BF5F78-D7B9-4DEB-86AD-DF6C98086A5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tripod.Service.System", "src\Tripod.Service.System\Tripod.Service.System.csproj", "{A1BF5F78-D7B9-4DEB-86AD-DF6C98086A5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
