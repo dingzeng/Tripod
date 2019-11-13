@@ -10,8 +10,8 @@ dotnet new console --name Tripod.Service.[ProjectName]
 ## 2.添加Grpc的引用
 ```
 dotnet add package Google.Protobuf
-dotnet add package Google
-dotnet add package Google.Tools
+dotnet add package Grpc
+dotnet add package Grpc.Tools
 ```
 
 ## 3.添加proto文件并在项目文件中引用
