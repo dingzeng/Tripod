@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `purchase_reveive_detail_branch`;
+DROP TABLE IF EXISTS `purchase_receive_detail_branch`;
 
-CREATE TABLE `purchase_reveive_detail_branch` (
+CREATE TABLE `purchase_receive_detail_branch` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
 	`sheet_id` VARCHAR(45) NOT NULL COMMENT '单据号',
 	`detail_id` VARCHAR(45) NOT NULL COMMENT '明细id',

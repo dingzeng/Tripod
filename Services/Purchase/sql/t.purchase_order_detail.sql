@@ -9,7 +9,7 @@ CREATE TABLE `purchase_order_detail` (
 	`gift_flag` TINYINT NOT NULL DEFAULT 0 COMMENT '赠品标志',
 	`size` VARCHAR(45) NULL COMMENT '规格',
 	`purchase_unit` VARCHAR(45) NOT NULL COMMENT '采购单位',
-	`refer_purchase_price` DECIMAL NOT NULL COMMENT '参考进价'
+	`refer_purchase_price` DECIMAL NOT NULL COMMENT '参考进价',
 	`qty` DECIMAL NOT NULL COMMENT '数量',
 	`purchase_price` DECIMAL NOT NULL COMMENT '进价',
 	`amount` DECIMAL NOT NULL COMMENT '金额',

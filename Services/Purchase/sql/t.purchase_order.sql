@@ -10,11 +10,11 @@ CREATE TABLE `purchase_order` (
 	`receive_expire_date` DATE NOT NULL COMMENT '收货期限',
 	`total_amount` DECIMAL NOT NULL COMMENT '订货金额',
 	`purchase_oper` VARCHAR(45) NOT NULL COMMENT '采购员',
-	`create_oper` VARCHAR(45) NOT NULL COMMENT '制单人'，
-	`create_time` DATETIME NOT NULL COMMENT '制单时间'，
-	`approve_oper` VARCHAR(45) NOT NULL COMMENT '审核人'，
-	`approve_time` DATETIME NOT NULL COMMENT '审核时间'，
-	`memo` VARCHAR(100) NULL COMMENT '备注'
+	`create_oper` VARCHAR(45) NOT NULL COMMENT '制单人',
+	`create_time` DATETIME NOT NULL COMMENT '制单时间',
+	`approve_oper` VARCHAR(45) NOT NULL COMMENT '审核人',
+	`approve_time` DATETIME NOT NULL COMMENT '审核时间',
+	`memo` VARCHAR(100) NULL COMMENT '备注',
   	PRIMARY KEY (`sheet_id`))
 ENGINE = InnoDB
 COMMENT = '采购订单';
