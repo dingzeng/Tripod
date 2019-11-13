@@ -9,7 +9,7 @@ CREATE TABLE `item_stock_flow` (
     `qty` DECIMAL NOT NULL COMMENT '库存数量',
     `price` DECIMAL NOT NULL COMMENT '出入库价格',
     `amount` DECIMAL NOT NULL COMMENT '出入库金额',
-    `create_time` DATETIME NOT NULL COMMENT '创建时间'
+    `create_time` DATETIME NOT NULL COMMENT '创建时间',
     PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '商品库存流水';

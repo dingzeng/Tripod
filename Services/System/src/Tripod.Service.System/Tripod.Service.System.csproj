@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="../../../Framework/protos/common.proto" />
     <Protobuf Include="../../protos/message.proto" />
     <Protobuf Include="../../protos/service.proto" />
   </ItemGroup>

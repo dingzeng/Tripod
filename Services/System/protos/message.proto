@@ -1,19 +1,8 @@
 syntax = "proto3";
 option csharp_namespace = "Tripod.Service.System";
 package System;
-
-// Commons
-message Empty { }
-message KeyObject {
-    string Body = 1;
-}
-message BooleanObject {
-    bool Body = 1;
-}
-message PagingRequest {
-    int32 PageIndex = 1;
-    int32 PageSize = 2;
-}
+import "common.proto";
+// ../Framework/protos/
 
 // Menu
 message MenuDTO {
