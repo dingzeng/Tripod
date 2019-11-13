@@ -1,5 +1,5 @@
 using System;
-using Dapper.Contrib.Extensions;
+using Tripod.Framework.DapperExtentions.Attributes;
 
 namespace Tripod.Service.System.Model
 {

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
-using Dapper.Contrib.Extensions;
 using Tripod.Service.System.Model;
 
 namespace Tripod.Service.System.DAL

@@ -1,12 +1,12 @@
 using System;
 using System.Data;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Dapper;
-using Dapper.Contrib;
-using Dapper.Contrib.Extensions;
+using Tripod.Framework.DapperExtentions;
 
 namespace Tripod.Service.System.DAL
 {
@@ -14,8 +14,17 @@ namespace Tripod.Service.System.DAL
     {
         static BaseDAO()
         {
-            // eg:user_id -> UserId
+            // Dapper 中数据库数据到实体映射时忽视下划线，如列名user_id可以被映射到属性名UserId上
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
+            // Tripod.Framework.DapperExtentions 中实体模型映射到数据库列名的控制，UserId -> user_id
+            SqlMapperExtensions.ColumnNameMapper = (prop) => {
+                Regex regex = new Regex("[A-Z]");
+                var newSource = regex.Replace(prop.Name, (match) => {
+                    return "_" + match.Value.ToLower();
+                });
+                return newSource.TrimStart('_');
+            };
         }
 
         private IDbConnection GetConnection()
