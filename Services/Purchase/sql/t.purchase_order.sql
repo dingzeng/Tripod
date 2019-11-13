@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS `pur`;
+
+CREATE TABLE `menu` (
+  `code` VARCHAR(45) NOT NULL,
+  `parent_code` VARCHAR(45) NOT NULL DEFAULT '',
+  `path` VARCHAR(45) NOT NULL DEFAULT '',
+  `name` VARCHAR(45) NOT NULL,
+  `is_leaf` TINYINT NOT NULL,
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB;

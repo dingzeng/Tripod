@@ -1,0 +1,144 @@
+purchase_order			采购订单
+	type			单据类型（采购订单、直配订单、越库订单、永续订单）
+	sheet_id		单据号
+	receive_status		收货状态（0-未收货、1-部分收货、2-已收货）
+	approve_status		审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	supplier		供应商
+	order_branch		订货机构
+	receive_expire_date	收货期限
+	total_amount		订货金额
+	purchase_oper		采购员
+	create_oper		制单人
+	create_time		制单时间
+	approve_oper		审核人
+	approve_time		审核时间
+	memo			备注
+
+purchase_order_receive_branch	采购订单收货机构
+	sheet_id		单据号
+	branch			收货机构
+	
+purchase_order_item		采购订单商品
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	gift_flag		赠品标志
+	size			规格
+	purchase_unit		采购单位
+	refer_purchase_price	参考进价
+	qty			数量
+	purchase_price		进价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	retail_price		零售价
+	receive_qty		到货数量
+	
+purchase_order_item_detail	采购订单商品明细
+	id
+	purchase_order_item_id	采购订单项id
+	branch			机构
+	refer_stock_qty		库存数量
+	stock_qty		数量
+	memo			备注
+
+
+purchase_reveive		采购收货单
+	sheet_id		单据编号
+	ref_sheet_id		引用采购订单单据号
+	approve_status		审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	settle_status		结算状态（0-未结算、1-已结算）
+	supplier		供应商
+	receive_branch		收货机构
+	receive_store		收货仓库
+	purchase_oper		采购员
+	total_amount		单据金额
+	receive_time		收货时间
+	create_oper		制单人
+	create_time		制单时间
+	approve_oper		审核人
+	approve_time		审核时间
+	memo			备注
+
+purchase_reveive_item		采购收货单商品
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	purchase_unit		采购单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	produce_date		生产日期
+	expire_date		过期日期
+	memo			备注
+
+purchase_reveive_item_detail	采购收货商品明细
+	id
+	purchase_reveive_item_id
+	branch			机构
+	refer_unreceived_qty	剩余
+	qty			数量
+	memo			备注
+
+purchase_return			采购退货单
+	sheet_id		单据编号
+	ref_sheet_id		引用采购收货单单据号
+	branch			退货机构
+	supplier		供应商
+	store			出库仓库
+	total_amount		单据金额
+	approve_status		审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper		制单人
+	create_time		制单时间
+	approve_oper		审核人
+	approve_time		审核时间
+	memo			备注
+
+purchase_return_item		采购退货商品
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	purchase_unit		采购单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
