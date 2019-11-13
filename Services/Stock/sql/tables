@@ -1,0 +1,348 @@
+item_stock			商品库存
+	item_id			商品编码
+	barcode			商品条码
+	branch			机构
+	store			仓库
+	qty			库存数量
+	cost_price		成本价
+	cost_amount		成本金额
+
+item_stock_flow			商品库存流水
+	item_id			商品编码
+	barcode			商品条码
+	branch			机构
+	sheet_id		业务单据编号
+	qty			库存数量
+	price			出入库价格
+	amount			出入库金额
+	create_time		创建时间
+
+item_batch_stock		商品批次库存
+	item_id			商品编码
+	barcode			商品条码
+	batch_id		批次号
+	branch			机构
+	store			仓库
+	qty			库存数量
+	expire_date		过期日期
+	cost_price		成本价
+	cost_amount		成本金额
+	create_time		创建时间
+
+delivery			配送出库单
+	sheet_id		单据编号
+	delivery_branch		配送中心
+	store			出库仓库
+	receive_branch		收货机构
+	total_amount		单据金额
+	approve_status		审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	receive_status		收货状态（0-未收货、1-部分收货、2-已收货）
+	create_oper		制单人
+	create_time		制单时间
+	approve_oper		审核人
+	approve_time		审核时间
+	memo			备注
+
+delivery_detail			配送出库单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	retail_price		零售价
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+delivery_detail_batch		配送出库单商品批次扣减
+	sheet_id		单据编号
+	detail_id		单据明细
+	batch_id		批次号
+	refer_batch_qty		剩余库存数量
+	qty			出库数量
+	expire_date		过期日期
+
+
+
+delivery_receive		配送收货单
+	sheet_id		单据编号
+	ref_sheet_id		引用配送出库单号
+	delivery_branch		配送中心
+	receive_branch		收货机构
+	store			入库仓库
+	total_amount		单据金额
+	approve_status		审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper		制单人
+	create_time		制单时间
+	approve_oper		审核人
+	approve_time		审核时间
+	memo			备注
+
+delivery_receive_detail		配送收货单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+delivery_receive_detail_batch	配送收货单商品批次扣减
+	sheet_id		单据编号
+	detail_id		单据明细
+	batch_id		批次号
+	refer_batch_qty		剩余库存数量
+	qty			出库数量
+	expire_date		过期日期
+
+delivery_diff_apply		配送差异申请单
+	sheet_id		单据编号
+	ref_sheet_id		引用配送单号
+	branch			申请机构
+	store			出入库仓库
+	diff_reason		差异原因
+	total_amount		单据金额
+	approve_status		审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper		制单人
+	create_time		制单时间
+	approve_oper		审核人
+	approve_time		审核时间
+	memo			备注
+
+delivery_diff_apply_detail	配送差异申请单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	delivery_qty		配送数量
+	diff_qty		差异数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+delivery_diff_in				配送差异入库单
+	sheet_id				单据编号
+	ref_delivery_sheet_id			引用配送单号
+	ref_delivery_diff_apply_sheet_id	引用配送差异申请单
+	in_branch				入库机构
+	in_store				入库仓库
+	total_amount				单据金额
+	approve_status				审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper				制单人
+	create_time				制单时间
+	approve_oper				审核人
+	approve_time				审核时间
+	memo					备注
+
+delivery_diff_in_detail		配送差异入库单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+delivery_diff_in_detail_batch	配送差异入库单商品批次扣减
+	sheet_id		单据编号
+	detail_id		单据明细
+	batch_id		批次号
+	refer_batch_qty		剩余库存数量
+	qty			出库数量
+	expire_date		过期日期
+
+
+delivery_diff_out				配送差异出库单
+	sheet_id				单据编号
+	ref_delivery_sheet_id			引用配送单号
+	ref_delivery_diff_apply_sheet_id	引用配送差异申请单
+	out_branch				出库机构
+	out_store				出库仓库
+	total_amount				单据金额
+	approve_status				审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper				制单人
+	create_time				制单时间
+	approve_oper				审核人
+	approve_time				审核时间
+	memo					备注
+
+delivery_diff_out_detail	配送差异出库单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+delivery_diff_out_detail_batch	配送差异入库单商品批次扣减
+	sheet_id		单据编号
+	detail_id		单据明细
+	batch_id		批次号
+	refer_batch_qty		剩余库存数量
+	qty			出库数量
+	expire_date		过期日期
+
+delivery_return_apply		配退申请单
+	sheet_id		单据编号
+	ref_sheet_id		引用配送单号
+	branch			申请机构
+	delivery_branch		配送中心
+	store			出库仓库
+	total_amount		单据金额
+	approve_status		审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper		制单人
+	create_time		制单时间
+	approve_oper		审核人
+	approve_time		审核时间
+	memo			备注
+
+delivery_return_apply_detail	配退申请单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+delivery_return					配退单
+	sheet_id				单据编号
+	ref_delivery_sheet_id			引用配送单号
+	ref_delivery_return_apply_sheet_id	引用配退申请单号
+	branch					配退机构
+	delivery_branch				配送中心
+	store					出库仓库
+	total_amount				单据金额
+	approve_status				审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper				制单人
+	create_time				制单时间
+	approve_oper				审核人
+	approve_time				审核时间
+	memo					备注
+
+delivery_return_detail		配退单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+
+delivery_return_detail_batch	配退单商品批次扣减
+	sheet_id		单据编号
+	detail_id		单据明细
+	batch_id		批次号
+	refer_batch_qty		剩余库存数量
+	qty			出库数量
+	expire_date		过期日期
+
+
+delivery_return_receive				配退收货单
+	sheet_id				单据编号
+	ref_delivery_return_sheet_id		引用配退单号
+	delivery_branch				配送中心
+	branch					配退机构
+	store					入库仓库
+	total_amount				单据金额
+	approve_status				审核状态（0-草稿、1-为审核、2-审核通过、3-已驳回）
+	create_oper				制单人
+	create_time				制单时间
+	approve_oper				审核人
+	approve_time				审核时间
+	memo					备注
+
+delivery_return_receive_detail	配退收货单商品明细
+	id			
+	sheet_id		单据号
+	item_id			商品编码
+	item_barcode		商品条码
+	item_name		商品名称
+	size			规格
+	delivery_unit		配送单位
+	qty			数量
+	price			单价
+	amount			金额
+	tax_rate		税率
+	tax_amount		税额
+	refer_stock_qty		库存数量
+	stock_qty		基本数量
+	stock_unit		库存单位
+	memo			备注
+
+delivery_return_receive_detail_batch	配退单商品批次扣减
+	sheet_id			单据编号
+	detail_id			单据明细
+	batch_id			批次号
+	refer_batch_qty			剩余库存数量
+	qty				出库数量
+	expire_date			过期日期
+
+
+
+
+
+

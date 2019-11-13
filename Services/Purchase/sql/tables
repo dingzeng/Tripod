@@ -18,7 +18,7 @@ purchase_order_receive_branch	采购订单收货机构
 	sheet_id		单据号
 	branch			收货机构
 	
-purchase_order_item		采购订单商品
+purchase_order_detail		采购订单商品明细
 	id			
 	sheet_id		单据号
 	item_id			商品编码
@@ -39,9 +39,9 @@ purchase_order_item		采购订单商品
 	retail_price		零售价
 	receive_qty		到货数量
 	
-purchase_order_item_detail	采购订单商品明细
+purchase_order_detail_branch	采购订单分配明细
 	id
-	purchase_order_item_id	采购订单项id
+	detail_id		采购订单项id
 	branch			机构
 	refer_stock_qty		库存数量
 	stock_qty		数量
@@ -65,7 +65,7 @@ purchase_reveive		采购收货单
 	approve_time		审核时间
 	memo			备注
 
-purchase_reveive_item		采购收货单商品
+purchase_reveive_detail		采购收货单商品明细
 	id			
 	sheet_id		单据号
 	item_id			商品编码
@@ -85,9 +85,9 @@ purchase_reveive_item		采购收货单商品
 	expire_date		过期日期
 	memo			备注
 
-purchase_reveive_item_detail	采购收货商品明细
+purchase_reveive_detail_branch	采购收货单分配明细
 	id
-	purchase_reveive_item_id
+  	detail_id
 	branch			机构
 	refer_unreceived_qty	剩余
 	qty			数量
@@ -107,7 +107,7 @@ purchase_return			采购退货单
 	approve_time		审核时间
 	memo			备注
 
-purchase_return_item		采购退货商品
+purchase_return_detail		采购退货商品明细
 	id			
 	sheet_id		单据号
 	item_id			商品编码
