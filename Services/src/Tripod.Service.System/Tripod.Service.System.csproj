@@ -17,13 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="../../../Framework/protos/common.proto" />
-    <Protobuf Include="../../protos/message.proto" />
-    <Protobuf Include="../../protos/service.proto" />
+    <Protobuf Include="../../protos/common.proto" />
+    <Protobuf Include="../../protos/system.proto" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Framework\src\Tripod.Framework.DapperExtentions\Tripod.Framework.DapperExtentions.csproj" />
+    <ProjectReference Include="..\Tripod.Framework.DapperExtentions\Tripod.Framework.DapperExtentions.csproj" />
+    <ProjectReference Include="..\Tripod.Framework.Common\Tripod.Framework.Common.csproj" />
   </ItemGroup>
 
 </Project>

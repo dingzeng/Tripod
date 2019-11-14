@@ -15,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="../../protos/message.proto" />
-    <Protobuf Include="../../protos/service.proto" />
+    <Protobuf Include="../../protos/stock.proto" />
   </ItemGroup>
 
 </Project>
