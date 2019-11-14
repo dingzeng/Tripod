@@ -19,6 +19,8 @@ namespace Tripod.Service.System
                 ConnectionString = configuration["connectionString"]
             };
 
+            GrpcEnvironment.SetLogger(new GrpcLogger());
+
             const int Port = 50054;
             Server server = new Server
             {
