@@ -5,7 +5,7 @@
 ## 1.创建项目
 ```
 dotnet new console --name Tripod.Service.[Name] --output src/Tripod.Service.[Name]
-dotnet sln add src/[Name]/[Name].csproj
+dotnet sln add src/Tripod.Service.[Name]/Tripod.Service.[Name].csproj
 ```
 
 ## 2.添加Grpc的引用
@@ -61,3 +61,22 @@ static void Main(string[] args)
 ```
 
 # 项目结构
+- protos
+    - common.proto
+    - xxx.proto
+- sql
+    - [serviceName]
+        - t.[tableName].sql
+- src
+    - [projectName]
+
+# 服务端口
+
+|服务|名称|端口|
+|:---|:---|:---|
+|档案服务|Archive|80051|
+|采购服务|Purchase|80052|
+|库存服务|Stock|80053|
+|系统服务|System|80054|
+
+

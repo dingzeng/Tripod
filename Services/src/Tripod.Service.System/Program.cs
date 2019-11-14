@@ -15,8 +15,8 @@ namespace Tripod.Service.System
             };
             server.Start();
 
-            Console.WriteLine("Greeter server listening on port " + Port);
-            Console.WriteLine("Press any key to stop the server...");
+            Console.WriteLine("系统服务监听端口： " + Port);
+            Console.WriteLine("任意键退出...");
             Console.Read();
 
             server.ShutdownAsync().Wait();
