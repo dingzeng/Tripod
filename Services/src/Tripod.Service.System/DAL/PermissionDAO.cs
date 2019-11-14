@@ -4,13 +4,14 @@ using System.Linq;
 using Dapper;
 using Tripod.Service.System.Model;
 using Tripod.Framework.Common.DAL;
+using Tripod.Framework.Common;
 
 namespace Tripod.Service.System.DAL
 {
     public class PermissionDAO : BaseDAO<Permission>
     {
-        public PermissionDAO()
-            :base("")
+        public PermissionDAO(ConfigurationOptions options)
+            :base(options.ConnectionString)
         {
             
         }

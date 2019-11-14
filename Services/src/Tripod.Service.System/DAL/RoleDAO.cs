@@ -4,14 +4,15 @@ using System.Text;
 using System.Collections.Generic;
 using Tripod.Service.System.Model;
 using Tripod.Framework.Common.DAL;
+using Tripod.Framework.Common;
 using Dapper;
 
 namespace Tripod.Service.System.DAL
 {
     public class RoleDAO : BaseDAO<Role>
     {
-        public RoleDAO()
-            :base("")
+        public RoleDAO(ConfigurationOptions options)
+            :base(options.ConnectionString)
         {
             
         }

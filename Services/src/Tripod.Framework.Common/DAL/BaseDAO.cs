@@ -36,8 +36,6 @@ namespace Tripod.Framework.Common.DAL
         private IDbConnection GetConnection()
         {
             return new MySqlConnection(this._connectionString);
-            // "database=sblpro_test;server=192.168.215.201;uid=root;pwd=Admin123!"
-            // return new MySqlConnection("database=db_tripod_system;server=192.168.0.102;uid=root;pwd=123456;port=33306;");
         }
 
         public T Run<T>(Func<IDbConnection,T> func)

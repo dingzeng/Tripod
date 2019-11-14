@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using Tripod.Service.System.DAL;
 using Tripod.Service.System.Model;
+using Tripod.Framework.Common;
 
 namespace Tripod.Service.System
 {
@@ -15,13 +16,13 @@ namespace Tripod.Service.System
         private readonly PermissionApiDAO _permissionApiDao;
         private readonly UserDAO _userDao;
         private readonly RoleDAO _roleDao;
-        public SystemService()
+        public SystemService(ConfigurationOptions options)
         {
-            _menuDao = new MenuDAO();
-            _permissionDao = new PermissionDAO();
-            _permissionApiDao = new PermissionApiDAO();
-            _userDao = new UserDAO();
-            _roleDao = new RoleDAO();
+            _menuDao = new MenuDAO(options);
+            _permissionDao = new PermissionDAO(options);
+            _permissionApiDao = new PermissionApiDAO(options);
+            _userDao = new UserDAO(options);
+            _roleDao = new RoleDAO(options);
         }
 
         // Menu

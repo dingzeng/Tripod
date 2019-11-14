@@ -9,8 +9,8 @@ namespace Tripod.Service.System.DAL
 {
     public class UserDAO : BaseDAO<User>
     {
-        public UserDAO()
-            :base("")
+        public UserDAO(ConfigurationOptions options)
+            :base(options.ConnectionString)
         {
             
         }

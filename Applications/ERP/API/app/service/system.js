@@ -1,6 +1,6 @@
 'use strict';
 
-const PROTO_PATH = __dirname + '/../../../../../Services/System/protos/service.proto';
+const PROTO_PATH = __dirname + '/../../../../../Services/protos/system.proto';
 var grpc = require('grpc');
 var protoLoader = require('@grpc/proto-loader');
 var packageDefinition = protoLoader.loadSync(
@@ -14,7 +14,7 @@ var packageDefinition = protoLoader.loadSync(
     });
 
 var System = grpc.loadPackageDefinition(packageDefinition).System;
-var client = new System.SystemSrv('127.0.0.1:50051', grpc.credentials.createInsecure());    
+var client = new System.SystemSrv('127.0.0.1:50054', grpc.credentials.createInsecure());    
 
 const Service = require('egg').Service;
 
