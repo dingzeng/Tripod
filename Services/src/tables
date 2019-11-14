@@ -75,3 +75,4 @@ item_department				商品部门
 item						商品档案
 	id
     name
+    item_cls_id
