@@ -4,27 +4,27 @@
 
 ## 1.创建项目
 ```
-mkdir src/Tripod.Service.[ProjectName]
-dotnet new console --name Tripod.Service.[ProjectName] --output Tripod.Service.[ProjectName]
+dotnet new console --name Tripod.Service.[Name] --output src/Tripod.Service.[Name]
+dotnet sln add src/[Name]/[Name].csproj
 ```
 
 ## 2.添加Grpc的引用
 ```
-cd src/Tripod.Service.[ProjectName]
+cd src/Tripod.Service.[Name]
 
-dotnet add package Google.Protobuf
-dotnet add package Grpc
-dotnet add package Grpc.Tools
+dotnet add package Google.Protobuf --version 3.10.1
+dotnet add package Grpc --version 2.25.0
+dotnet add package Grpc.Tools --version 2.25.0
 ```
 
 ## 3.添加proto文件并在项目文件中引用
 ```bash
 cd ../../
-touch xxx.proto
+touch [name].proto
 ```
 ```xml
 <ItemGroup>
-    <Protobuf Include="../../protos/xxx.proto" />
+    <Protobuf Include="../../protos/[project name].proto" />
 </ItemGroup>
 ```
 > [重要]这样在构建项目(dotnet build)时会自动生成Grpc要使用的代码文件，存放在bin目录下
