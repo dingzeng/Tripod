@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Tripod.Service.System
+namespace Tripod.Framework.Common
 {
     public class PagedList<T> where T : class
     {

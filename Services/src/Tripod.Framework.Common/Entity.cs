@@ -1,6 +1,6 @@
 using System;
 
-namespace Tripod.Service.System
+namespace Tripod.Framework.Common
 {
     public class Entity
     {

@@ -3,12 +3,19 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Tripod.Service.System.Model;
+using Tripod.Framework.Common.DAL;
 using Dapper;
 
 namespace Tripod.Service.System.DAL
 {
     public class RoleDAO : BaseDAO<Role>
     {
+        public RoleDAO()
+            :base("")
+        {
+            
+        }
+
         public List<Role> GetRolesByUserId(long userId)
         {
             return Run(conn =>

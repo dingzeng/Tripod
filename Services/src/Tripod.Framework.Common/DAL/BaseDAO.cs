@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 using Dapper;
 using Tripod.Framework.DapperExtentions;
 
-namespace Tripod.Service.System.DAL
+namespace Tripod.Framework.Common.DAL
 {
     public class BaseDAO<TEntity> where TEntity : class
     {
@@ -27,9 +27,16 @@ namespace Tripod.Service.System.DAL
             };
         }
 
+        private readonly string _connectionString;
+        public BaseDAO(string connectionString)
+        {
+            this._connectionString = connectionString;
+        }
+
         private IDbConnection GetConnection()
         {
-            return new MySqlConnection("database=sblpro_test;server=192.168.215.201;uid=root;pwd=Admin123!");
+            return new MySqlConnection(this._connectionString);
+            // "database=sblpro_test;server=192.168.215.201;uid=root;pwd=Admin123!"
             // return new MySqlConnection("database=db_tripod_system;server=192.168.0.102;uid=root;pwd=123456;port=33306;");
         }
 

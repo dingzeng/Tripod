@@ -1,12 +1,20 @@
 using System;
 using System.Text;
 using Tripod.Service.System.Model;
+using Tripod.Framework.Common.DAL;
 using Dapper;
+using Tripod.Framework.Common;
 
 namespace Tripod.Service.System.DAL
 {
     public class UserDAO : BaseDAO<User>
     {
+        public UserDAO()
+            :base("")
+        {
+            
+        }
+
         public User GetUserByUsername(string username)
         {
             return Run(conn => {

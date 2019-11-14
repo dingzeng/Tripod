@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Tripod.Service.System.Model;
+using Tripod.Framework.Common.DAL;
 
 namespace Tripod.Service.System.DAL
 {
     public class PermissionDAO : BaseDAO<Permission>
     {
+        public PermissionDAO()
+            :base("")
+        {
+            
+        }
+
         public List<Permission> GetPermissionsByRoleId(int roleId)
         {
             return Run(conn => {
