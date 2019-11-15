@@ -11,7 +11,10 @@ namespace Tripod.Service.Archive
             new GrpcServerBuilder()
                 .UseHost("localhost")
                 .UsePort(80051)
+                .AddService((options,mapper) => ItemSrv.BindService(new BranchService(mapper, options)))
                 .AddService((options,mapper) => ItemSrv.BindService(new ItemService(mapper, options)))
+                .AddService((options,mapper) => ItemSrv.BindService(new PriceService(mapper, options)))
+                .AddService((options,mapper) => ItemSrv.BindService(new SupplierService(mapper, options)))
                 .Start();
         }
     }

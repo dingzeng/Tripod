@@ -1,4 +1,6 @@
 ﻿using System;
+using Tripod.Framework.Common;
+using Tripod.Service.Purchase.Services;
 
 namespace Tripod.Service.Purchase
 {
@@ -6,7 +8,11 @@ namespace Tripod.Service.Purchase
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new GrpcServerBuilder()
+                .UseHost("localhost")
+                .UsePort(80052)
+                .AddService((options,mapper) => PurchaseSrv.BindService(new PurchaseOrderService(mapper, options)))
+                .Start();
         }
     }
 }

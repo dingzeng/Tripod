@@ -1,4 +1,6 @@
 ﻿using System;
+using Tripod.Framework.Common;
+using Tripod.Service.Stock.Services;
 
 namespace Tripod.Service.Stock
 {
@@ -6,7 +8,11 @@ namespace Tripod.Service.Stock
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new GrpcServerBuilder()
+                .UseHost("localhost")
+                .UsePort(80053)
+                .AddService((options,mapper) => ItemStockSrv.BindService(new ItemStockService(mapper, options)))
+                .Start();
         }
     }
 }

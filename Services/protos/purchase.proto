@@ -1,1 +1,12 @@
 syntax = "proto3";
+option csharp_namespace = "Tripod.Service.Purchase";
+package Purchase;
+import "common.proto";
+
+service PurchaseSrv {
+    rpc GetPurchaseOrderById(Empty) returns(PurchaseOrderDTO);
+}
+
+message PurchaseOrderDTO {
+    string SheetId = 1;
+}
