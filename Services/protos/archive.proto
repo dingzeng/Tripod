@@ -1,1 +1,17 @@
 syntax = "proto3";
+option csharp_namespace = "Tripod.Service.Archive";
+package Archive;
+import "common.proto";
+
+service ItemSrv {
+    rpc GetAllItemBrands(Empty) returns (GetAllItemBrandsResponse);
+}
+
+message ItemBrandDTO {
+    string Id = 1;
+    string Name = 2;
+}
+
+message GetAllItemBrandsResponse {
+    repeated ItemBrandDTO ItemBrands = 1;
+}

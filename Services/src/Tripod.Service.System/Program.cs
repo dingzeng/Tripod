@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Tripod.Framework.Common;
+using Tripod.Service.System.Services;
 
 namespace Tripod.Service.System
 {

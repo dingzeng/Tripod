@@ -8,7 +8,7 @@ using Tripod.Service.System.Model;
 using Tripod.Framework.Common;
 using AutoMapper;
 
-namespace Tripod.Service.System
+namespace Tripod.Service.System.Services
 {
     public class SystemService : SystemSrv.SystemSrvBase
     {
