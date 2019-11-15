@@ -6,6 +6,7 @@ using Grpc.Core;
 using Tripod.Service.System.DAL;
 using Tripod.Service.System.Model;
 using Tripod.Framework.Common;
+using AutoMapper;
 
 namespace Tripod.Service.System
 {
@@ -16,13 +17,15 @@ namespace Tripod.Service.System
         private readonly PermissionApiDAO _permissionApiDao;
         private readonly UserDAO _userDao;
         private readonly RoleDAO _roleDao;
-        public SystemService(ConfigurationOptions options)
+        private readonly IMapper _mapper;
+        public SystemService(IMapper mapper, ConfigurationOptions options)
         {
             _menuDao = new MenuDAO(options);
             _permissionDao = new PermissionDAO(options);
             _permissionApiDao = new PermissionApiDAO(options);
             _userDao = new UserDAO(options);
             _roleDao = new RoleDAO(options);
+            _mapper = mapper;
         }
 
         // Menu
@@ -30,7 +33,7 @@ namespace Tripod.Service.System
         {
             var menus = _menuDao.GetAll();
             var res = new GetAllMenusResponse();
-            res.Menus.AddRange(menus.Select(m => m.ToDto()));
+            res.Menus.AddRange(menus.Select(m => _mapper.Map<MenuDTO>(m)));
             return Task.FromResult(res);
         }
 
@@ -39,7 +42,7 @@ namespace Tripod.Service.System
         {
             var permissions = _permissionDao.GetAll();
             var res = new GetAllPermissionsResponse();
-            res.Permissions.AddRange(permissions.Select(p => p.ToDto()));
+            res.Permissions.AddRange(permissions.Select(p => _mapper.Map<PermissionDTO>(p)));
             return Task.FromResult(res);
         }
 
@@ -48,7 +51,7 @@ namespace Tripod.Service.System
         {
             var permissionApis = _permissionApiDao.GetAll();
             var res = new GetAllPermissionApisResponse();
-            res.PermissionApis.AddRange(permissionApis.Select(pa => pa.ToDto()));
+            res.PermissionApis.AddRange(permissionApis.Select(pa => _mapper.Map<PermissionApiDTO>(pa)));
             return Task.FromResult(res);
         }
 
@@ -58,21 +61,21 @@ namespace Tripod.Service.System
         {
             var roles = _roleDao.GetAll();
             var res = new GetAllRolesResponse();
-            res.Roles.AddRange(roles.Select(m => m.ToDto()));
+            res.Roles.AddRange(roles.Select(r => this._mapper.Map<RoleDTO>(r)));
             return Task.FromResult(res);
         }
 
         public override Task<RoleDTO> GetRoleById(KeyObject request, ServerCallContext context)
         {
             var role = _roleDao.Get(request.Body);
-            return Task.FromResult(role.ToDto());
+            return Task.FromResult(_mapper.Map<RoleDTO>(role));
         }
 
         public override Task<RoleDTO> CreateRole(RoleDTO request, ServerCallContext context)
         {
-            long id = _roleDao.Insert(request.ToEntity());
+            long id = _roleDao.Insert(_mapper.Map<Role>(request));
             var role = _roleDao.Get(id);
-            return Task.FromResult(role.ToDto());
+            return Task.FromResult(_mapper.Map<RoleDTO>(role));
         }
 
         public override Task<BooleanObject> DeleteRoleById(KeyObject request, ServerCallContext context)
@@ -84,7 +87,7 @@ namespace Tripod.Service.System
 
         public override Task<BooleanObject> UpdateRole(RoleDTO request, ServerCallContext context)
         {
-            bool success = _roleDao.Update(request.ToEntity());
+            bool success = _roleDao.Update(_mapper.Map<Role>(request));
             return Task.FromResult(new BooleanObject { Body = success });
         }
 
@@ -93,7 +96,7 @@ namespace Tripod.Service.System
             var roleId = Convert.ToInt32(request.Body);
             var permissions = _permissionDao.GetPermissionsByRoleId(roleId);
             var res = new GetRolePermissionsResponse();
-            res.Permissions.AddRange(permissions.Select(p => p.ToDto()));
+            res.Permissions.AddRange(permissions.Select(p => _mapper.Map<PermissionDTO>(p)));
             return Task.FromResult(res);
         }
 
@@ -110,20 +113,7 @@ namespace Tripod.Service.System
         public override Task<UserDTO> GetUserByUsername(GetUserByUsernameRequest request, ServerCallContext context)
         {
             var user = _userDao.GetUserByUsername(request.Username);
-            var result = new UserDTO()
-            {
-                Id = user.Id,
-                BranchCode = user.BranchCode,
-                Username = user.Username,
-                Password = user.Password,
-                Name = user.Name,
-                Mobile = user.Mobile,
-                Status = user.Status,
-                ItemDepartmentPermissionFlag = user.ItemDepartmentPermissionFlag,
-                SupplierPermissionFlag = user.SupplierPermissionFlag,
-            };
-
-            return Task.FromResult(result);
+            return Task.FromResult(_mapper.Map<UserDTO>(user));
         }
 
         public override Task<GetUsersResponse> GetUsers(PagingRequest request, ServerCallContext context)
@@ -131,7 +121,7 @@ namespace Tripod.Service.System
             var pagingResult = _userDao.GetUserPaging(request.PageIndex, request.PageSize);
             var res = new GetUsersResponse();
             res.TotalCount = pagingResult.TotalCount;
-            res.Users.AddRange(pagingResult.List.Select(u => u.ToDto()));
+            res.Users.AddRange(pagingResult.List.Select(u => _mapper.Map<UserDTO>(u)));
 
             return Task.FromResult(res);
         }
@@ -139,19 +129,19 @@ namespace Tripod.Service.System
         public override Task<UserDTO> GetUserById(KeyObject request, ServerCallContext context)
         {
             var user = _userDao.Get(request.Body);
-            return Task.FromResult(user.ToDto());
+            return Task.FromResult(_mapper.Map<UserDTO>(user));
         }
 
         public override Task<UserDTO> CreateUser(UserDTO request, ServerCallContext context)
         {
-            var id = _userDao.Insert(request.ToEntity());
+            var id = _userDao.Insert(_mapper.Map<User>(request));
             var user = _userDao.Get(id);
-            return Task.FromResult(user.ToDto());
+            return Task.FromResult(_mapper.Map<UserDTO>(user));
         }
 
         public override Task<BooleanObject> UpdateUSer(UserDTO reqeust, ServerCallContext context)
         {
-            bool success = _userDao.Update(reqeust.ToEntity());
+            bool success = _userDao.Update(_mapper.Map<User>(reqeust));
             return Task.FromResult(new BooleanObject { Body = success });
         }
 

@@ -1,8 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using AutoMapper;
 using Grpc.Core;
 using Microsoft.Extensions.Configuration;
 using Tripod.Framework.Common;
+using Tripod.Service.System.Mapping;
 
 namespace Tripod.Service.System
 {
@@ -10,6 +14,7 @@ namespace Tripod.Service.System
     {
         static void Main(string[] args)
         {
+            // 获取配置信息
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
@@ -19,12 +24,27 @@ namespace Tripod.Service.System
                 ConnectionString = configuration["connectionString"]
             };
 
+            // 设置Grpc日志处理器
             GrpcEnvironment.SetLogger(new GrpcLogger());
 
+            // 动态配置对象映射
+            var mappingTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => typeof(IMapping).IsAssignableFrom(t));
+            var mapperConfiguration = new MapperConfiguration(cfg => 
+            {
+                foreach (var m in mappingTypes)
+                {
+                    var typeName = m.FullName;
+                    var mapping = (IMapping)m.Assembly.CreateInstance(typeName);   
+                    mapping.Configure(cfg);
+                }
+            });
+            var mapper = mapperConfiguration.CreateMapper();
+
+            // Server
             const int Port = 50054;
             Server server = new Server
             {
-                Services = { SystemSrv.BindService(new SystemService(options)) },
+                Services = { SystemSrv.BindService(new SystemService(mapper, options)) },
                 Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
             };
             server.Start();
