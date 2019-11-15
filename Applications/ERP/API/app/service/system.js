@@ -14,7 +14,7 @@ var packageDefinition = protoLoader.loadSync(
     });
 
 var System = grpc.loadPackageDefinition(packageDefinition).System;
-var client = new System.SystemSrv('127.0.0.1:50054', grpc.credentials.createInsecure());    
+var client = new System.SystemSrv('127.0.0.1:80054', grpc.credentials.createInsecure());    
 
 const Service = require('egg').Service;
 
