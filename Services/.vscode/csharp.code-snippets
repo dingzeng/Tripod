@@ -47,6 +47,8 @@
 			"\t{",
 			"\t\tpublic void Configure(IMapperConfigurationExpression expression)",
 			"\t\t{",
+			"\t\t\texpression.CreateMap<$2DTO,$2>();",
+			"\t\t\texpression.CreateMap<$2,$2DTO>();",
 			"\t\t}",
 			"\t}",
 			"}"
