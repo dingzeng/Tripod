@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS `menu`;
 
 CREATE TABLE `menu` (
-  `code` VARCHAR(45) NOT NULL,
-  `parent_code` VARCHAR(45) NOT NULL DEFAULT '',
-  `path` VARCHAR(45) NOT NULL DEFAULT '',
-  `name` VARCHAR(45) NOT NULL,
-  `is_leaf` TINYINT NOT NULL,
+  `code` VARCHAR(45) NOT NULL COMMENT '编码',
+  `parent_code` VARCHAR(45) NOT NULL DEFAULT '' COMMENT '父级编码',
+  `path` VARCHAR(45) NOT NULL DEFAULT '' COMMENT '菜单路径',
+  `name` VARCHAR(45) NOT NULL COMMENT '菜单名称',
+  `is_leaf` TINYINT NOT NULL COMMENT '是否是叶子节点',
   PRIMARY KEY (`code`))
 ENGINE = InnoDB;
 
