@@ -27,6 +27,5 @@ namespace Tripod.Service.Archive.Model
 		/// 是否可用
 		/// <summary>
 		public int IsUsable { get; set; }
-
 	}
 }

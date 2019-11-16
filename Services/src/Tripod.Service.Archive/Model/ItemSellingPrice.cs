@@ -57,6 +57,5 @@ namespace Tripod.Service.Archive.Model
 		/// 备注
 		/// <summary>
 		public string Memo { get; set; }
-
 	}
 }

@@ -107,6 +107,5 @@ namespace Tripod.Service.Archive.Model
 		/// 最后修改时间
 		/// <summary>
 		public DateTime LastUpdateTime { get; set; }
-
 	}
 }
