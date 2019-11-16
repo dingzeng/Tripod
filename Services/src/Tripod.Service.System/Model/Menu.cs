@@ -7,6 +7,7 @@ namespace Tripod.Service.System.Model
     [Table("menu")]
     public class Menu : Entity
     {
+        
         [ExplicitKey]
         public string Code { get; set; }
 
