@@ -14,6 +14,18 @@ service BranchSrv {
     rpc AddBranchGroupBranchs(AddBranchGroupBranchsRequest) returns (BooleanObject);
 }
 
+service ItemSrv {
+    rpc GetAllItemBrands(Empty) returns (GetAllItemBrandsResponse);
+}
+
+service PriceSrv {
+
+}
+
+service SupplierSrv {
+	
+}
+
 message GetBranchGroupsResponse {
     repeated BranchGroupDTO BranchGroups = 1;
 }
@@ -30,10 +42,6 @@ message DeleteBranchGroupBranchsRequest {
 message AddBranchGroupBranchsRequest {
     int32 BranchGroupId = 1;
     repeated string BranchIdList = 2;
-}
-
-service ItemSrv {
-    rpc GetAllItemBrands(Empty) returns (GetAllItemBrandsResponse);
 }
 
 message GetAllItemBrandsResponse {

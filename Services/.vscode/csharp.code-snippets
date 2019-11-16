@@ -16,6 +16,8 @@
 		"prefix": "dao",
 		"body": [
 			"using System;",
+			"using System.Linq;",
+			"using System.Collections.Generic;",
 			"using Dapper;",
 			"using Tripod.Framework.Common;",
 			"using Tripod.Framework.Common.DAL;",
@@ -84,10 +86,12 @@
 			"",
 			"namespace Tripod.Service.$1.Services",
 			"{",
-			"\tpublic class $2Service",
+			"\tpublic class $2Service : $2Srv.$2SrvBase",
 			"\t{",
+			"\t\tprivate readonly IMapper _mapper;",
 			"\t\tpublic $2Service(IMapper mapper, ConfigurationOptions options)",
 			"\t\t{",
+			"\t\t\t_mapper = mapper;",
 			"\t\t}",
 			"\t}",
 			"}"

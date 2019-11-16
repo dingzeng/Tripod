@@ -10,8 +10,15 @@ using Tripod.Framework.DapperExtentions;
 
 namespace Tripod.Framework.Common.DAL
 {
+    /// <summary>
+    /// 数据访问对象基类
+    /// </summary>
+    /// <typeparam name="TEntity">实体类型</typeparam>
     public class BaseDAO<TEntity> where TEntity : class
     {
+        /// <summary>
+        /// Ctor
+        /// </summary>
         static BaseDAO()
         {
             // Dapper 中数据库数据到实体映射时忽视下划线，如列名user_id可以被映射到属性名UserId上
@@ -28,16 +35,31 @@ namespace Tripod.Framework.Common.DAL
         }
 
         private readonly string _connectionString;
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="connectionString">数据库链接字符串</param>
         public BaseDAO(string connectionString)
         {
             this._connectionString = connectionString;
         }
 
+        /// <summary>
+        /// 获取数据库连接对象
+        /// </summary>
+        /// <returns></returns>
         private IDbConnection GetConnection()
         {
             return new MySqlConnection(this._connectionString);
         }
 
+        /// <summary>
+        /// Run
+        /// </summary>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Run<T>(Func<IDbConnection,T> func)
         {
             using (var conn = this.GetConnection())
@@ -47,6 +69,11 @@ namespace Tripod.Framework.Common.DAL
             }
         }
 
+        /// <summary>
+        /// 根据Id获取单个实体对象
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public TEntity Get(dynamic id)
         {
             return Run(conn => {
@@ -54,6 +81,10 @@ namespace Tripod.Framework.Common.DAL
             });
         }
 
+        /// <summary>
+        /// 获取所有实体对象
+        /// </summary>
+        /// <returns></returns>
         public List<TEntity> GetAll()
         {
             return Run(conn => {
@@ -61,6 +92,11 @@ namespace Tripod.Framework.Common.DAL
             });
         }
 
+        /// <summary>
+        /// 删除单个实体
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public bool Delete(TEntity entity)
         {
             return Run(conn => {
@@ -68,6 +104,11 @@ namespace Tripod.Framework.Common.DAL
             });
         }
 
+        /// <summary>
+        /// 插入实体
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public long Insert(TEntity entity)
         {
             return Run(conn => {
@@ -75,6 +116,11 @@ namespace Tripod.Framework.Common.DAL
             });
         }
 
+        /// <summary>
+        /// 更新实体
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public bool Update(TEntity entity)
         {
             return Run(conn => {
@@ -82,6 +128,17 @@ namespace Tripod.Framework.Common.DAL
             });
         }
 
+        /// <summary>
+        /// 分页获取数据
+        /// </summary>
+        /// <param name="innerQuery">分页前的内部子查询</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="conditions">条件子句(不用包含WHERE,如："AND status = 1 ...")</param>
+        /// <param name="projection">外层SELECT子句</param>
+        /// <param name="param">查询参数对象</param>
+        /// <typeparam name="T">结果集类型</typeparam>
+        /// <returns></returns>
         public PagedList<T> GetPaging<T>(string innerQuery, int pageIndex = 1, int pageSize = int.MaxValue, string conditions = "", string projection = "*", object param = null)
             where T : class
         {

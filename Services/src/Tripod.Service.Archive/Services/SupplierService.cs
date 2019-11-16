@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace Tripod.Service.Archive.Services
 {
-    public class SupplierService
+    public class SupplierService : SupplierSrv.SupplierSrvBase
     {
         public SupplierService(IMapper mapper, ConfigurationOptions options)
         {

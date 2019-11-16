@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace Tripod.Service.Archive.Services
 {
-    public class PriceService
+    public class PriceService : PriceSrv.PriceSrvBase
     {
         public PriceService(IMapper mapper, ConfigurationOptions options)
         {
