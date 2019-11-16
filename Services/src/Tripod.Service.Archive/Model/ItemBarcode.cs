@@ -11,7 +11,7 @@ namespace Tripod.Service.Archive.Model
 		/// 
 		/// <summary>
 		[Key]
-		public int? Id { get; set; }
+		public int Id { get; set; }
 
 		/// <summary>
 		/// 商品编码

@@ -11,7 +11,7 @@ namespace Tripod.Service.Archive.Model
 		/// 自增编码
 		/// <summary>
 		[Key]
-		public long? Id { get; set; }
+		public long Id { get; set; }
 
 		/// <summary>
 		/// 名称

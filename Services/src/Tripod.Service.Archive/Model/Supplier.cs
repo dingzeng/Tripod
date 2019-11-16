@@ -36,7 +36,7 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 结算周期天数
 		/// <summary>
-		public int SettleDays { get; set; }
+		public int? SettleDays { get; set; }
 
 		/// <summary>
 		/// 结算日期

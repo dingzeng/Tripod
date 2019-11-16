@@ -61,17 +61,17 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 默认赠送仓库
 		/// <summary>
-		public int GiftStoreId { get; set; }
+		public int? GiftStoreId { get; set; }
 
 		/// <summary>
 		/// 默认退货仓库
 		/// <summary>
-		public int ReturnStoreId { get; set; }
+		public int? ReturnStoreId { get; set; }
 
 		/// <summary>
 		/// 默认进货仓库
 		/// <summary>
-		public int PurchaseStoreId { get; set; }
+		public int? PurchaseStoreId { get; set; }
 
 		/// <summary>
 		/// 备注

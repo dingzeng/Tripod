@@ -126,17 +126,17 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 保质天数
 		/// <summary>
-		public int QualityDays { get; set; }
+		public int? QualityDays { get; set; }
 
 		/// <summary>
 		/// 临期预计天数
 		/// <summary>
-		public int WarningDays { get; set; }
+		public int? WarningDays { get; set; }
 
 		/// <summary>
 		/// 最小配送数量
 		/// <summary>
-		public int LeastDeliveryQty { get; set; }
+		public int? LeastDeliveryQty { get; set; }
 
 		/// <summary>
 		/// 产地
@@ -146,12 +146,12 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 进项税
 		/// <summary>
-		public decimal PurchaseTaxRate { get; set; }
+		public decimal? PurchaseTaxRate { get; set; }
 
 		/// <summary>
 		/// 销项税
 		/// <summary>
-		public decimal SalesTaxRate { get; set; }
+		public decimal? SalesTaxRate { get; set; }
 
 		/// <summary>
 		/// 备注
