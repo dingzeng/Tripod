@@ -1,20 +1,10 @@
 'use strict';
 
-const PROTO_PATH = __dirname + '/../../../../../Services/protos/system.proto';
-var grpc = require('grpc');
-var protoLoader = require('@grpc/proto-loader');
-var packageDefinition = protoLoader.loadSync(
-    PROTO_PATH,
-    {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-    });
-
-var System = grpc.loadPackageDefinition(packageDefinition).System;
-var client = new System.SystemSrv('127.0.0.1:80054', grpc.credentials.createInsecure());    
+const protoFilePath = __dirname + '/../../../../../Services/protos/system.proto';
+const packageName = 'System';
+const serviceName = 'SystemSrv';
+const address = '127.0.0.1:80054';
+const client = require('../grpcLoader')(protoFilePath, packageName, serviceName, address);
 
 const Service = require('egg').Service;
 
