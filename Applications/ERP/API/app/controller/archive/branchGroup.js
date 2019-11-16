@@ -4,7 +4,7 @@ const Controller = require('egg').Controller;
 
 class BranchGroupController extends Controller {
     async getBranchGroups() {
-        this.ctx.body = 'getBranchGroups'
+        this.ctx.body = await this.service.branch.getBranchGroups();
     }
     async getBranchGroup() {
         this.ctx.body = 'getBranchGroup'
