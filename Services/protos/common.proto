@@ -11,4 +11,5 @@ message BooleanObject {
 message PagingRequest {
     int32 PageIndex = 1;
     int32 PageSize = 2;
+    string Keyword = 3;
 }

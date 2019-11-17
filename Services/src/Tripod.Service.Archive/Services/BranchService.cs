@@ -82,5 +82,54 @@ namespace Tripod.Service.Archive.Services
             var success = _branchGroupDao.AddBranchGroupBranchs(branchGroupId, request.BranchIdList);
             return Task.FromResult(new BooleanObject() { Body = success });
         }
+
+        public override Task<GetBranchsResponse> GetBranchs(GetBranchsRequest request, ServerCallContext context)
+        {
+            var branchs = _branchDao.GetBranchs(request.PageIndex, request.PageSize, request.Keyword, request.ParentId);
+            var response = new GetBranchsResponse();
+            response.TotalCount = branchs.TotalCount;
+            response.Branchs.AddRange(branchs.List.Select(b => _mapper.Map<BranchDTO>(b)));
+            return Task.FromResult(response);
+        }
+
+        public override Task<BranchDTO> GetBranch(KeyObject request, ServerCallContext context)
+        {
+            var branch = _branchDao.Get(request.Body);
+            return Task.FromResult(_mapper.Map<BranchDTO>(branch));
+        }
+
+        public override Task<BranchDTO> CreateBranch(BranchDTO request, ServerCallContext context)
+        {
+            var id = _branchDao.Insert(_mapper.Map<Branch>(request));
+            var branch = _branchDao.Get(id);
+            return Task.FromResult(_mapper.Map<BranchDTO>(branch));
+        }
+
+        public override Task<BooleanObject> UpdateBranch(BranchDTO request, ServerCallContext context)
+        {
+            var success = _branchDao.Update(_mapper.Map<Branch>(request));
+            return Task.FromResult(new BooleanObject() { Body = success });
+        }
+
+        public override Task<BooleanObject> DeleteBranch(KeyObject request, ServerCallContext context)
+        {
+            var success = _branchDao.Delete(new Branch() { Id = request.Body });
+            return Task.FromResult(new BooleanObject() { Body = success });
+        }
+
+        public override Task<GetBranchStoresResponse> GetBranchStores(KeyObject request, ServerCallContext context)
+        {
+            var stores = _branchDao.GetStoresByBranchId(request.Body);
+            var resposne = new GetBranchStoresResponse();
+            resposne.Stores.AddRange(stores.Select(s => _mapper.Map<StoreDTO>(s)));
+            return Task.FromResult(resposne);
+        }
+
+        public override Task<BooleanObject> UpdateBranchStores(UpdateBranchStoresRequest request, ServerCallContext context)
+        {
+            var stores = request.Stores.Select(s => _mapper.Map<Store>(s)).ToList();
+            var success = _branchDao.UpdateBranchStores(request.BranchId, stores);
+            return Task.FromResult(new BooleanObject() { Body = success });
+        }
     }
 }
