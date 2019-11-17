@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `delivery_return_apply`;
 
 CREATE TABLE `delivery_return_apply` (
     `sheet_id` VARCHAR(45) NOT NULL COMMENT '单据号',
-    `ref_sheet_id` VARCHAR(45) NULL COMMENT '引用配送单号',
+    `ref_sheet_id` VARCHAR(45) NOT NULL DEFAULT ('') COMMENT '引用配送单号',
     `branch_id` VARCHAR(45) NOT NULL COMMENT '入库机构',
     `delivery_branch_id` VARCHAR(45) NOT NULL COMMENT '配送中心',
     `store_id` VARCHAR(45) NOT NULL COMMENT '入库仓库',
@@ -14,7 +14,7 @@ CREATE TABLE `delivery_return_apply` (
 	`approve_oper_id` INT NOT NULL COMMENT '审核人',
 	`approve_oper_name` VARCHAR(45) NOT NULL,
 	`approve_time` DATETIME NOT NULL COMMENT '审核时间',
-	`memo` VARCHAR(100) NULL COMMENT '备注',
+	`memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
     PRIMARY KEY (`sheet_id`))
 ENGINE = InnoDB
 COMMENT = '配退申请单';

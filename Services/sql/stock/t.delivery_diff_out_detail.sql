@@ -6,7 +6,7 @@ CREATE TABLE `delivery_diff_out_detail` (
     `item_id` VARCHAR(45) NOT NULL COMMENT '商品编码',
     `item_barcode` VARCHAR(45) NOT NULL COMMENT '商品条码',
     `item_name` VARCHAR(45) NOT NULL COMMENT '商品名称',
-    `size` VARCHAR(45) NULL COMMENT '规格',
+    `size` VARCHAR(45) NOT NULL DEFAULT ('') COMMENT '规格',
     `delivery_unit` VARCHAR(45) NOT NULL COMMENT '配送单位',
 	`qty` DECIMAL NOT NULL COMMENT '数量',
     `price` DECIMAL NOT NULL COMMENT '单价',
@@ -17,7 +17,7 @@ CREATE TABLE `delivery_diff_out_detail` (
     `retail_price` DECIMAL NOT NULL COMMENT '零售价',
     `stock_qty` DECIMAL NOT NULL COMMENT '基本数量',
 	`stock_unit` VARCHAR(45) NOT NULL COMMENT '库存单位',
-	`memo` VARCHAR(100) NULL COMMENT '备注',
+	`memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
     PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '配送差异出库单商品明细';

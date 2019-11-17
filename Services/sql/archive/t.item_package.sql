@@ -11,7 +11,7 @@ CREATE TABLE `item_package` (
     `sales_price` DECIMAL NOT NULL DEFAULT(0) COMMENT '批发价',
     `is_default_purchase_unit` TINYINT NOT NULL DEFAULT(0) COMMENT '是否为默认采购单位',
     `is_default_delivery_unit` TINYINT NOT NULL DEFAULT(0) COMMENT '是否为默认配送单位',
-    `memo` VARCHAR(100) NULL COMMENT '备注',
+    `memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
     PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '商品多包装';

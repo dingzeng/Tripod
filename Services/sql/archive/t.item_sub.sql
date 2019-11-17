@@ -7,7 +7,7 @@ CREATE TABLE `item_sub` (
     `name` VARCHAR(45) NOT NULL COMMENT '子商品名称',
     `retail_price` DECIMAL NOT NULL DEFAULT(0) COMMENT '零售价',
     `sales_price` DECIMAL NOT NULL DEFAULT(0) COMMENT '批发价',
-    `memo` VARCHAR(100) NULL COMMENT '备注',
+    `memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
     PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '子商品';

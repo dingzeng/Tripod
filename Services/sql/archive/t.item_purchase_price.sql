@@ -10,7 +10,7 @@ CREATE TABLE `item_purchase_price` (
     `item_unit_name` VARCHAR(45) NOT NULL,
     `factor_qty` INT NOT NULL COMMENT '包装系数',
     `purchase_price` DECIMAL NOT NULL DEFAULT(0) COMMENT '进价',
-    `memo` VARCHAR(100) NULL COMMENT '备注',
+    `memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
     PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '商品进价';

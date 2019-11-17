@@ -7,7 +7,7 @@ CREATE TABLE `purchase_order_detail` (
 	`item_barcode` VARCHAR(45) NOT NULL COMMENT '商品条码',
 	`item_name` VARCHAR(45) NOT NULL COMMENT '商品名称',
 	`gift_flag` TINYINT NOT NULL DEFAULT 0 COMMENT '赠品标志',
-	`size` VARCHAR(45) NULL COMMENT '规格',
+	`size` VARCHAR(45) NOT NULL DEFAULT ('') COMMENT '规格',
 	`purchase_unit` VARCHAR(45) NOT NULL COMMENT '采购单位',
 	`refer_purchase_price` DECIMAL NOT NULL COMMENT '参考进价',
 	`qty` DECIMAL NOT NULL COMMENT '数量',
@@ -20,7 +20,7 @@ CREATE TABLE `purchase_order_detail` (
 	`stock_unit` VARCHAR(45) NOT NULL COMMENT '库存单位',
 	`retail_price` DECIMAL NOT NULL COMMENT '零售价',
 	`received_qty` DECIMAL NOT NULL COMMENT '到货数量',
-	`memo` VARCHAR(100) NULL COMMENT '备注',
+	`memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
 	PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '采购订单商品明细';
