@@ -45,10 +45,20 @@ namespace Tripod.Service.Archive.DAL
         /// <returns></returns>
         public bool AddBranchGroupBranchs(int branchGroupId, IList<string> branchIdList)
         {
+            if (branchIdList == null || branchIdList.Count == 0)
+            {
+                throw new ArgumentNullException(nameof(branchIdList));
+            }
+
             return Run(conn =>
             {
                 var existsBranchIdList = conn.Query<string>("SELECT branch_id FROM branch_group_branch WHERE branch_group_id = @branchGroupId;", new { branchGroupId = branchGroupId }).ToList();
                 var targetIdList = branchIdList.Except(branchIdList.Intersect(existsBranchIdList));
+                if (targetIdList.Count() == 0)
+                {
+                    // 要添加的机构在该机构组中已存在
+                    return false;
+                }
 
                 var values = string.Join(", ", targetIdList.Select(id => $"({branchGroupId}, '{id}')"));
                 var sql = $"INSERT INTO branch_group_branch(branch_group_id, branch_id) VALUES {values};";

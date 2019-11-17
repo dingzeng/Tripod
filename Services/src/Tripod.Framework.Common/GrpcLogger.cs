@@ -63,6 +63,7 @@ namespace Tripod.Framework.Common
         public void Warning(Exception exception, string message)
         {
             this.UnifyOutput(exception.Message);
+            this.UnifyOutput(exception.StackTrace);
         }
     }
 }

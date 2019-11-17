@@ -1,31 +1,89 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const BaseController = require('../base');
 
-class BranchGroupController extends Controller {
+class BranchGroupController extends BaseController {
     async getBranchGroups() {
         this.ctx.body = await this.service.branch.getBranchGroups();
     }
+
     async getBranchGroup() {
-        this.ctx.body = 'getBranchGroup'
+        const id = this.ctx.params.id;
+        const branchGroup = await this.service.branch.getBranchGroup(id);
+        this.success(branchGroup);
     }
+
     async createBranchGroup() {
-        this.ctx.body = 'createBranchGroup'
+        const rules = {
+            Name: { type: 'string' }
+        };
+        this.ctx.validate(rules);
+        const model = this.ctx.request.body;
+        const branchGroup = await this.service.branch.createBranchGroup(model);
+        this.success(branchGroup);
     }
+
     async updateBranchGroup() {
-        this.ctx.body = 'updateBranchGroup'
+        const rules = {
+            Id: { type: 'int' },
+            Name: { type: 'string' }
+        };
+        const errors = this.app.validator.validate(rules, this.ctx.request.body);
+        if(errors){
+            this.validationFailed(errors);
+            return;
+        }
+
+        const model = this.ctx.request.body;
+        const success = await this.service.branch.updateBranchGroup(model);
+
+        success ? this.success() : this.failed();
     }
+
     async deleteBranchGroup() {
-        this.ctx.body = 'deleteBranchGroup'
+        const id = this.ctx.params.id;
+        const success = await this.service.branch.deleteBranchGroup(id);
+        success ? this.success() : this.failed();
     }
+
     async getBranchGroupBranchs() {
-        this.ctx.body = 'getBranchGroupBranchs'
+        const branchGroupId = this.ctx.params.id;
+        const branchs = await this.service.branch.getBranchGroupBranchs(branchGroupId);
+        this.success(branchs);
     }
+
     async deleteBranchGroupBranchs() {
-        this.ctx.body = 'deleteBranchGroupBranchs'
+        const branchGroupId = this.ctx.params.id;
+        const rules = {
+            branchIdList: { 
+                type: 'array',
+                itemType: 'string'
+            }
+        }
+        const model = this.ctx.request.body;
+        const errors = this.app.validator.validate(rules, model);
+        if(errors){
+            this.validationFailed(errors);
+        }
+        const success = await this.service.branch.deleteBranchGroupBranchs(branchGroupId, model.branchIdList);
+        success ? this.success() : this.failed();
     }
+    
     async addBranchGroupBranchs() {
-        this.ctx.body = 'addBranchGroupBranchs'
+        const branchGroupId = this.ctx.params.id;
+        const rules = {
+            branchIdList: { 
+                type: 'array',
+                itemType: 'string'
+            }
+        }
+        const model = this.ctx.request.body;
+        const errors = this.app.validator.validate(rules, model);
+        if(errors){
+            this.validationFailed(errors);
+        }
+        const success = await this.service.branch.addBranchGroupBranchs(branchGroupId, model.branchIdList);
+        success ? this.success() : this.failed();
     }
 }
 

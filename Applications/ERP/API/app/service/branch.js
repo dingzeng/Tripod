@@ -83,7 +83,7 @@ class BranchService extends Service {
 
   async deleteBranchGroupBranchs(branchGroupId, branchIdList) {
     return new Promise(function(resolve, reject){
-      client.DeleteBranchGroupBranchs({ branchGroupId, branchIdList }, function(error, feature){
+      client.DeleteBranchGroupBranchs({ BranchGroupId: branchGroupId, BranchIdList: branchIdList }, function(error, feature){
         if(error){
           resolve(false)
         }else{
@@ -95,7 +95,7 @@ class BranchService extends Service {
 
   async addBranchGroupBranchs(branchGroupId, branchIdList) {
     return new Promise(function(resolve, reject){
-      client.AddBranchGroupBranchs({ branchGroupId, branchIdList }, function(error, feature){
+      client.AddBranchGroupBranchs({ BranchGroupId: branchGroupId, BranchIdList: branchIdList }, function(error, feature){
         if(error){
           resolve(false)
         }else{

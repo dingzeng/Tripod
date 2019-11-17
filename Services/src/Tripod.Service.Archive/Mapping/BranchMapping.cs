@@ -9,8 +9,8 @@ namespace Tripod.Service.Archive.Mapping
     {
         public void Configure(IMapperConfigurationExpression expression)
         {
-            expression.CreateMap<BranchDTO,Branch>();
-            expression.CreateMap<Branch,BranchDTO>();
+            expression.CreateMap<BranchDTO, Branch>();
+            expression.CreateMap<Branch, BranchDTO>();
         }
     }
 }
