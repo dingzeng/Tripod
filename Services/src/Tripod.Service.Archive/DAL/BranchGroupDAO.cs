@@ -63,7 +63,7 @@ namespace Tripod.Service.Archive.DAL
                 var values = string.Join(", ", targetIdList.Select(id => $"({branchGroupId}, '{id}')"));
                 var sql = $"INSERT INTO branch_group_branch(branch_group_id, branch_id) VALUES {values};";
 
-                return conn.Execute(sql) > 1;
+                return conn.Execute(sql) > 0;
             });
         }
     }
