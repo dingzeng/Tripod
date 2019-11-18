@@ -4,7 +4,6 @@ package Archive;
 import "common.proto";
 
 service BranchSrv {
-
 	// branchGroup
     rpc GetBranchGroups(Empty) returns (GetBranchGroupsResponse);
     rpc GetBranchGroup(KeyObject) returns (BranchGroupDTO);
@@ -26,7 +25,40 @@ service BranchSrv {
 }
 
 service ItemSrv {
-    rpc GetAllItemBrands(Empty) returns (GetAllItemBrandsResponse);
+	// itemCls
+	rpc GetItemClss(GetItemClssRequest) returns (GetItemClssResponse);
+	rpc GetItemCls(KeyObject) returns(ItemClsDTO);
+	rpc CreateItemCls(ItemClsDTO) returns(ItemClsDTO);
+	rpc UpdateItemCls(ItemClsDTO) returns(BooleanObject);
+	rpc DeleteItemCls(KeyObject) returns(BooleanObject);
+
+	// itemBrand
+	rpc GetItemBrands(Empty) returns(GetItemBrandsResponse);
+	rpc GetItemBrand(KeyObject) returns(ItemBrandDTO);
+	rpc CreateItemBrand(ItemBrandDTO) returns(ItemBrandDTO);
+	rpc UpdateItemBrand(ItemBrandDTO) returns(BooleanObject);
+	rpc DeleteItemBrand(KeyObject) returns(BooleanObject);
+
+	// itemUnit
+	rpc GetItemUnits(Empty) returns(GetItemUnitResponse);
+	rpc GetItemUnit(KeyObject) returns(ItemUnitDTO);
+	rpc CreateItemUnit(ItemUnitDTO) returns(ItemUnitDTO);
+	rpc UpdateItemUnit(ItemUnitDTO) returns(BooleanObject);
+	rpc DeleteItemUnit(KeyObject) returns(BooleanObject);
+
+	// itemDepartment
+	rpc GetItemDepartments(Empty) returns(GetItemDepartmentsResponse);
+	rpc GetItemDepartment(KeyObject) returns(ItemDepartmentDTO);
+	rpc CreateItemDepartment(ItemDepartmentDTO) returns(ItemDepartmentDTO);
+	rpc UpdateItemDepartment(ItemDepartmentDTO) returns(BooleanObject);
+	rpc DeleteItemDepartment(KeyObject) returns(BooleanObject);
+
+	// item
+	rpc GetItems(GetItemsRequest) returns(GetItemsResponse);
+	rpc GetItem(KeyObject) returns(ItemInfo);
+	rpc CreateItem(ItemInfo) returns(ItemInfo);
+	rpc UpdateItem(ItemInfo) returns(BooleanObject);
+	rpc DeleteItem(KeyObject) returns(BooleanObject);
 }
 
 service PriceSrv {
@@ -34,7 +66,80 @@ service PriceSrv {
 }
 
 service SupplierSrv {
-	
+	// supplierRegion
+	rpc GetSupplierRegions(Empty) returns(GetSupplierRegionsResponse);
+	rpc GetSupplierRegion(KeyObject) returns(SupplierRegionDTO);
+	rpc CreateSupplierRegion(SupplierRegionDTO) returns(SupplierRegionDTO);
+	rpc UpdateSupplierRegion(SupplierRegionDTO) returns(BooleanObject);
+	rpc DeleteSupplierRegion(KeyObject) returns(BooleanObject);
+
+	// supplier
+	rpc GetSuppliers(GetSuppliersRequest) returns(GetSuppliersResponse);
+	rpc GetSupplier(KeyObject) returns(SupplierDTO);
+	rpc CreateSupplier(SupplierDTO) returns(SupplierDTO);
+	rpc UpdateSupplier(SupplierDTO) returns(BooleanObject);
+	rpc DeleteSupplier(KeyObject) returns(BooleanObject);
+}
+
+message GetItemsRequest {
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	string Keyword = 3;
+	string Status = 4;
+	string ItemClsId = 5;
+	string ItemBrandId = 6;
+	string ItemDepartmentId = 7;
+	string PrimarySupplierId = 8;
+}
+
+message GetItemsResponse {
+	int32 TotalCount = 1;
+	repeated ItemInfo Items = 2;
+}
+
+message ItemInfo {
+	ItemDTO Item = 1;
+	repeated ItemBarcodeDTO Barcodes = 2;
+	repeated ItemPackageDTO Packages = 3;
+	repeated ItemSubDTO Subs = 4;
+}
+
+message GetSuppliersRequest {
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	int32 SupplierRegionId = 3;
+}
+
+message GetSuppliersResponse {
+	int32 TotalCount = 1;
+	repeated SupplierDTO Suppliers = 2;
+}
+
+message GetSupplierRegionsResponse {
+	repeated SupplierRegionDTO SupplierRegions = 1;
+}
+
+message GetItemClssRequest {
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	string ParentId = 3;
+}
+
+message GetItemClssResponse {
+	int32 TotalCount = 1;
+	repeated ItemClsDTO ItemClss = 2;
+}
+
+message GetItemUnitResponse {
+	repeated ItemUnitDTO ItemUnits = 1;
+}
+
+message GetItemDepartmentsResponse {
+	repeated ItemDepartmentDTO ItemDepartments = 1;
+}
+
+message GetItemBrandsResponse {
+	repeated ItemBrandDTO ItemBrands = 1;
 }
 
 message GetBranchsRequest {
