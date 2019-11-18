@@ -9,6 +9,7 @@
   "dependencies": {
     "@grpc/proto-loader": "^0.5.3",
     "egg": "^2.15.1",
+    "egg-cors": "^2.2.3",
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
     "grpc": "^1.24.2"

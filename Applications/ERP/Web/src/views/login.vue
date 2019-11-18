@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import http from '../util/httpClient'
 export default {
     name: 'login',
     data() {
@@ -56,7 +57,16 @@ export default {
     },
     methods: {
         login() {
-            console.log(this.username,this.password,this.isRememberPassword)
+            http.post('/login',{
+                Username: this.username,
+                Password: this.password
+            }).then(response => {
+                if(response.data.status != 0){
+                    this.$alert(response.data.message)
+                }else{
+                    this.$router.push('/')
+                }
+            })
         }
     }
 }
