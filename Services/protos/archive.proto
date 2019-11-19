@@ -181,10 +181,6 @@ message AddBranchGroupBranchsRequest {
     repeated string BranchIdList = 2;
 }
 
-message GetAllItemBrandsResponse {
-    repeated ItemBrandDTO ItemBrands = 1;
-}
-
 message BranchDTO {
 	string Id = 1;
 	string ParentId = 2;

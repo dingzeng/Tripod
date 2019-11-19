@@ -50,7 +50,6 @@ WHERE b.branch_group_id = @branchGroupId;";
             string keyword = null,
             string parentId = null)
         {
-            string inner = "SELECT * FROM branch";
             string conditions = "";
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -62,7 +61,7 @@ WHERE b.branch_group_id = @branchGroupId;";
             }
 
             return this.GetPaging<Branch>(
-                innerQuery: inner,
+                innerQuery: "branch",
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 conditions: conditions,
@@ -81,7 +80,7 @@ WHERE b.branch_group_id = @branchGroupId;";
                 return conn.Query<Store>("SELECT id, branch_id, name, is_usable FROM store WHERE branch_id = @branchId;", new { branchId = branchId }).ToList();
             });
         }
-        
+
         /// <summary>
         /// 更新机构下的仓库
         /// </summary>

@@ -4,7 +4,8 @@ const BaseController = require('../base');
 
 class BranchGroupController extends BaseController {
     async getBranchGroups() {
-        this.ctx.body = await this.service.branch.getBranchGroups();
+        const branchGroups = await this.service.branch.getBranchGroups();
+        this.success(branchGroups);
     }
 
     async getBranchGroup() {
@@ -29,7 +30,7 @@ class BranchGroupController extends BaseController {
             Name: { type: 'string' }
         };
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
@@ -55,31 +56,31 @@ class BranchGroupController extends BaseController {
     async deleteBranchGroupBranchs() {
         const branchGroupId = this.ctx.params.id;
         const rules = {
-            branchIdList: { 
+            branchIdList: {
                 type: 'array',
                 itemType: 'string'
             }
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
         }
         const success = await this.service.branch.deleteBranchGroupBranchs(branchGroupId, model.branchIdList);
         success ? this.success() : this.failed();
     }
-    
+
     async addBranchGroupBranchs() {
         const branchGroupId = this.ctx.params.id;
         const rules = {
-            branchIdList: { 
+            branchIdList: {
                 type: 'array',
                 itemType: 'string'
             }
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
         }
         const success = await this.service.branch.addBranchGroupBranchs(branchGroupId, model.branchIdList);

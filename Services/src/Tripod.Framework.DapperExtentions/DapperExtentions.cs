@@ -282,7 +282,7 @@ namespace Tripod.Framework.DapperExtentions
 
         public static ColumnNameMapperDelegate ColumnNameMapper;
 
-        private static string GetTableName(Type type)
+        public static string GetTableName(Type type)
         {
             if (TypeTableName.TryGetValue(type.TypeHandle, out string name)) return name;
 
@@ -325,10 +325,10 @@ namespace Tripod.Framework.DapperExtentions
             }
             else
             {
-                var columnName = 
+                var columnName =
                     propertyInfo.GetCustomAttribute<ColumnAttribute>(false)?.Name
                     ?? (propertyInfo.GetCustomAttributes(false).FirstOrDefault(attr => attr.GetType().Name == "ColumnAttribute") as dynamic)?.Name;
-                
+
                 name = columnName ?? propertyInfo.Name;
             }
 
