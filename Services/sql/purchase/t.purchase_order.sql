@@ -14,7 +14,7 @@ CREATE TABLE `purchase_order` (
 	`create_time` DATETIME NOT NULL COMMENT '制单时间',
 	`approve_oper` VARCHAR(45) NOT NULL COMMENT '审核人',
 	`approve_time` DATETIME NOT NULL COMMENT '审核时间',
-	`memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
+	`memo` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '备注',
   	PRIMARY KEY (`sheet_id`))
 ENGINE = InnoDB
 COMMENT = '采购订单';

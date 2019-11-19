@@ -8,9 +8,9 @@ CREATE TABLE `item_selling_price` (
     `item_unit_id` INT NOT NULL COMMENT '包装单位',
     `item_unit_name` VARCHAR(45) NOT NULL,
     `factor_qty` INT NOT NULL COMMENT '包装系数',
-    `retail_price` DECIMAL NOT NULL DEFAULT(0) COMMENT '零售价',
-    `sales_price` DECIMAL NOT NULL DEFAULT(0) COMMENT '批发价',
-    `memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
+    `retail_price` DECIMAL NOT NULL DEFAULT 0 COMMENT '零售价',
+    `sales_price` DECIMAL NOT NULL DEFAULT 0 COMMENT '批发价',
+    `memo` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '备注',
     PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '商品售价';

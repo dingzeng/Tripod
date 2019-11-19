@@ -14,7 +14,7 @@ CREATE TABLE `delivery` (
 	`approve_oper_id` INT NOT NULL COMMENT '审核人',
 	`approve_oper_name` VARCHAR(45) NOT NULL,
 	`approve_time` DATETIME NOT NULL COMMENT '审核时间',
-	`memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
+	`memo` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '备注',
     PRIMARY KEY (`sheet_id`))
 ENGINE = InnoDB
 COMMENT = '配送出库单';

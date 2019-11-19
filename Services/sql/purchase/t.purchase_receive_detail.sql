@@ -6,7 +6,7 @@ CREATE TABLE `purchase_receive_detail` (
 	`item_id` VARCHAR(45) NOT NULL COMMENT '商品编码',
 	`item_barcode` VARCHAR(45) NOT NULL COMMENT '商品条码',
 	`item_name` VARCHAR(45) NOT NULL COMMENT '商品名称',
-	`size` VARCHAR(45) NOT NULL DEFAULT ('') COMMENT '规格',
+	`size` VARCHAR(45) NOT NULL DEFAULT '' COMMENT '规格',
 	`purchase_unit` VARCHAR(45) NOT NULL COMMENT '采购单位',
 	`qty` DECIMAL NOT NULL COMMENT '数量',
 	`price` DECIMAL NOT NULL COMMENT '单价',
@@ -18,7 +18,7 @@ CREATE TABLE `purchase_receive_detail` (
 	`stock_unit` VARCHAR(45) NOT NULL COMMENT '库存单位',
 	`produce_date` DATE NULL COMMENT '生产日期',
 	`expire_date` DATE NULL COMMENT '过期日期',
-	`memo` VARCHAR(100) NOT NULL DEFAULT ('') COMMENT '备注',
+	`memo` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '备注',
 	PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '采购收货单商品明细';
