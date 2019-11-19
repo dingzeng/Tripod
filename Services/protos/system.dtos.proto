@@ -1,0 +1,68 @@
+/*
+	本文件代码由代码生成工具自动生成，请不要手动修改
+	生成时间：2019-11-19 21:17:28
+*/
+syntax = "proto3";
+option csharp_namespace = "Tripod.Service.System";
+
+message PermissionDTO {
+	string Code = 1;
+	string MenuCode = 2;
+	int32 Type = 3;
+	string Name = 4;
+}
+
+message RoleDTO {
+	int32 Id = 1;
+	string Name = 2;
+	string Memo = 3;
+}
+
+message MenuDTO {
+	string Code = 1;
+	string ParentCode = 2;
+	string Path = 3;
+	string Name = 4;
+	int32 IsLeaf = 5;
+}
+
+message RolePermissionDTO {
+	int32 Id = 1;
+	int32 RoleId = 2;
+	string PermissionCode = 3;
+}
+
+message PermissionApiDTO {
+	int32 Id = 1;
+	string PermissionCode = 2;
+	string Url = 3;
+	string Method = 4;
+}
+
+message UserDTO {
+	int64 Id = 1;
+	string BranchCode = 2;
+	string Username = 3;
+	string Password = 4;
+	string Name = 5;
+	string Mobile = 6;
+	int32 Status = 7;
+	int32 ItemDepartmentPermissionFlag = 8;
+	int32 SupplierPermissionFlag = 9;
+}
+
+message UserRoleDTO {
+	int32 Id = 1;
+	int32 UserId = 2;
+	int32 RoleId = 3;
+}
+
+message SheetLogDTO {
+	int64 Id = 1;
+	string SheetType = 2;
+	string SheetId = 3;
+	string Action = 4;
+	string OperName = 5;
+	string CreateTime = 6;
+}
+

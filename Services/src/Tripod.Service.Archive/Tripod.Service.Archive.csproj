@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Protobuf Include="../../protos/common.proto" />
+    <Protobuf Include="../../protos/archive.dtos.proto" />
     <Protobuf Include="../../protos/archive.proto" />
   </ItemGroup>
 

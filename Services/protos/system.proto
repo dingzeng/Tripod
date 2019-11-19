@@ -2,6 +2,7 @@ syntax = "proto3";
 option csharp_namespace = "Tripod.Service.System";
 package System;
 import "common.proto";
+import "system.dtos.proto";
 
 service SystemSrv {
     // Menu
@@ -31,58 +32,16 @@ service SystemSrv {
     rpc DeleteUserById(KeyObject) returns(BooleanObject);
 }
 
-// Menu
-message MenuDTO {
-    string Code = 1;
-    string ParentCode = 2;
-    string Path = 3;
-    string Name = 4;
-    bool IsLeaf = 5;
-}
-
 message GetAllMenusResponse {
     repeated MenuDTO Menus = 1;
-}
-
-// Permission
-enum PermissionType {
-    VIEW = 0;
-    CREATE = 1;
-    UPDATE = 2;
-    DELETE = 3;
-    APPROVE = 4;
-    OTHER = 9;
-}
-
-message PermissionDTO {
-    string Code = 1;
-    string MenuCode = 2;
-    PermissionType Type = 3;
-    string Name = 4;
-    string Url = 5;
 }
 
 message GetAllPermissionsResponse {
     repeated PermissionDTO Permissions = 1;
 }
 
-// PermissionApi
-message PermissionApiDTO {
-    int32 Id = 1;
-    string PermissionCode = 2;
-    string Url = 3;
-    string Method = 4;
-}
-
 message GetAllPermissionApisResponse {
     repeated PermissionApiDTO PermissionApis = 1;
-}
-
-// Role
-message RoleDTO {
-    int32 Id = 1;
-    string Name = 2;
-    string Memo = 3; 
 }
 
 message GetAllRolesResponse {
@@ -101,18 +60,6 @@ message UpdateRolePermissionsRequest {
 // User
 message GetUserByUsernameRequest {
     string Username = 1;
-}
-
-message UserDTO {
-    sint64 Id = 1;
-    string BranchCode = 2;
-    string Username = 3;
-    string Password = 4;
-    string Name = 5;
-    string Mobile = 6;
-    bool Status = 7;
-    bool ItemDepartmentPermissionFlag = 8;
-    bool SupplierPermissionFlag = 9;
 }
 
 message GetUsersResponse {
