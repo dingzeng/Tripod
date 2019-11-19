@@ -12,5 +12,10 @@ namespace Tripod.Service.Archive.DAL
             :base(options.ConnectionString)
         {
         }
+
+        public PagedList<ItemCls> GetItemClss(int pageIndex, int pageSize, string parentId = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

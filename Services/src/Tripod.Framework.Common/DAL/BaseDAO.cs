@@ -25,9 +25,11 @@ namespace Tripod.Framework.Common.DAL
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
             // Tripod.Framework.DapperExtentions 中实体模型映射到数据库列名的控制，UserId -> user_id
-            SqlMapperExtensions.ColumnNameMapper = (prop) => {
+            SqlMapperExtensions.ColumnNameMapper = (prop) =>
+            {
                 Regex regex = new Regex("[A-Z]");
-                var newSource = regex.Replace(prop.Name, (match) => {
+                var newSource = regex.Replace(prop.Name, (match) =>
+                {
                     return "_" + match.Value.ToLower();
                 });
                 return newSource.TrimStart('_');
@@ -60,7 +62,7 @@ namespace Tripod.Framework.Common.DAL
         /// <param name="func"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Run<T>(Func<IDbConnection,T> func)
+        public T Run<T>(Func<IDbConnection, T> func)
         {
             using (var conn = this.GetConnection())
             {
@@ -76,7 +78,8 @@ namespace Tripod.Framework.Common.DAL
         /// <returns></returns>
         public TEntity Get(dynamic id)
         {
-            return Run(conn => {
+            return Run(conn =>
+            {
                 return SqlMapperExtensions.Get<TEntity>(conn, id);
             });
         }
@@ -87,8 +90,9 @@ namespace Tripod.Framework.Common.DAL
         /// <returns></returns>
         public List<TEntity> GetAll()
         {
-            return Run(conn => {
-               return conn.GetAll<TEntity>().AsList();
+            return Run(conn =>
+            {
+                return conn.GetAll<TEntity>().AsList();
             });
         }
 
@@ -99,8 +103,9 @@ namespace Tripod.Framework.Common.DAL
         /// <returns></returns>
         public bool Delete(TEntity entity)
         {
-            return Run(conn => {
-               return conn.Delete(entity);
+            return Run(conn =>
+            {
+                return conn.Delete(entity);
             });
         }
 
@@ -111,8 +116,9 @@ namespace Tripod.Framework.Common.DAL
         /// <returns></returns>
         public long Insert(TEntity entity)
         {
-            return Run(conn => {
-               return conn.Insert(entity);
+            return Run(conn =>
+            {
+                return conn.Insert(entity);
             });
         }
 
@@ -123,9 +129,17 @@ namespace Tripod.Framework.Common.DAL
         /// <returns></returns>
         public bool Update(TEntity entity)
         {
-            return Run(conn => {
+            return Run(conn =>
+            {
                 return conn.Update(entity);
             });
+        }
+
+        // 分页
+        public PagedList<TEntity> GetPaging(int pageIndex = 1, int pageSize = int.MaxValue)
+        {
+            var tableName = SqlMapperExtensions.GetTableName(typeof(TEntity));
+            return GetPaging<TEntity>(innerQuery: tableName, pageIndex: pageIndex, pageSize: pageSize);
         }
 
         /// <summary>
@@ -142,7 +156,7 @@ namespace Tripod.Framework.Common.DAL
         public PagedList<T> GetPaging<T>(string innerQuery, int pageIndex = 1, int pageSize = int.MaxValue, string conditions = "", string projection = "*", object param = null)
             where T : class
         {
-            if(string.IsNullOrEmpty(innerQuery))
+            if (string.IsNullOrEmpty(innerQuery))
             {
                 throw new ArgumentNullException(nameof(innerQuery));
             }
@@ -154,13 +168,14 @@ namespace Tripod.Framework.Common.DAL
             int end = pageIndex * pageSize;
             builder.Append($"SELECT {projection} FROM ({innerQuery}) as temp WHERE 1 = 1 {conditions} LIMIT {start},{end};");
 
-            return Run(conn => {
+            return Run(conn =>
+            {
                 string sql = builder.ToString();
-                using(var multi = conn.QueryMultiple(sql, param))
+                using (var multi = conn.QueryMultiple(sql, param))
                 {
                     int totalCount = multi.Read<int>().Single();
                     var list = multi.Read<T>().ToList();
-                    
+
                     return new PagedList<T>()
                     {
                         PageIndex = pageIndex,
