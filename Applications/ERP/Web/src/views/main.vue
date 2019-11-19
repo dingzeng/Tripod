@@ -97,12 +97,18 @@
 </template>
 
 <script>
+import http from '../util/httpClient'
 export default {
     name: 'container',
     data() {
         return {
 
         }
+    },
+    mounted(){
+        http.get('/system/menus').then(response => {
+            console.log(response);
+        })
     }
 }
 </script>

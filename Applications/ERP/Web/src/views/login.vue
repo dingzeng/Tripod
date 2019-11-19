@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import cookie from 'js-cookie'
 import http from '../util/httpClient'
 export default {
     name: 'login',
@@ -64,6 +65,7 @@ export default {
                 if(response.data.status != 0){
                     this.$alert(response.data.message)
                 }else{
+                    cookie.set('token', response.data.data.token)
                     this.$router.push('/')
                 }
             })
