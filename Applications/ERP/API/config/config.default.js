@@ -19,7 +19,7 @@ module.exports = appInfo => {
   config.middleware = ['auth'];
 
   config.auth = {
-    ignore: 'login'
+    ignore: '.'
   }
 
   // add your user config here
@@ -34,7 +34,7 @@ module.exports = appInfo => {
   };
 
   config.cors = {
-    origin:'*',
+    origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   };
 
