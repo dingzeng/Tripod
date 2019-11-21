@@ -57,10 +57,10 @@ namespace Tripod.Service.System.Services
 
         #region Role
 
-        public override Task<GetAllRolesResponse> GetAllRoles(Empty request, ServerCallContext context)
+        public override Task<RolesResponse> GetAllRoles(Empty request, ServerCallContext context)
         {
             var roles = _roleDao.GetAll();
-            var res = new GetAllRolesResponse();
+            var res = new RolesResponse();
             res.Roles.AddRange(roles.Select(r => this._mapper.Map<RoleDTO>(r)));
             return Task.FromResult(res);
         }
@@ -148,8 +148,17 @@ namespace Tripod.Service.System.Services
         public override Task<BooleanObject> DeleteUserById(KeyObject reqeust, ServerCallContext context)
         {
             int userId = Convert.ToInt32(reqeust.Body);
-            bool success = _userDao.Delete(new User { Id = userId});
+            bool success = _userDao.Delete(new User { Id = userId });
             return Task.FromResult(new BooleanObject { Body = success });
+        }
+
+        public override Task<RolesResponse> GetRolesByUserId(KeyObject request, ServerCallContext context)
+        {
+            var id = Convert.ToInt64(request.Body);
+            var roles = _roleDao.GetRolesByUserId(id);
+            var response = new RolesResponse();
+            response.Roles.AddRange(roles.Select(r => _mapper.Map<RoleDTO>(r)));
+            return Task.FromResult(response);
         }
 
         #endregion
