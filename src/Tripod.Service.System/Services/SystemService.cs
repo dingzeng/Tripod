@@ -38,10 +38,10 @@ namespace Tripod.Service.System.Services
         }
 
         // Permission
-        public override Task<GetAllPermissionsResponse> GetAllPermissions(Empty request, ServerCallContext context)
+        public override Task<PermissionsResponse> GetAllPermissions(Empty request, ServerCallContext context)
         {
             var permissions = _permissionDao.GetAll();
-            var res = new GetAllPermissionsResponse();
+            var res = new PermissionsResponse();
             res.Permissions.AddRange(permissions.Select(p => _mapper.Map<PermissionDTO>(p)));
             return Task.FromResult(res);
         }
@@ -91,11 +91,11 @@ namespace Tripod.Service.System.Services
             return Task.FromResult(new BooleanObject { Body = success });
         }
 
-        public override Task<GetRolePermissionsResponse> GetRolePermissions(KeyObject request, ServerCallContext context)
+        public override Task<PermissionsResponse> GetRolePermissions(KeyObject request, ServerCallContext context)
         {
             var roleId = Convert.ToInt32(request.Body);
             var permissions = _permissionDao.GetPermissionsByRoleId(roleId);
-            var res = new GetRolePermissionsResponse();
+            var res = new PermissionsResponse();
             res.Permissions.AddRange(permissions.Select(p => _mapper.Map<PermissionDTO>(p)));
             return Task.FromResult(res);
         }
@@ -167,6 +167,15 @@ namespace Tripod.Service.System.Services
             var menus = _userDao.GetUserMenus(id);
             var response = new MenusResponse();
             response.Menus.AddRange(menus.Select(m => _mapper.Map<MenuDTO>(m)));
+            return Task.FromResult(response);
+        }
+
+        public override Task<PermissionsResponse> GetUserPermissions(KeyObject request, ServerCallContext context)
+        {
+            var id = Convert.ToInt64(request.Body);
+            var permissions = _userDao.GetUserPermissions(id);
+            var response = new PermissionsResponse();
+            response.Permissions.AddRange(permissions.Select(p => _mapper.Map<PermissionDTO>(p)));
             return Task.FromResult(response);
         }
 

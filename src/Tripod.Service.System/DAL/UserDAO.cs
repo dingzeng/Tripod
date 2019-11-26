@@ -64,5 +64,26 @@ WHERE b.`type` = 0 AND f.id = '@userId';";
                 return conn.Query<Menu>(sql, new { userId = userId }).ToList();
             });
         }
+
+        public List<Permission> GetUserPermissions(long userId)
+        {
+            var sql = @"
+SELECT
+	a.`code`, 
+    a.menu_code, 
+    a.`type`, 
+    a.`name`
+FROM permission a
+INNER JOIN role_permission b on b.permission_code = a.`code`
+INNER JOIN `role` c on c.id = b.role_id
+INNER JOIN user_role d on d.role_id = c.id
+INNER JOIN `user` e on e.id = d.user_id
+WHERE e.id = @userId;";
+
+            return Run(conn =>
+            {
+                return conn.Query<Permission>(sql, new { userId = userId }).ToList();
+            });
+        }
     }
 }
