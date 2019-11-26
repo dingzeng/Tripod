@@ -57,7 +57,7 @@ INNER JOIN role_permission c on c.permission_code = b.code
 INNER JOIN `role` d on d.id = c.role_id
 INNER JOIN user_role e on e.role_id = d.id
 INNER JOIN `user` f on f.id = e.user_id
-WHERE b.`type` = 0 AND f.id = '@userId';";
+WHERE b.`type` = 0 AND f.id = @userId;";
 
             return Run(conn =>
             {

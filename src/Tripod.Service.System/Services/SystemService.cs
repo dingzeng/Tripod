@@ -7,6 +7,7 @@ using Tripod.Service.System.DAL;
 using Tripod.Service.System.Model;
 using Tripod.Framework.Common;
 using AutoMapper;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Tripod.Service.System.Services
 {
@@ -161,13 +162,65 @@ namespace Tripod.Service.System.Services
             return Task.FromResult(response);
         }
 
-        public override Task<MenusResponse> GetUserMenus(KeyObject request, ServerCallContext context)
+        public override Task<MenuTree> GetUserMenus(KeyObject request, ServerCallContext context)
         {
             var id = Convert.ToInt64(request.Body);
-            var menus = _userDao.GetUserMenus(id);
-            var response = new MenusResponse();
-            response.Menus.AddRange(menus.Select(m => _mapper.Map<MenuDTO>(m)));
+
+            var allMenus = _menuDao.GetAll();
+
+            var userPermissionMenus = new List<Menu>();
+            var userPermissionLeafMenus = _userDao.GetUserMenus(id);
+            foreach (var m in userPermissionLeafMenus)
+            {
+                userPermissionMenus.Add(m);
+                var temp = new List<Menu>();
+                FindParentMenus(allMenus, temp, m);
+                userPermissionMenus.AddRange(temp);
+            }
+            userPermissionMenus = userPermissionMenus.Distinct(new MenuEqualityComparer()).ToList();
+
+            var response = new MenuTree();
+            var firstLevelMenus = userPermissionMenus.Where(s => string.IsNullOrEmpty(s.ParentCode)).Select(s => new MenuNode()
+            {
+                Code = s.Code,
+                ParentCode = s.ParentCode,
+                Path = s.Path,
+                Name = s.Name,
+                IsLeaf = s.IsLeaf,
+                Icon = ""
+            }).ToList();
+            response.Nodes.AddRange(firstLevelMenus);
+            BuildMenuTree(userPermissionMenus, response.Nodes.ToList());
+
             return Task.FromResult(response);
+        }
+
+        private void FindParentMenus(List<Menu> all, List<Menu> findMenus, Menu current)
+        {
+            if (!string.IsNullOrEmpty(current.ParentCode))
+            {
+                var parent = all.Find(m => m.Code == current.ParentCode);
+                findMenus.Add(parent);
+                FindParentMenus(all, findMenus, parent);
+            }
+        }
+
+        private void BuildMenuTree(List<Menu> source, List<MenuNode> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                var children = source.Where(s => s.ParentCode == node.Code).Select(s => new MenuNode()
+                {
+                    Code = s.Code,
+                    ParentCode = s.ParentCode,
+                    Path = s.Path,
+                    Name = s.Name,
+                    IsLeaf = s.IsLeaf,
+                    Icon = ""
+                }).ToList();
+                node.Children.AddRange(children);
+                BuildMenuTree(source, node.Children.ToList());
+            }
         }
 
         public override Task<PermissionsResponse> GetUserPermissions(KeyObject request, ServerCallContext context)
@@ -180,5 +233,18 @@ namespace Tripod.Service.System.Services
         }
 
         #endregion
+    }
+
+    public class MenuEqualityComparer : IEqualityComparer<Menu>
+    {
+        public bool Equals([AllowNull] Menu x, [AllowNull] Menu y)
+        {
+            return x.Code == y.Code;
+        }
+
+        public int GetHashCode([DisallowNull] Menu obj)
+        {
+            return obj.GetHashCode();
+        }
     }
 }
