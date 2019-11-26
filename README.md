@@ -74,9 +74,9 @@ static void Main(string[] args)
 
 |服务|名称|端口|
 |:---|:---|:---|
-|档案服务|Archive|80051|
-|采购服务|Purchase|80052|
-|库存服务|Stock|80053|
-|系统服务|System|80054|
+|档案服务|Archive|8051|
+|采购服务|Purchase|8052|
+|库存服务|Stock|8053|
+|系统服务|System|8054|
 
 

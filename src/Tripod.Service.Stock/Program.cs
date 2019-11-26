@@ -9,8 +9,8 @@ namespace Tripod.Service.Stock
         static void Main(string[] args)
         {
             new GrpcServerBuilder()
-                .UseHost("localhost")
-                .UsePort(80053)
+                .UseHost("0.0.0.0")
+                .UsePort(8053)
                 .AddService((options,mapper) => ItemStockSrv.BindService(new ItemStockService(mapper, options)))
                 .Start();
         }

@@ -9,8 +9,8 @@ namespace Tripod.Service.Purchase
         static void Main(string[] args)
         {
             new GrpcServerBuilder()
-                .UseHost("localhost")
-                .UsePort(80052)
+                .UseHost("0.0.0.0")
+                .UsePort(8052)
                 .AddService((options,mapper) => PurchaseSrv.BindService(new PurchaseOrderService(mapper, options)))
                 .Start();
         }
