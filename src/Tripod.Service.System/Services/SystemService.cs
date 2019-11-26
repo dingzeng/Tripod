@@ -29,10 +29,10 @@ namespace Tripod.Service.System.Services
         }
 
         // Menu
-        public override Task<GetAllMenusResponse> GetAllMenus(Empty request, ServerCallContext context)
+        public override Task<MenusResponse> GetAllMenus(Empty request, ServerCallContext context)
         {
             var menus = _menuDao.GetAll();
-            var res = new GetAllMenusResponse();
+            var res = new MenusResponse();
             res.Menus.AddRange(menus.Select(m => _mapper.Map<MenuDTO>(m)));
             return Task.FromResult(res);
         }
@@ -158,6 +158,15 @@ namespace Tripod.Service.System.Services
             var roles = _roleDao.GetRolesByUserId(id);
             var response = new RolesResponse();
             response.Roles.AddRange(roles.Select(r => _mapper.Map<RoleDTO>(r)));
+            return Task.FromResult(response);
+        }
+
+        public override Task<MenusResponse> GetUserMenus(KeyObject request, ServerCallContext context)
+        {
+            var id = Convert.ToInt64(request.Body);
+            var menus = _userDao.GetUserMenus(id);
+            var response = new MenusResponse();
+            response.Menus.AddRange(menus.Select(m => _mapper.Map<MenuDTO>(m)));
             return Task.FromResult(response);
         }
 

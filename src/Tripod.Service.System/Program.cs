@@ -12,8 +12,8 @@ namespace Tripod.Service.System
         static void Main(string[] args)
         {
             new GrpcServerBuilder()
-                .UseHost("localhost")
-                .UsePort(80054)
+                .UseHost("0.0.0.0")
+                .UsePort(8054)
                 .AddService((options,mapper) => SystemSrv.BindService(new SystemService(mapper, options)))
                 .Start();
         }

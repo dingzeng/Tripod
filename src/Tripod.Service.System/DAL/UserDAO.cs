@@ -4,6 +4,8 @@ using Tripod.Service.System.Model;
 using Tripod.Framework.Common.DAL;
 using Dapper;
 using Tripod.Framework.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Tripod.Service.System.DAL
 {
@@ -38,6 +40,29 @@ namespace Tripod.Service.System.DAL
             };
 
             return this.GetPaging<User>(innerQuery: "`user`", pageIndex: pageIndex, pageSize: pageSize, conditions: conditions, param: param);
+        }
+
+        public List<Menu> GetUserMenus(long userId)
+        {
+            var sql = @"
+SELECT
+	a.`code`, 
+    a.parent_code, 
+    a.`path`, 
+    a.`name`, 
+    a.is_leaf
+FROM menu a
+INNER JOIN permission b on a.`code` = b.menu_code
+INNER JOIN role_permission c on c.permission_code = b.code
+INNER JOIN `role` d on d.id = c.role_id
+INNER JOIN user_role e on e.role_id = d.id
+INNER JOIN `user` f on f.id = e.user_id
+WHERE b.`type` = 0 AND f.id = '@userId';";
+
+            return Run(conn =>
+            {
+                return conn.Query<Menu>(sql, new { userId = userId }).ToList();
+            });
         }
     }
 }
