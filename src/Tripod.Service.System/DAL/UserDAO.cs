@@ -50,6 +50,7 @@ SELECT
     a.parent_code, 
     a.`path`, 
     a.`name`, 
+    a.icon,
     a.is_leaf
 FROM menu a
 INNER JOIN permission b on a.`code` = b.menu_code

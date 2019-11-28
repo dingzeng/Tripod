@@ -186,8 +186,8 @@ namespace Tripod.Service.System.Services
                 ParentCode = s.ParentCode,
                 Path = s.Path,
                 Name = s.Name,
-                IsLeaf = s.IsLeaf,
-                Icon = ""
+                Icon = s.Icon,
+                IsLeaf = s.IsLeaf
             }).ToList();
             response.Nodes.AddRange(firstLevelMenus);
             BuildMenuTree(userPermissionMenus, response.Nodes.ToList());
@@ -215,8 +215,8 @@ namespace Tripod.Service.System.Services
                     ParentCode = s.ParentCode,
                     Path = s.Path,
                     Name = s.Name,
-                    IsLeaf = s.IsLeaf,
-                    Icon = ""
+                    Icon = s.Icon,
+                    IsLeaf = s.IsLeaf
                 }).ToList();
                 node.Children.AddRange(children);
                 BuildMenuTree(source, node.Children.ToList());
