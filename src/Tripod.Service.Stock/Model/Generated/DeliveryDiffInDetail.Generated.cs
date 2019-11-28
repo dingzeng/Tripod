@@ -1,6 +1,5 @@
 /*
 	本文件代码由代码生成工具自动生成，请不要手动修改
-	生成时间：2019-11-19 21:17:26
 */
 using System;
 using Tripod.Framework.DapperExtentions.Attributes;
