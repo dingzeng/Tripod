@@ -61,7 +61,6 @@ WHERE b.branch_group_id = @branchGroupId;";
             }
 
             return this.GetPaging<Branch>(
-                innerQuery: "branch",
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 conditions: conditions,

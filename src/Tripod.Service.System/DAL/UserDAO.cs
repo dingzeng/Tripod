@@ -39,7 +39,7 @@ namespace Tripod.Service.System.DAL
                 status = status.HasValue && status.Value ? '1' : '0'
             };
 
-            return this.GetPaging<User>(innerQuery: "`user`", pageIndex: pageIndex, pageSize: pageSize, conditions: conditions, param: param);
+            return this.GetPaging<User>(pageIndex: pageIndex, pageSize: pageSize, conditions: conditions, param: param);
         }
 
         public List<Menu> GetUserMenus(long userId)

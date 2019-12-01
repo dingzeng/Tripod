@@ -24,7 +24,6 @@ namespace Tripod.Service.Archive.DAL
             }
 
             return this.GetPaging<Supplier>(
-                innerQuery: "supplier",
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 conditions: conditions,

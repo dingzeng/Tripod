@@ -135,13 +135,6 @@ namespace Tripod.Framework.Common.DAL
             });
         }
 
-        // 分页
-        public PagedList<TEntity> GetPaging(int pageIndex = 1, int pageSize = int.MaxValue)
-        {
-            var tableName = SqlMapperExtensions.GetTableName(typeof(TEntity));
-            return GetPaging<TEntity>(innerQuery: tableName, pageIndex: pageIndex, pageSize: pageSize);
-        }
-
         /// <summary>
         /// 分页获取数据
         /// </summary>
@@ -153,12 +146,13 @@ namespace Tripod.Framework.Common.DAL
         /// <param name="param">查询参数对象</param>
         /// <typeparam name="T">结果集类型</typeparam>
         /// <returns></returns>
-        public PagedList<T> GetPaging<T>(string innerQuery, int pageIndex = 1, int pageSize = int.MaxValue, string conditions = "", string projection = "*", object param = null)
+        public PagedList<T> GetPaging<T>(string innerQuery = null, int pageIndex = 1, int pageSize = int.MaxValue, string conditions = "", string projection = "*", object param = null)
             where T : class
         {
             if (string.IsNullOrEmpty(innerQuery))
             {
-                throw new ArgumentNullException(nameof(innerQuery));
+                var tableName = SqlMapperExtensions.GetTableName(typeof(TEntity));
+                innerQuery = $"SELECT * FROM {tableName}";
             }
 
             StringBuilder builder = new StringBuilder();
