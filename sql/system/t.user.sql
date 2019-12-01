@@ -2,7 +2,8 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '自增编码',
-  `branch_code` VARCHAR(8) NOT NULL COMMENT '所属机构编码',
+  `branch_id` VARCHAR(8) NOT NULL COMMENT '所属机构编码',
+  `branch_name` VARCHAR(45) NOT NULL COMMENT '所属机构名称',
   `username` VARCHAR(45) NOT NULL COMMENT '用户名',
   `password` VARCHAR(45) NOT NULL COMMENT '登录密码',
   `name` VARCHAR(45) NOT NULL COMMENT '姓名',
@@ -13,5 +14,5 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-INSERT INTO `user`(branch_code,username,`password`,`name`,mobile,`status`,item_department_permission_flag,supplier_permission_flag) 
-values('00','admin','123456','管理员','15812345678',1,0,0);
+INSERT INTO `user`(branch_id,branch_name,username,`password`,`name`,mobile,`status`,item_department_permission_flag,supplier_permission_flag) 
+values('00','总部','admin','123456','管理员','15812345678',1,0,0);

@@ -19,7 +19,12 @@ namespace Tripod.Service.System.Model
 		/// <summary>
 		/// 所属机构编码
 		/// <summary>
-		public string BranchCode { get; set; }
+		public string BranchId { get; set; }
+
+		/// <summary>
+		/// 所属机构名称
+		/// <summary>
+		public string BranchName { get; set; }
 
 		/// <summary>
 		/// 用户名
