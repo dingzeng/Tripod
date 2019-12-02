@@ -9,13 +9,27 @@ CREATE TABLE `permission_api` (
 ENGINE = InnoDB
 COMMENT = '权限对应接口';
 
+-- BranchGroup
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_GROUP_VIEW','/archive/branchGroups','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_GROUP_VIEW','/archive/branchGroup/?','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_GROUP_CREATE','/archive/branchGroup','POST');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_GROUP_UPDATE','/archive/branchGroup','PUT');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_GROUP_DELETE','/archive/branchGroup','DELETE');
+
+-- Branch
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_VIEW','/archive/branchs','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_VIEW','/archive/branch/?','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_CREATE','/archive/branch','POST');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_UPDATE','/archive/branch','PUT');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_DELETE','/archive/branch','DELETE');
+
 -- Role
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_VIEW','/system/roles','GET');
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_VIEW','/system/role/?','GET');
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_VIEW','/system/role/?/permissions','GET');
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_CREATE','/system/role','POST');
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_UPDATE','/system/role','PUT');
-INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_UPDATE','system/role/?/permissions','PUT');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_UPDATE','/system/role/?/permissions','PUT');
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_DELETE','/system/role','DELETE');
 
 -- User

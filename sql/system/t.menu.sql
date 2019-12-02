@@ -10,7 +10,12 @@ CREATE TABLE `menu` (
   PRIMARY KEY (`code`))
 ENGINE = InnoDB;
 
+-- 基础档案
 INSERT INTO `menu`(code,`name`,`icon`,is_leaf) VALUES('01','基础档案','el-icon-document', 0);
+INSERT INTO `menu`(code,parent_code,`name`,is_leaf) VALUES('0101','01','机构档案', 0);
+INSERT INTO `menu`(code,parent_code,`path`,`name`,is_leaf) VALUES('010101','0101','/archive/branchGroup','店组管理', 1);
+INSERT INTO `menu`(code,parent_code,`path`,`name`,is_leaf) VALUES('010102','0101','/archive/branch','机构档案', 1);
+
 INSERT INTO `menu`(code,`name`,`icon`,is_leaf) VALUES('02','采购业务','el-icon-s-order', 0);
 INSERT INTO `menu`(code,`name`,`icon`,is_leaf) VALUES('03','零售业务','el-icon-s-shop', 0);
 INSERT INTO `menu`(code,`name`,`icon`,is_leaf) VALUES('04','批发业务','el-icon-s-custom', 0);

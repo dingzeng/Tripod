@@ -9,6 +9,18 @@ CREATE TABLE `permission` (
 ENGINE = InnoDB
 COMMENT = '操作权限';
 
+-- BranchGroup
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_GROUP_VIEW','010101',0,'查看机构组');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_GROUP_CREATE','010101',1,'新增机构组');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_GROUP_UPDATE','010101',2,'修改机构组');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_GROUP_DELETE','010101',3,'删除机构组');
+
+-- Branch
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_VIEW','010102',0,'查看机构');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_CREATE','010102',1,'新增机构');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_UPDATE','010102',2,'修改机构');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_DELETE','010102',3,'删除机构');
+
 -- Role
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_VIEW','090101',0,'查看角色');
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_CREATE','090101',1,'新增角色');
