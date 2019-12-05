@@ -7,4 +7,4 @@ CREATE TABLE `user_role` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-INSERT INTO user_role(user_id,role_id) VALUES(1,3);
+INSERT INTO user_role(user_id,role_id) VALUES(1,1);

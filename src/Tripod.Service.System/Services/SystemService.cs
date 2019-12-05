@@ -133,16 +133,18 @@ namespace Tripod.Service.System.Services
             return Task.FromResult(_mapper.Map<UserDTO>(user));
         }
 
-        public override Task<UserDTO> CreateUser(UserDTO request, ServerCallContext context)
+        public override Task<UserDTO> CreateUser(UserUpdateRequest request, ServerCallContext context)
         {
-            var id = _userDao.Insert(_mapper.Map<User>(request));
+            var id = _userDao.Insert(_mapper.Map<User>(request.User));
+            _userDao.UpdateUserRoles((int)id, request.Roles.ToList());
             var user = _userDao.Get(id);
             return Task.FromResult(_mapper.Map<UserDTO>(user));
         }
 
-        public override Task<BooleanObject> UpdateUSer(UserDTO reqeust, ServerCallContext context)
+        public override Task<BooleanObject> UpdateUSer(UserUpdateRequest request, ServerCallContext context)
         {
-            bool success = _userDao.Update(_mapper.Map<User>(reqeust));
+            bool success = _userDao.Update(_mapper.Map<User>(request.User));
+            _userDao.UpdateUserRoles((int)request.User.Id, request.Roles.ToList());
             return Task.FromResult(new BooleanObject { Body = success });
         }
 

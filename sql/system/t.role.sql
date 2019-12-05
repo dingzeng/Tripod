@@ -7,6 +7,4 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-INSERT INTO `role`(`name`,memo) VALUES('部门主管','部门主管');
-INSERT INTO `role`(`name`,memo) VALUES('录单员','录单员');
 INSERT INTO `role`(`name`,memo) VALUES('系统管理员','系统管理员');
