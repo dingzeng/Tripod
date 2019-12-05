@@ -133,19 +133,23 @@ namespace Tripod.Service.System.Services
             return Task.FromResult(_mapper.Map<UserDTO>(user));
         }
 
-        public override Task<UserDTO> CreateUser(UserUpdateRequest request, ServerCallContext context)
+        public override Task<UserDTO> CreateUser(UserDTO request, ServerCallContext context)
         {
-            var id = _userDao.Insert(_mapper.Map<User>(request.User));
-            _userDao.UpdateUserRoles((int)id, request.Roles.ToList());
+            var id = _userDao.Insert(_mapper.Map<User>(request));
             var user = _userDao.Get(id);
             return Task.FromResult(_mapper.Map<UserDTO>(user));
         }
 
-        public override Task<BooleanObject> UpdateUSer(UserUpdateRequest request, ServerCallContext context)
+        public override Task<BooleanObject> UpdateUser(UserDTO request, ServerCallContext context)
         {
-            bool success = _userDao.Update(_mapper.Map<User>(request.User));
-            _userDao.UpdateUserRoles((int)request.User.Id, request.Roles.ToList());
+            bool success = _userDao.Update(_mapper.Map<User>(request));
             return Task.FromResult(new BooleanObject { Body = success });
+        }
+
+        public override Task<BooleanObject> UpdateUserRoles(UpdateUserRolesRequest request, ServerCallContext context)
+        {
+            _userDao.UpdateUserRoles(request.UserId, request.Roles.ToList());
+            return Task.FromResult(new BooleanObject { Body = true });
         }
 
         public override Task<BooleanObject> DeleteUserById(KeyObject reqeust, ServerCallContext context)
