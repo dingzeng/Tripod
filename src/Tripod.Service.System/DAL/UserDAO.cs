@@ -93,7 +93,7 @@ WHERE e.id = @userId;";
                 throw new ArgumentNullException(nameof(roles));
             Run(conn =>
             {
-                var values = string.Join(' ', roles.Select(roleId => $"({userId}, {roleId})"));
+                var values = string.Join(',', roles.Select(roleId => $"({userId}, {roleId})"));
                 var lines = conn.Execute("DELETE FROM user_role WHERE user_id = @userId;", new { userId });
                 lines += conn.Execute($"INSERT INTO user_role(user_id, role_id) VALUES{values}");
                 return lines;

@@ -12,16 +12,22 @@ namespace Tripod.Service.System.DAL
     public class RoleDAO : BaseDAO<Role>
     {
         public RoleDAO(ConfigurationOptions options)
-            :base(options.ConnectionString)
+            : base(options.ConnectionString)
         {
-            
+
         }
 
         public List<Role> GetRolesByUserId(long userId)
         {
+            var sql = @"
+SELECT
+    a.*
+FROM `role` a
+INNER JOIN user_role b ON a.id = b.role_id
+WHERE b.user_id = @userId";
             return Run(conn =>
             {
-                return conn.Query<Role>("SELECT * FROM `role` WHERE EXISTS(SELECT 1 FROM user_role WHERE user_id = @userId);", new { userId = userId }).ToList();
+                return conn.Query<Role>(sql, new { userId }).ToList();
             });
         }
 
