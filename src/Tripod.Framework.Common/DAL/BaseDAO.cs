@@ -159,8 +159,7 @@ namespace Tripod.Framework.Common.DAL
             builder.Append($"SELECT COUNT(1) as totalCount FROM ({innerQuery}) as temp WHERE 1 = 1 {conditions};");
 
             int start = (pageIndex - 1) * pageSize;
-            int end = pageIndex * pageSize;
-            builder.Append($"SELECT {projection} FROM ({innerQuery}) as temp WHERE 1 = 1 {conditions} LIMIT {start},{end};");
+            builder.Append($"SELECT {projection} FROM ({innerQuery}) as temp WHERE 1 = 1 {conditions} LIMIT {start},{pageSize};");
 
             return Run(conn =>
             {
