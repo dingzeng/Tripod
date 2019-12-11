@@ -26,5 +26,5 @@ ENGINE = InnoDB
 COMMENT = '机构';
 
 INSERT INTO `db_tripod_archive`.`branch` (`id`, `parent_id`, `name`, `short_name`, `type`, `contacts_name`, `contacts_mobile`, `contacts_tel`, `contacts_email`, `address`, `gift_store_id`, `return_store_id`, `purchase_store_id`, `create_oper_id`, `create_oper_name`, `create_time`, `last_update_oper_id`, `last_update_oper_name`, `last_update_time`) 
-VALUES ('0712-', '\'\'', '总部', '总部', '0', '曾鼎', '15874564512', '0712-8820550', '66666@qq.com', '湖北省汉川市韩集乡金光村', '1', '1', '1', '9001', '9001', '2019-12-02 14:57:26', '9001', '9001', '2019-12-02 14:57:35');
+VALUES ('00', '', '总部', '总部', '0', '曾鼎', '15874564512', '0712-8820550', '66666@qq.com', '湖北省汉川市韩集乡金光村', '1', '1', '1', '9001', '9001', '2019-12-02 14:57:26', '9001', '9001', '2019-12-02 14:57:35');
 

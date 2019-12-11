@@ -88,13 +88,14 @@ WHERE b.branch_group_id = @branchGroupId;";
         /// <returns></returns>
         public bool UpdateBranchStores(string branchId, List<Store> stores)
         {
-            var values = string.Join(", ", stores.Select(s => $"((@branchId, '{s.Name}', {s.IsUsable}))"));
+            var values = string.Join(", ", stores.Select(s => $"(@branchId, '{s.Name}', {s.IsUsable})"));
             StringBuilder builder = new StringBuilder();
             builder.Append("DELETE FROM store WHERE branch_id = @branchId;");
             builder.Append($"INSERT INTO store(branch_id, `name`, is_usable) VALUES{values};");
 
             return Run(conn =>
             {
+                Console.WriteLine(builder.ToString());
                 return conn.Execute(builder.ToString(), new { branchId = branchId }) > 0;
             });
             throw new NotImplementedException();

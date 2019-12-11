@@ -94,7 +94,9 @@ namespace Tripod.Service.Archive.Services
 
         public override Task<BranchDTO> GetBranch(KeyObject request, ServerCallContext context)
         {
+            Console.WriteLine(request.Body);
             var branch = _branchDao.Get(request.Body);
+            Console.WriteLine(branch.Name);
             return Task.FromResult(_mapper.Map<BranchDTO>(branch));
         }
 
