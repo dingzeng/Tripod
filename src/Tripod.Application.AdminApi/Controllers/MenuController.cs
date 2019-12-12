@@ -14,16 +14,16 @@ namespace Tripod.Application.AdminApi.Controllers
     [Route("[controller]")]
     public class MenuController : ControllerBase
     {
-        private readonly RpcOptions _rpcOptions;
+        private readonly AppOptions _options;
         private readonly ILogger<MenuController> _logger;
         private readonly SystemSrv.SystemSrvClient _client;
 
-        public MenuController(ILogger<MenuController> logger, IOptionsMonitor<RpcOptions> rpcOptionsAccessor)
+        public MenuController(ILogger<MenuController> logger, IOptionsMonitor<AppOptions> rpcOptionsAccessor)
         {
-            _rpcOptions = rpcOptionsAccessor.CurrentValue;
+            _options = rpcOptionsAccessor.CurrentValue;
             _logger = logger;
 
-            Channel channel = new Channel(_rpcOptions.SystemSrvHost, ChannelCredentials.Insecure);
+            Channel channel = new Channel(_options.SystemSrvHost, ChannelCredentials.Insecure);
             _client = new SystemSrv.SystemSrvClient(channel);
         }
 

@@ -14,16 +14,16 @@ namespace Tripod.Application.AdminApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly RpcOptions _rpcOptions;
+        private readonly AppOptions _options;
         private readonly ILogger<UserController> _logger;
         private readonly SystemSrv.SystemSrvClient _client;
 
-        public UserController(ILogger<UserController> logger, IOptionsMonitor<RpcOptions> rpcOptionsAccessor)
+        public UserController(ILogger<UserController> logger, IOptionsMonitor<AppOptions> rpcOptionsAccessor)
         {
-            _rpcOptions = rpcOptionsAccessor.CurrentValue;
+            _options = rpcOptionsAccessor.CurrentValue;
             _logger = logger;
 
-            Channel channel = new Channel(_rpcOptions.SystemSrvHost, ChannelCredentials.Insecure);
+            Channel channel = new Channel(_options.SystemSrvHost, ChannelCredentials.Insecure);
             _client = new SystemSrv.SystemSrvClient(channel);
         }
 

@@ -14,16 +14,16 @@ namespace Tripod.Application.AdminApi.Controllers
     [Route("[controller]")]
     public class BranchGroupController : ControllerBase
     {
-        private readonly RpcOptions _rpcOptions;
+        private readonly AppOptions _options;
         private readonly ILogger<BranchGroupController> _logger;
         private readonly BranchSrv.BranchSrvClient _client;
 
-        public BranchGroupController(ILogger<BranchGroupController> logger, IOptionsMonitor<RpcOptions> rpcOptionsAccessor)
+        public BranchGroupController(ILogger<BranchGroupController> logger, IOptionsMonitor<AppOptions> rpcOptionsAccessor)
         {
-            _rpcOptions = rpcOptionsAccessor.CurrentValue;
+            _options = rpcOptionsAccessor.CurrentValue;
             _logger = logger;
 
-            Channel channel = new Channel(_rpcOptions.ArchiveSrvHost, ChannelCredentials.Insecure);
+            Channel channel = new Channel(_options.ArchiveSrvHost, ChannelCredentials.Insecure);
             _client = new BranchSrv.BranchSrvClient(channel);
         }
 

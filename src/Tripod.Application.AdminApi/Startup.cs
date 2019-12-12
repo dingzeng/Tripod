@@ -27,7 +27,7 @@ namespace Tripod.Application.AdminApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.Configure<RpcOptions>(Configuration.GetSection("Rpc"));
+            services.Configure<AppOptions>(Configuration.GetSection("App"));
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
