@@ -36,7 +36,7 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpPost]
         [Route("login")]
-        public ActionResult<bool> Login(LoginModel model)
+        public Response<bool> Login(LoginModel model)
         {
             var user = _client.GetUserByUsername(new GetUserByUsernameRequest()
             {
@@ -64,7 +64,7 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpGet]
         [Route("userinfo")]
-        public ActionResult<UserInfo> GetUserInfo([FromHeader]string token)
+        public Response<UserInfo> GetUserInfo([FromHeader]string token)
         {
             var cache = _redis.StringGet(token);
             return JsonConvert.DeserializeObject<UserInfo>(cache);
@@ -72,7 +72,7 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpPost]
         [Route("logout")]
-        public ActionResult<bool> Logout([FromHeader]string token)
+        public Response<bool> Logout([FromHeader]string token)
         {
             return _redis.KeyDelete(token);
         }

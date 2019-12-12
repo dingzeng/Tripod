@@ -28,7 +28,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<BranchDTO> Get(string id)
+        public Response<BranchDTO> Get(string id)
         {
             var request = new KeyObject()
             {
@@ -39,7 +39,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<BranchDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "", string parentId = "")
+        public Response<IEnumerable<BranchDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "", string parentId = "")
         {
             var response = _client.GetBranchs(new GetBranchsRequest()
             {
@@ -53,25 +53,22 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<BranchDTO> Post(BranchDTO model)
-        {
-            return _client.CreateBranch(model);
-        }
+        public Response<BranchDTO> Post(BranchDTO model) => _client.CreateBranch(model);
 
         [HttpPut]
-        public ActionResult<bool> Put(BranchDTO model)
+        public Response<bool> Put(BranchDTO model)
         {
             return _client.UpdateBranch(model).Body;
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<bool> Delete(string id)
+        public Response<bool> Delete(string id)
         {
             return _client.DeleteBranch(new KeyObject() { Body = id }).Body;
         }
-        
+
         [HttpGet("store")]
-        public ActionResult<IEnumerable<StoreDTO>> GetStores(string branchId)
+        public Response<IEnumerable<StoreDTO>> GetStores(string branchId)
         {
             var request = new KeyObject()
             {
@@ -82,7 +79,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpPut("store")]
-        public ActionResult<bool> PutStores(string branchId, [FromBody]List<StoreDTO> model)
+        public Response<bool> PutStores(string branchId, [FromBody]List<StoreDTO> model)
         {
             var request = new UpdateBranchStoresRequest()
             {
