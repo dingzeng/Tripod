@@ -11,7 +11,7 @@ using Tripod.Service.Archive;
 namespace Tripod.Application.AdminApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("archive/[controller]")]
     public class BranchController : ControllerBase
     {
         private readonly AppOptions _options;

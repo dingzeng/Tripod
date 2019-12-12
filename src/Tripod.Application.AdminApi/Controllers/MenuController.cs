@@ -11,7 +11,7 @@ using Tripod.Service.System;
 namespace Tripod.Application.AdminApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("system/[controller]")]
     public class MenuController : ControllerBase
     {
         private readonly AppOptions _options;

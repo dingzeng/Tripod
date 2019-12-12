@@ -36,7 +36,7 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpPost]
         [Route("login")]
-        public Response<bool> Login(LoginModel model)
+        public Response<string> Login(LoginModel model)
         {
             var user = _client.GetUserByUsername(new GetUserByUsernameRequest()
             {
@@ -44,7 +44,7 @@ namespace Tripod.Application.AdminApi.Controllers
             });
             if (user == null || user.Password != model.Password)
             {
-                return false;
+                throw new ApiException(0,"用户名或密码错误");
             }
 
             var request = new KeyObject() { Body = user.Id.ToString() };
@@ -59,12 +59,15 @@ namespace Tripod.Application.AdminApi.Controllers
                 Permissions = permissions.Permissions.ToList()
             };
             string cache = JsonConvert.SerializeObject(userInfo);
-            return _redis.StringSet(token, cache);
+            if(!_redis.StringSet(token, cache)) {
+                throw new ApiException("登录失败");
+            }
+            return token;
         }
 
         [HttpGet]
         [Route("userinfo")]
-        public Response<UserInfo> GetUserInfo([FromHeader]string token)
+        public Response<UserInfo> GetUserInfo(string token)
         {
             var cache = _redis.StringGet(token);
             return JsonConvert.DeserializeObject<UserInfo>(cache);

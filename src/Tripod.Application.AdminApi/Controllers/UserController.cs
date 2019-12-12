@@ -11,7 +11,7 @@ using Tripod.Service.System;
 namespace Tripod.Application.AdminApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("system/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly AppOptions _options;
@@ -27,6 +27,14 @@ namespace Tripod.Application.AdminApi.Controllers
             _client = new SystemSrv.SystemSrvClient(channel);
         }
 
+        [HttpGet("_page")]
+        public Response<dynamic> Page()
+        {
+            return new {
+                
+            };
+        }
+
         [HttpGet]
         public Response<GetUsersResponse> Get(int pageIndex = 1, int pageSize = 20, string keyword = "")
         {
@@ -38,7 +46,7 @@ namespace Tripod.Application.AdminApi.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public Response<UserDTO> Get(string id) => _client.GetUserById(new KeyObject() { Body = id });
 
         [HttpPost]
