@@ -28,9 +28,6 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
-        public Response<IEnumerable<MenuDTO>> Get()
-        {
-           return _client.GetAllMenus(new Empty()).Menus;
-        }
+        public Response<IEnumerable<MenuDTO>> Get() => _client.GetAllMenus(new Empty()).Menus;
     }
 }

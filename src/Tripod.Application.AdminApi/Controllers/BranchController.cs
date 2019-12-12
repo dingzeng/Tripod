@@ -28,15 +28,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public Response<BranchDTO> Get(string id)
-        {
-            var request = new KeyObject()
-            {
-                Body = id
-            };
-            var response = _client.GetBranch(request);
-            return response;
-        }
+        public Response<BranchDTO> Get(string id) => _client.GetBranch(new KeyObject() { Body = id });
 
         [HttpGet]
         public Response<IEnumerable<BranchDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "", string parentId = "")
@@ -56,27 +48,13 @@ namespace Tripod.Application.AdminApi.Controllers
         public Response<BranchDTO> Post(BranchDTO model) => _client.CreateBranch(model);
 
         [HttpPut]
-        public Response<bool> Put(BranchDTO model)
-        {
-            return _client.UpdateBranch(model).Body;
-        }
+        public Response<bool> Put(BranchDTO model) => _client.UpdateBranch(model).Body;
 
         [HttpDelete("{id}")]
-        public Response<bool> Delete(string id)
-        {
-            return _client.DeleteBranch(new KeyObject() { Body = id }).Body;
-        }
+        public Response<bool> Delete(string id) => _client.DeleteBranch(new KeyObject() { Body = id }).Body;
 
         [HttpGet("store")]
-        public Response<IEnumerable<StoreDTO>> GetStores(string branchId)
-        {
-            var request = new KeyObject()
-            {
-                Body = branchId
-            };
-            var response = _client.GetBranchStores(request);
-            return response.Stores;
-        }
+        public Response<IEnumerable<StoreDTO>> GetStores(string branchId) => _client.GetBranchStores(new KeyObject() { Body = branchId }).Stores;
 
         [HttpPut("store")]
         public Response<bool> PutStores(string branchId, [FromBody]List<StoreDTO> model)

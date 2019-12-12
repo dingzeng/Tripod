@@ -39,34 +39,19 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
-        public Response<UserDTO> Get(string id)
-        {
-            return _client.GetUserById(new KeyObject() { Body = id });
-        }
+        public Response<UserDTO> Get(string id) => _client.GetUserById(new KeyObject() { Body = id });
 
         [HttpPost]
-        public Response<UserDTO> Post(UserDTO model)
-        {
-            return _client.CreateUser(model);
-        }
+        public Response<UserDTO> Post(UserDTO model) => _client.CreateUser(model);
 
         [HttpPut]
-        public Response<bool> Put(UserDTO model)
-        {
-            return _client.UpdateUser(model).Body;
-        }
+        public Response<bool> Put(UserDTO model) => _client.UpdateUser(model).Body;
 
         [HttpDelete]
-        public Response<bool> Delete(string id)
-        {
-            return _client.DeleteUserById(new KeyObject() { Body = id }).Body;
-        }
+        public Response<bool> Delete(string id) => _client.DeleteUserById(new KeyObject() { Body = id }).Body;
 
         [HttpGet("permission")]
-        public Response<IEnumerable<PermissionDTO>> GetPermissions(string userId)
-        {
-            return _client.GetUserPermissions(new KeyObject() { Body = userId }).Permissions;
-        }
+        public Response<IEnumerable<PermissionDTO>> GetPermissions(string userId) => _client.GetUserPermissions(new KeyObject() { Body = userId }).Permissions;
 
         [HttpPut("permission")]
         public Response<bool> PutPermissions(string userId, [FromBody]List<PermissionDTO> model)

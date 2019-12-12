@@ -28,40 +28,18 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public Response<BranchGroupDTO> Get(string id)
-        {
-            var request = new KeyObject()
-            {
-                Body = id
-            };
-            var response = _client.GetBranchGroup(request);
-            return response;
-        }
+        public Response<BranchGroupDTO> Get(string id) => _client.GetBranchGroup(new KeyObject() { Body = id });
 
         [HttpGet]
-        public Response<IEnumerable<BranchGroupDTO>> Get()
-        {
-            var response = _client.GetBranchGroups(new Empty());
-
-            return response.BranchGroups;
-        }
+        public Response<IEnumerable<BranchGroupDTO>> Get() => _client.GetBranchGroups(new Empty()).BranchGroups;
 
         [HttpPost]
-        public Response<BranchGroupDTO> Post(BranchGroupDTO model)
-        {
-            return _client.CreateBranchGroup(model);
-        }
+        public Response<BranchGroupDTO> Post(BranchGroupDTO model) => _client.CreateBranchGroup(model);
 
         [HttpPut]
-        public Response<bool> Put(BranchGroupDTO model)
-        {
-            return _client.UpdateBranchGroup(model).Body;
-        }
+        public Response<bool> Put(BranchGroupDTO model) => _client.UpdateBranchGroup(model).Body;
 
         [HttpDelete("{id}")]
-        public Response<bool> Delete(string id)
-        {
-            return _client.DeleteBranchGroup(new KeyObject() { Body = id }).Body;
-        }
+        public Response<bool> Delete(string id) => _client.DeleteBranchGroup(new KeyObject() { Body = id }).Body;
     }
 }

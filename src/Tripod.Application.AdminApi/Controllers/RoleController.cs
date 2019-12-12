@@ -28,37 +28,19 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
-        public Response<IEnumerable<RoleDTO>> Get()
-        {
-            return _client.GetAllRoles(new Empty()).Roles;
-        }
+        public Response<IEnumerable<RoleDTO>> Get() => _client.GetAllRoles(new Empty()).Roles;
 
         [HttpGet("{id}")]
-        public Response<RoleDTO> Get(string id)
-        {
-            return _client.GetRoleById(new KeyObject() { Body = id });
-        }
+        public Response<RoleDTO> Get(string id) => _client.GetRoleById(new KeyObject() { Body = id });
 
         [HttpPost]
-        public Response<RoleDTO> Post(RoleDTO model)
-        {
-            return _client.CreateRole(model);
-        }
+        public Response<RoleDTO> Post(RoleDTO model) => _client.CreateRole(model);
 
         [HttpPut]
-        public Response<bool> Put(RoleDTO model)
-        {
-            return _client.UpdateRole(model).Body;
-        }
+        public Response<bool> Put(RoleDTO model) => _client.UpdateRole(model).Body;
 
         [HttpDelete("{id}")]
-        public Response<bool> Delete(string id)
-        {
-            return _client.DeleteRoleById(new KeyObject()
-            {
-                Body = id
-            }).Body;
-        }
+        public Response<bool> Delete(string id) => _client.DeleteRoleById(new KeyObject() { Body = id }).Body;
 
         [HttpGet("permission")]
         public Response<IEnumerable<PermissionDTO>> GetPermissions(string roleId)

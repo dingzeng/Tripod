@@ -72,9 +72,6 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpPost]
         [Route("logout")]
-        public Response<bool> Logout([FromHeader]string token)
-        {
-            return _redis.KeyDelete(token);
-        }
+        public Response<bool> Logout([FromHeader]string token) => _redis.KeyDelete(token);
     }
 }
