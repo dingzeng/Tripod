@@ -18,9 +18,9 @@ namespace Tripod.Application.AdminApi.Controllers
         private readonly ILogger<BranchController> _logger;
         private readonly BranchSrv.BranchSrvClient _client;
 
-        public BranchController(ILogger<BranchController> logger, IOptionsMonitor<AppOptions> rpcOptionsAccessor)
+        public BranchController(ILogger<BranchController> logger, IOptionsMonitor<AppOptions> optionsAccessor)
         {
-            _options = rpcOptionsAccessor.CurrentValue;
+            _options = optionsAccessor.CurrentValue;
             _logger = logger;
 
             Channel channel = new Channel(_options.ArchiveSrvHost, ChannelCredentials.Insecure);

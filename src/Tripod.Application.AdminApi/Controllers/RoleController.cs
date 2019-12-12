@@ -18,9 +18,9 @@ namespace Tripod.Application.AdminApi.Controllers
         private readonly ILogger<RoleController> _logger;
         private readonly SystemSrv.SystemSrvClient _client;
 
-        public RoleController(ILogger<RoleController> logger, IOptionsMonitor<AppOptions> rpcOptionsAccessor)
+        public RoleController(ILogger<RoleController> logger, IOptionsMonitor<AppOptions> optionsAccessor)
         {
-            _options = rpcOptionsAccessor.CurrentValue;
+            _options = optionsAccessor.CurrentValue;
             _logger = logger;
 
             Channel channel = new Channel(_options.SystemSrvHost, ChannelCredentials.Insecure);

@@ -29,6 +29,16 @@ namespace Tripod.Application.AdminApi
             services.AddControllers();
             services.Configure<AppOptions>(Configuration.GetSection("App"));
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(build =>
+                {
+                    build
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader();
+                });
+            });
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -61,6 +71,8 @@ namespace Tripod.Application.AdminApi
                 app.UseDeveloperExceptionPage();
             }
 
+
+            app.UseCors();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 

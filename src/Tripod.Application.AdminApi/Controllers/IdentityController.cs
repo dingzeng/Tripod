@@ -22,15 +22,15 @@ namespace Tripod.Application.AdminApi.Controllers
         private readonly SystemSrv.SystemSrvClient _client;
         private readonly IDatabase _redis;
 
-        public IdentityController(ILogger<IdentityController> logger, IOptionsMonitor<AppOptions> rpcOptionsAccessor)
+        public IdentityController(ILogger<IdentityController> logger, IOptionsMonitor<AppOptions> optionsAccessor)
         {
-            _options = rpcOptionsAccessor.CurrentValue;
+            _options = optionsAccessor.CurrentValue;
             _logger = logger;
 
             Channel channel = new Channel(_options.SystemSrvHost, ChannelCredentials.Insecure);
             _client = new SystemSrv.SystemSrvClient(channel);
 
-            var connectionMultiplexer = ConnectionMultiplexer.Connect("");
+            var connectionMultiplexer = ConnectionMultiplexer.Connect(_options.Redis);
             _redis = connectionMultiplexer.GetDatabase(REDIS_DATABASE);
         }
 

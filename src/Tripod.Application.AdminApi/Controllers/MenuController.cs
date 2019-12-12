@@ -18,9 +18,9 @@ namespace Tripod.Application.AdminApi.Controllers
         private readonly ILogger<MenuController> _logger;
         private readonly SystemSrv.SystemSrvClient _client;
 
-        public MenuController(ILogger<MenuController> logger, IOptionsMonitor<AppOptions> rpcOptionsAccessor)
+        public MenuController(ILogger<MenuController> logger, IOptionsMonitor<AppOptions> optionsAccessor)
         {
-            _options = rpcOptionsAccessor.CurrentValue;
+            _options = optionsAccessor.CurrentValue;
             _logger = logger;
 
             Channel channel = new Channel(_options.SystemSrvHost, ChannelCredentials.Insecure);
