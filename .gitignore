@@ -5,7 +5,7 @@
 **/.vs
 **/.vscode/*.json
 **/appsettings.json
-**/appsettings.*.json
+**/appsettings.Development.json
 
 # node
 package-lock.json
