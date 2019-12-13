@@ -3,7 +3,7 @@ using System;
 namespace Tripod.Application.AdminApi
 {
     public class Response<TData>
-    {   
+    {
         public int Code { get; set; }
 
         public TData Data { get; set; }
@@ -19,5 +19,10 @@ namespace Tripod.Application.AdminApi
                 Data = value
             };
         }
+    }
+
+    public class Response : Response<object>
+    {
+
     }
 }
