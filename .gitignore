@@ -5,7 +5,9 @@
 **/.vs
 **/.vscode/*.json
 **/appsettings.json
-**/appsettings.Development.json
 
 # node
 package-lock.json
+
+#
+src/Tripod.Application.AdminApi/appsettings.Development.json
