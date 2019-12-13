@@ -6,6 +6,7 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Model;
 using Tripod.Service.Archive;
 
 namespace Tripod.Application.AdminApi.Controllers
@@ -31,7 +32,7 @@ namespace Tripod.Application.AdminApi.Controllers
         public Response<BranchDTO> Get(string id) => _client.GetBranch(new KeyObject() { Body = id });
 
         [HttpGet]
-        public Response<IEnumerable<BranchDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "", string parentId = "")
+        public Response<PagedList<BranchDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "", string parentId = "")
         {
             var response = _client.GetBranchs(new GetBranchsRequest()
             {
@@ -41,7 +42,42 @@ namespace Tripod.Application.AdminApi.Controllers
                 ParentId = parentId
             });
 
-            return response.Branchs;
+            return new PagedList<BranchDTO>(response.Branchs, response.TotalCount);
+        }
+
+        [HttpGet("tree")]
+        public Response<List<TreeNode>> GetTree()
+        {
+            var response = _client.GetBranchs(new GetBranchsRequest()
+            {
+                PageIndex = 1,
+                PageSize = int.MaxValue
+            });
+            var branchs = response.Branchs.Where(b => b.Type == 0 || b.Type == 1);
+
+            var root = new TreeNode();
+            root.Id = branchs.Where(b => b.Type == 0).First().Id;
+            root.Label = branchs.Where(b => b.Type == 0).First().Name;
+            root.Children = new List<TreeNode>();
+            BuildTree(root, branchs);
+
+            return new List<TreeNode>() { root };
+        }
+
+        private void BuildTree(TreeNode node, IEnumerable<BranchDTO> branchs)
+        {
+            var children = branchs.Where(b => b.ParentId == node.Id);
+            foreach (var child in children)
+            {
+                var childNode = new TreeNode()
+                {
+                    Id = child.Id,
+                    Label = child.Name,
+                    Children = new List<TreeNode>()
+                };
+                node.Children.Add(childNode);
+                BuildTree(childNode, branchs);
+            }
         }
 
         [HttpPost]

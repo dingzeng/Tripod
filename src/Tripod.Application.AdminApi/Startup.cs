@@ -34,7 +34,8 @@ namespace Tripod.Application.AdminApi
                 {
                     build
                         .AllowAnyOrigin()
-                        .AllowAnyHeader();
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
                 });
             });
 
