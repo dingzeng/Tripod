@@ -8,6 +8,7 @@ namespace Tripod.Application.AdminApi.Controllers
     [ApiController]
     public class ErrorController : ControllerBase
     {
+        [HttpGet]
         [Route("/error")]
         public IActionResult Error([FromServices] IWebHostEnvironment webHostEnvironment)
         {

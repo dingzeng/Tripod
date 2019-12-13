@@ -22,6 +22,11 @@ namespace Tripod.Service.Archive.Model
 		public string ParentId { get; set; }
 
 		/// <summary>
+		/// 上级机构名称
+		/// <summary>
+		public string ParentName { get; set; }
+
+		/// <summary>
 		/// 机构名称
 		/// <summary>
 		public string Name { get; set; }
