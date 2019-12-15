@@ -85,7 +85,7 @@ namespace Tripod.Service.Archive.Services
 
         public override Task<GetBranchsResponse> GetBranchs(GetBranchsRequest request, ServerCallContext context)
         {
-            var branchs = _branchDao.GetBranchs(request.PageIndex, request.PageSize, request.Keyword, request.ParentId);
+            var branchs = _branchDao.GetBranchs(request.PageIndex, request.PageSize, request.Keyword, request.ParentId, request.TypeList);
             var response = new GetBranchsResponse();
             response.TotalCount = branchs.TotalCount;
             response.Branchs.AddRange(branchs.List.Select(b => _mapper.Map<BranchDTO>(b)));

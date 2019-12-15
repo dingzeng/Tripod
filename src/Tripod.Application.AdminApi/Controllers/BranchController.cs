@@ -32,14 +32,20 @@ namespace Tripod.Application.AdminApi.Controllers
         public Response<BranchDTO> Get(string id) => _client.GetBranch(new KeyObject() { Body = id });
 
         [HttpGet]
-        public Response<PagedList<BranchDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "", string parentId = "")
+        public Response<PagedList<BranchDTO>> Get(
+            int pageIndex = 1, 
+            int pageSize = 20, 
+            string keyword = "", 
+            string parentId = "",
+            string typeList = "")
         {
             var response = _client.GetBranchs(new GetBranchsRequest()
             {
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                Keyword = keyword,
-                ParentId = parentId
+                Keyword = keyword ?? "",
+                ParentId = parentId ?? "",
+                TypeList = typeList ?? ""
             });
 
             return new PagedList<BranchDTO>(response.Branchs, response.TotalCount);
@@ -51,15 +57,16 @@ namespace Tripod.Application.AdminApi.Controllers
             var response = _client.GetBranchs(new GetBranchsRequest()
             {
                 PageIndex = 1,
-                PageSize = int.MaxValue
+                PageSize = int.MaxValue,
+                TypeList = "0,1"
             });
-            var branchs = response.Branchs.Where(b => b.Type == 0 || b.Type == 1);
 
             var root = new TreeNode();
-            root.Id = branchs.Where(b => b.Type == 0).First().Id;
-            root.Label = branchs.Where(b => b.Type == 0).First().Name;
+            var branch = response.Branchs.Where(b => b.Type == 0).First();
+            root.Id = branch.Id;
+            root.Label = $"[{branch.Id}]{branch.Name}";
             root.Children = new List<TreeNode>();
-            BuildTree(root, branchs);
+            BuildTree(root, response.Branchs);
 
             return new List<TreeNode>() { root };
         }
@@ -72,7 +79,7 @@ namespace Tripod.Application.AdminApi.Controllers
                 var childNode = new TreeNode()
                 {
                     Id = child.Id,
-                    Label = child.Name,
+                    Label = $"[{child.Id}]{child.Name}",
                     Children = new List<TreeNode>()
                 };
                 node.Children.Add(childNode);

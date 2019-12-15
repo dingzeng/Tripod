@@ -6,6 +6,7 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Model;
 using Tripod.Service.System;
 
 namespace Tripod.Application.AdminApi.Controllers
@@ -36,14 +37,15 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
-        public Response<GetUsersResponse> Get(int pageIndex = 1, int pageSize = 20, string keyword = "")
+        public Response<PagedList<UserDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "")
         {
-            return _client.GetUsers(new PagingRequest()
+            var response = _client.GetUsers(new PagingRequest()
             {
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 Keyword = keyword
             });
+            return new PagedList<UserDTO>(response.Users, response.TotalCount);
         }
 
         [HttpGet("{id}")]

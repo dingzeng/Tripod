@@ -48,7 +48,8 @@ WHERE b.branch_group_id = @branchGroupId;";
             int pageIndex = 1,
             int pageSize = int.MaxValue,
             string keyword = null,
-            string parentId = null)
+            string parentId = null,
+            string typeList = null)
         {
             string conditions = "";
             if (!string.IsNullOrEmpty(keyword))
@@ -57,14 +58,19 @@ WHERE b.branch_group_id = @branchGroupId;";
             }
             if (!string.IsNullOrEmpty(parentId))
             {
-                conditions += $"AND parent_id = '{parentId}' ";
+                conditions += $"AND parent_id = @parentId ";
+            }
+            if (!string.IsNullOrEmpty(typeList))
+            {   
+                var types = string.Join(",",typeList.Split(',').Select(t => Convert.ToInt32(t)));
+                conditions += $"AND `type` IN ({types}) ";
             }
 
             return this.GetPaging<Branch>(
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 conditions: conditions,
-                param: new { });
+                param: new { parentId });
         }
 
         /// <summary>
