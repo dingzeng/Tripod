@@ -1,0 +1,87 @@
+syntax = "proto3";
+option csharp_namespace = "Tripod.Service.System";
+package System;
+import "common.proto";
+import "system_dtos.proto";
+
+service SystemSrv {
+    // Menu
+    rpc GetAllMenus(Empty) returns (MenusResponse);
+
+    // Permission
+    rpc GetAllPermissions(Empty) returns (PermissionsResponse);
+
+    // PermissionApi
+    rpc GetAllPermissionApis(Empty) returns (GetAllPermissionApisResponse);
+
+    // Role
+    rpc GetAllRoles(Empty) returns (RolesResponse);
+    rpc GetRoleById(KeyObject) returns (RoleDTO);
+    rpc CreateRole(RoleDTO) returns (RoleDTO);
+    rpc DeleteRoleById(KeyObject) returns (BooleanObject);
+    rpc UpdateRole(RoleDTO) returns (BooleanObject);
+    rpc GetRolePermissions(KeyObject) returns (PermissionsResponse);
+    rpc UpdateRolePermissions(UpdateRolePermissionsRequest) returns (BooleanObject);
+
+    // User
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);
+    rpc GetUsers(PagingRequest) returns (GetUsersResponse);
+    rpc GetUserById(KeyObject) returns (UserDTO);
+    rpc CreateUser(UserDTO) returns (UserDTO);
+    rpc UpdateUser(UserDTO) returns (BooleanObject);
+    rpc UpdateUserRoles(UpdateUserRolesRequest) returns (BooleanObject);
+    rpc DeleteUserById(KeyObject) returns(BooleanObject);
+    rpc GetRolesByUserId(KeyObject) returns(RolesResponse);
+    rpc GetUserMenus(KeyObject) returns(MenuTree);
+    rpc GetUserPermissions(KeyObject) returns(PermissionsResponse);
+}
+
+message UpdateUserRolesRequest {
+    int32 UserId = 1;
+    repeated int32 Roles = 2;
+}
+
+message MenuTree {
+    repeated MenuNode Nodes = 1;
+}
+
+message MenuNode {
+    string Code = 1;
+    string ParentCode = 2;
+    string Path = 3;
+    string Name = 4;
+    int32 IsLeaf = 5;
+    string Icon = 6;
+    repeated MenuNode Children = 7;
+}
+
+message MenusResponse {
+    repeated MenuDTO Menus = 1;
+}
+
+message PermissionsResponse {
+    repeated PermissionDTO Permissions = 1;
+}
+
+message GetAllPermissionApisResponse {
+    repeated PermissionApiDTO PermissionApis = 1;
+}
+
+message RolesResponse {
+    repeated RoleDTO Roles = 1;
+}
+
+message UpdateRolePermissionsRequest {
+    int32 RoleId = 1;
+    repeated string PermissionCodes = 2;
+}
+
+// User
+message GetUserByUsernameRequest {
+    string Username = 1;
+}
+
+message GetUsersResponse {
+    int32 TotalCount = 1;
+    repeated UserDTO Users = 2;
+}
