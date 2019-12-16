@@ -22,11 +22,13 @@ namespace Tripod.Service.Archive.Services
             _branchGroupDao = new BranchGroupDAO(options);
         }
 
-        public override Task<GetBranchGroupsResponse> GetBranchGroups(Empty request, Grpc.Core.ServerCallContext context)
+        public override Task<GetBranchGroupsResponse> GetBranchGroups(GetBranchGroupsRequest request, Grpc.Core.ServerCallContext context)
         {
-            var branchGroups = _branchGroupDao.GetAll();
+            var branchGroups = _branchGroupDao.GetBranchGroups(request.PageIndex, request.PageSize, request.Keyword);
             var response = new GetBranchGroupsResponse();
-            response.BranchGroups.AddRange(branchGroups.Select(bg => _mapper.Map<BranchGroupDTO>(bg)));
+
+            response.BranchGroups.AddRange(branchGroups.List.Select(bg => _mapper.Map<BranchGroupDTO>(bg)));
+            response.TotalCount = branchGroups.TotalCount;
             return Task.FromResult(response);
         }
 
@@ -69,17 +71,10 @@ namespace Tripod.Service.Archive.Services
             return Task.FromResult(response);
         }
 
-        public override Task<BooleanObject> DeleteBranchGroupBranchs(DeleteBranchGroupBranchsRequest request, Grpc.Core.ServerCallContext context)
+        public override Task<BooleanObject> UpdateBranchGroupBranchs(UpdateBranchGroupBranchsRequest request, ServerCallContext context)
         {
-            int branchGroupId = Convert.ToInt32(request.BranchGroupId);
-            var success = _branchGroupDao.DeleteBranchGroupBranchs(branchGroupId, request.BranchIdList);
-            return Task.FromResult(new BooleanObject() { Body = success });
-        }
+            var success = _branchGroupDao.UpdateBranchGroupBranchs(request.BranchGroupId, request.BranchIdList);
 
-        public override Task<BooleanObject> AddBranchGroupBranchs(AddBranchGroupBranchsRequest request, Grpc.Core.ServerCallContext context)
-        {
-            int branchGroupId = Convert.ToInt32(request.BranchGroupId);
-            var success = _branchGroupDao.AddBranchGroupBranchs(branchGroupId, request.BranchIdList);
             return Task.FromResult(new BooleanObject() { Body = success });
         }
 

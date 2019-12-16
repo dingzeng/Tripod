@@ -6,6 +6,8 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Model;
+using Tripod.Application.AdminApi.Model.BranchGroup;
 using Tripod.Service.Archive;
 
 namespace Tripod.Application.AdminApi.Controllers
@@ -31,7 +33,16 @@ namespace Tripod.Application.AdminApi.Controllers
         public Response<BranchGroupDTO> Get(string id) => _client.GetBranchGroup(new KeyObject() { Body = id });
 
         [HttpGet]
-        public Response<IEnumerable<BranchGroupDTO>> Get() => _client.GetBranchGroups(new Empty()).BranchGroups;
+        public Response<PagedList<BranchGroupDTO>> Get(int pageIndex = 1, int pageSize = int.MaxValue, string keyword = "")
+        {
+            var request = new GetBranchGroupsRequest();
+            request.PageIndex = pageIndex;
+            request.PageSize = pageSize;
+            request.Keyword = keyword ?? "";
+
+            var response = _client.GetBranchGroups(request);
+            return new PagedList<BranchGroupDTO>(response.BranchGroups, response.TotalCount);
+        }
 
         [HttpPost]
         public Response<BranchGroupDTO> Post(BranchGroupDTO model) => _client.CreateBranchGroup(model);
@@ -41,5 +52,23 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpDelete("{id}")]
         public Response<bool> Delete(string id) => _client.DeleteBranchGroup(new KeyObject() { Body = id }).Body;
+
+        [HttpGet("branch/{branchGroupId}")]
+        public Response<List<BranchDTO>> GetBranchs(string branchGroupId)
+        {
+            var response = _client.GetBranchGroupBranchs(new KeyObject() { Body = branchGroupId });
+            return response.BranchGroupBranchs.ToList();
+        }
+
+        [HttpPut("branch")]
+        public Response<bool> UpdateBranchs(UpdateBranchsModel model)
+        {
+            var request = new UpdateBranchGroupBranchsRequest();
+            request.BranchGroupId = model.BranchGroupId;
+            request.BranchIdList.AddRange(model.BranchIdList);
+
+            var response = _client.UpdateBranchGroupBranchs(request);
+            return response.Body;
+        }
     }
 }

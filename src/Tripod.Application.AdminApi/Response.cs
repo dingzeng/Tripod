@@ -15,7 +15,6 @@ namespace Tripod.Application.AdminApi
             return new Response<TData>()
             {
                 Code = 20000,
-                Message = "success",
                 Data = value
             };
         }

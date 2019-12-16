@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Tripod.Application.AdminApi.Model;
+using Tripod.Application.AdminApi.Model.User;
 using Tripod.Service.System;
 
 namespace Tripod.Application.AdminApi.Controllers
@@ -31,8 +32,10 @@ namespace Tripod.Application.AdminApi.Controllers
         [HttpGet("_page")]
         public Response<dynamic> Page()
         {
-            return new {
-                
+            var response = _client.GetAllRoles(new Empty());
+            return new
+            {
+                roles = response.Roles
             };
         }
 
@@ -56,6 +59,24 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpPut]
         public Response<bool> Put(UserDTO model) => _client.UpdateUser(model).Body;
+
+        [HttpGet("role/{userId}")]
+        public Response<IEnumerable<RoleDTO>> GetRoles(string userId)
+        {
+            var response = _client.GetRolesByUserId(new KeyObject() { Body = userId });
+            return response.Roles;
+        }
+
+        [HttpPut("role")]
+        public Response<bool> UpdateRoles(UpdateRolesModel model)
+        {
+            var request = new UpdateUserRolesRequest();
+            request.UserId = model.UserId;
+            request.Roles.AddRange(model.RoleIdList);
+
+            var response = _client.UpdateUserRoles(request);
+            return response.Body;
+        }
 
         [HttpDelete]
         public Response<bool> Delete(string id) => _client.DeleteUserById(new KeyObject() { Body = id }).Body;

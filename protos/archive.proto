@@ -6,14 +6,13 @@ import "archive_dtos.proto";
 
 service BranchSrv {
 	// branchGroup
-    rpc GetBranchGroups(Empty) returns (GetBranchGroupsResponse);
+    rpc GetBranchGroups(GetBranchGroupsRequest) returns (GetBranchGroupsResponse);
     rpc GetBranchGroup(KeyObject) returns (BranchGroupDTO);
     rpc CreateBranchGroup(BranchGroupDTO) returns (BranchGroupDTO);
     rpc UpdateBranchGroup(BranchGroupDTO) returns (BooleanObject);
     rpc DeleteBranchGroup(KeyObject) returns (BooleanObject);
-    rpc GetBranchGroupBranchs(KeyObject) returns (GetBranchGroupBranchsResponse);
-    rpc DeleteBranchGroupBranchs(DeleteBranchGroupBranchsRequest) returns (BooleanObject);
-	rpc AddBranchGroupBranchs(AddBranchGroupBranchsRequest) returns (BooleanObject);
+	rpc GetBranchGroupBranchs(KeyObject) returns (GetBranchGroupBranchsResponse);
+	rpc UpdateBranchGroupBranchs(UpdateBranchGroupBranchsRequest) returns (BooleanObject);
 	
 	// branch
 	rpc GetBranchs(GetBranchsRequest) returns (GetBranchsResponse);
@@ -144,11 +143,17 @@ message GetItemBrandsResponse {
 }
 
 message GetBranchsRequest {
-    int32 PageIndex = 1;
-    int32 PageSize = 2;
-		string Keyword = 3;
-		string ParentId = 4;
-		string TypeList = 5;
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	string Keyword = 3;
+	string ParentId = 4;
+	string TypeList = 5;
+}
+
+message GetBranchGroupsRequest {
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	string Keyword = 3;
 }
 
 message GetBranchStoresResponse {
@@ -161,25 +166,21 @@ message UpdateBranchStoresRequest {
 }
 
 message GetBranchsResponse {
-  int32 TotalCount = 1;
+  	int32 TotalCount = 1;
 	repeated BranchDTO Branchs = 2;
 }
 
 message GetBranchGroupsResponse {
-  repeated BranchGroupDTO BranchGroups = 1;
+	int32 TotalCount = 1;
+  	repeated BranchGroupDTO BranchGroups = 2;
 }
 
 message GetBranchGroupBranchsResponse {
     repeated BranchDTO BranchGroupBranchs = 1;
 }
 
-message DeleteBranchGroupBranchsRequest {
-    int32 BranchGroupId = 1;
-    repeated string BranchIdList = 2;
-}
-
-message AddBranchGroupBranchsRequest {
-    int32 BranchGroupId = 1;
+message UpdateBranchGroupBranchsRequest {
+	int32 BranchGroupId = 1;
     repeated string BranchIdList = 2;
 }
 

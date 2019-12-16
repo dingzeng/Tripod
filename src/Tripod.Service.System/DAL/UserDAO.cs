@@ -89,13 +89,14 @@ WHERE e.id = @userId;";
 
         public void UpdateUserRoles(int userId, List<int> roles)
         {
-            if (roles == null || roles.Count == 0)
-                throw new ArgumentNullException(nameof(roles));
             Run(conn =>
             {
-                var values = string.Join(',', roles.Select(roleId => $"({userId}, {roleId})"));
                 var lines = conn.Execute("DELETE FROM user_role WHERE user_id = @userId;", new { userId });
-                lines += conn.Execute($"INSERT INTO user_role(user_id, role_id) VALUES{values}");
+                if (roles != null && roles.Count > 0)
+                {
+                    var values = string.Join(',', roles.Select(roleId => $"({userId}, {roleId})"));
+                    lines += conn.Execute($"INSERT INTO user_role(user_id, role_id) VALUES{values}");
+                }
                 return lines;
             });
         }
