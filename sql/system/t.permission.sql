@@ -21,6 +21,18 @@ INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_CREATE',
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_UPDATE','010102',2,'修改机构');
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('BRANCH_DELETE','010102',3,'删除机构');
 
+-- SupplierRegion
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_REGION_VIEW','010201',0,'查看供应商区域');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_REGION_CREATE','010201',1,'新增供应商区域');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_REGION_UPDATE','010201',2,'修改供应商区域');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_REGION_DELETE','010201',3,'删除供应商区域');
+
+-- Supplier
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_VIEW','010202',0,'查看供应商');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_CREATE','010202',1,'新增供应商');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_UPDATE','010202',2,'修改供应商');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_DELETE','010202',3,'删除供应商');
+
 -- Role
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_VIEW','090101',0,'查看角色');
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_CREATE','090101',1,'新增角色');

@@ -12,9 +12,12 @@ ENGINE = InnoDB;
 
 -- 基础档案
 INSERT INTO `menu`(code,`name`,`icon`,is_leaf) VALUES('01','基础档案','el-icon-document', 0);
-INSERT INTO `menu`(code,parent_code,`name`,is_leaf) VALUES('0101','01','机构档案', 0);
+INSERT INTO `menu`(code,parent_code,`name`,is_leaf) VALUES('0101','01','机构管理', 0);
 INSERT INTO `menu`(code,parent_code,`path`,`name`,is_leaf) VALUES('010101','0101','/archive/branchGroup','店组管理', 1);
 INSERT INTO `menu`(code,parent_code,`path`,`name`,is_leaf) VALUES('010102','0101','/archive/branch','机构档案', 1);
+INSERT INTO `menu`(code,parent_code,`name`,is_leaf) VALUES('0102','01','供应商管理', 0);
+INSERT INTO `menu`(code,parent_code,`path`,`name`,is_leaf) VALUES('010201','0102','/archive/supplierRegion','供应商区域', 1);
+INSERT INTO `menu`(code,parent_code,`path`,`name`,is_leaf) VALUES('010202','0102','/archive/supplier','供应商档案', 1);
 
 INSERT INTO `menu`(code,`name`,`icon`,is_leaf) VALUES('02','采购业务','el-icon-s-order', 0);
 INSERT INTO `menu`(code,`name`,`icon`,is_leaf) VALUES('03','零售业务','el-icon-s-shop', 0);

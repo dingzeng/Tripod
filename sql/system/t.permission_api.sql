@@ -23,6 +23,20 @@ INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_CREATE
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_UPDATE','/archive/branch','PUT');
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('BRANCH_DELETE','/archive/branch','DELETE');
 
+-- SupplierRegion
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_REGION_VIEW','/archive/supplierRegion','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_REGION_VIEW','/archive/supplierRegion/?','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_REGION_CREATE','/archive/supplierRegion','POST');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_REGION_UPDATE','/archive/supplierRegion','PUT');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_REGION_DELETE','/archive/supplierRegion','DELETE');
+
+-- Supplier
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_VIEW','/archive/supplier','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_VIEW','/archive/supplier/?','GET');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_CREATE','/archive/supplier','POST');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_UPDATE','/archive/supplier','PUT');
+INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('SUPPLIER_DELETE','/archive/supplier','DELETE');
+
 -- Role
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_VIEW','/system/roles','GET');
 INSERT INTO `permission_api`(permission_code,`url`,method) VALUES('ROLE_VIEW','/system/role/?','GET');
