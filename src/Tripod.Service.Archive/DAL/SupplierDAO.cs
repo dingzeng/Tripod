@@ -18,7 +18,7 @@ namespace Tripod.Service.Archive.DAL
         public PagedList<Supplier> GetSuppliers(int pageIndex = 1, int pageSize = int.MaxValue, int? supplierRegionId = null)
         {
             var conditions = "";
-            if (supplierRegionId.HasValue)
+            if (supplierRegionId.HasValue && supplierRegionId.Value != 0)
             {
                 conditions += "AND region_id = @regionId";
             }
@@ -27,7 +27,10 @@ namespace Tripod.Service.Archive.DAL
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 conditions: conditions,
-                param: new { });
+                param: new
+                {
+                    regionId = supplierRegionId
+                });
         }
     }
 }

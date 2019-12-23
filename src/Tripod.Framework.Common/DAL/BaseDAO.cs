@@ -135,6 +135,11 @@ namespace Tripod.Framework.Common.DAL
             });
         }
 
+        public PagedList<TEntity> GetPaging(int pageIndex = 1, int pageSize = int.MaxValue)
+        {
+            return GetPaging<TEntity>(pageIndex: pageIndex, pageSize: pageSize);
+        }
+
         /// <summary>
         /// 分页获取数据
         /// </summary>

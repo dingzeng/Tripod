@@ -33,21 +33,21 @@ service ItemSrv {
 	rpc DeleteItemCls(KeyObject) returns(BooleanObject);
 
 	// itemBrand
-	rpc GetItemBrands(Empty) returns(GetItemBrandsResponse);
+	rpc GetItemBrands(GetItemBrandsRequest) returns(GetItemBrandsResponse);
 	rpc GetItemBrand(KeyObject) returns(ItemBrandDTO);
 	rpc CreateItemBrand(ItemBrandDTO) returns(ItemBrandDTO);
 	rpc UpdateItemBrand(ItemBrandDTO) returns(BooleanObject);
 	rpc DeleteItemBrand(KeyObject) returns(BooleanObject);
 
 	// itemUnit
-	rpc GetItemUnits(Empty) returns(GetItemUnitResponse);
+	rpc GetItemUnits(GetItemUnitsRequest) returns(GetItemUnitResponse);
 	rpc GetItemUnit(KeyObject) returns(ItemUnitDTO);
 	rpc CreateItemUnit(ItemUnitDTO) returns(ItemUnitDTO);
 	rpc UpdateItemUnit(ItemUnitDTO) returns(BooleanObject);
 	rpc DeleteItemUnit(KeyObject) returns(BooleanObject);
 
 	// itemDepartment
-	rpc GetItemDepartments(Empty) returns(GetItemDepartmentsResponse);
+	rpc GetItemDepartments(GetItemDepartmentsRequest) returns(GetItemDepartmentsResponse);
 	rpc GetItemDepartment(KeyObject) returns(ItemDepartmentDTO);
 	rpc CreateItemDepartment(ItemDepartmentDTO) returns(ItemDepartmentDTO);
 	rpc UpdateItemDepartment(ItemDepartmentDTO) returns(BooleanObject);
@@ -79,6 +79,24 @@ service SupplierSrv {
 	rpc CreateSupplier(SupplierDTO) returns(SupplierDTO);
 	rpc UpdateSupplier(SupplierDTO) returns(BooleanObject);
 	rpc DeleteSupplier(KeyObject) returns(BooleanObject);
+}
+
+message GetItemBrandsRequest {
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	string Keyword = 3;
+}
+
+message GetItemUnitsRequest {
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	string Keyword = 3;
+}
+
+message GetItemDepartmentsRequest {
+	int32 PageIndex = 1;
+	int32 PageSize = 2;
+	string Keyword = 3;
 }
 
 message GetItemsRequest {
@@ -131,15 +149,18 @@ message GetItemClssResponse {
 }
 
 message GetItemUnitResponse {
-	repeated ItemUnitDTO ItemUnits = 1;
+	int32 TotalCount = 1;
+	repeated ItemUnitDTO ItemUnits = 2;
 }
 
 message GetItemDepartmentsResponse {
-	repeated ItemDepartmentDTO ItemDepartments = 1;
+	int32 TotalCount = 1;
+	repeated ItemDepartmentDTO ItemDepartments = 2;
 }
 
 message GetItemBrandsResponse {
-	repeated ItemBrandDTO ItemBrands = 1;
+	int32 TotalCount = 1;
+	repeated ItemBrandDTO ItemBrands = 2;
 }
 
 message GetBranchsRequest {

@@ -10,6 +10,7 @@ using Tripod.Application.AdminApi.Model.Identity;
 using Tripod.Service.System;
 using StackExchange.Redis;
 using Newtonsoft.Json;
+using Tripod.Application.AdminApi.Model;
 
 namespace Tripod.Application.AdminApi.Controllers
 {
@@ -75,6 +76,9 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpPost]
         [Route("logout")]
-        public Response<bool> Logout([FromHeader]string token) => _redis.KeyDelete(token);
+        public Response<bool> Logout([FromBody]LogoutModel model)
+        {
+           return _redis.KeyDelete(model.Token);
+        }
     }
 }

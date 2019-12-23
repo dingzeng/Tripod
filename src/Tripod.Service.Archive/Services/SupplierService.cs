@@ -46,19 +46,19 @@ namespace Tripod.Service.Archive.Services
         public override Task<BooleanObject> UpdateSupplierRegion(SupplierRegionDTO request, ServerCallContext context)
         {
             var success = _supplierRegionDao.Update(_mapper.Map<SupplierRegion>(request));
-            return Task.FromResult(new BooleanObject(){ Body = success });
+            return Task.FromResult(new BooleanObject() { Body = success });
         }
 
         public override Task<BooleanObject> DeleteSupplierRegion(KeyObject request, ServerCallContext context)
         {
             var id = Convert.ToInt32(request.Body);
-            var success = _supplierRegionDao.Delete(new SupplierRegion(){Id = id});
-            return Task.FromResult(new BooleanObject(){ Body = success });
+            var success = _supplierRegionDao.Delete(new SupplierRegion() { Id = id });
+            return Task.FromResult(new BooleanObject() { Body = success });
         }
 
         public override Task<GetSuppliersResponse> GetSuppliers(GetSuppliersRequest request, ServerCallContext context)
         {
-            var suppliers = _supplierDao.GetSuppliers(pageIndex:request.PageIndex,pageSize:request.PageSize,supplierRegionId:request.SupplierRegionId);
+            var suppliers = _supplierDao.GetSuppliers(pageIndex: request.PageIndex, pageSize: request.PageSize, supplierRegionId: request.SupplierRegionId);
             var response = new GetSuppliersResponse();
             response.Suppliers.AddRange(suppliers.List.Select(s => _mapper.Map<SupplierDTO>(s)));
             response.TotalCount = suppliers.TotalCount;
@@ -81,13 +81,13 @@ namespace Tripod.Service.Archive.Services
         public override Task<BooleanObject> UpdateSupplier(SupplierDTO request, ServerCallContext context)
         {
             var success = _supplierDao.Update(_mapper.Map<Supplier>(request));
-            return Task.FromResult(new BooleanObject(){Body=success});
+            return Task.FromResult(new BooleanObject() { Body = success });
         }
 
         public override Task<BooleanObject> DeleteSupplier(KeyObject request, ServerCallContext context)
         {
-            var success = _supplierDao.Delete(new Supplier(){Id=request.Body});
-            return Task.FromResult(new BooleanObject(){Body=success});
+            var success = _supplierDao.Delete(new Supplier() { Id = request.Body });
+            return Task.FromResult(new BooleanObject() { Body = success });
         }
     }
 }

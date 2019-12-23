@@ -7,22 +7,5 @@ CREATE TABLE `role_permission` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_GROUP_VIEW');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_GROUP_CREATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_GROUP_UPDATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_GROUP_DELETE');
-
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_VIEW');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_CREATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_UPDATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'BRANCH_DELETE');
-
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'ROLE_VIEW');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'ROLE_CREATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'ROLE_UPDATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'ROLE_DELETE');
-
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'USER_VIEW');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'USER_CREATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'USER_UPDATE');
-INSERT INTO `role_permission`(role_id,permission_code) VALUES(1,'USER_DELETE');
+/* 为角色1分配所有操作权限 */
+INSERT INTO role_permission(role_id, permission_code) SELECT 1, `code` FROM permission;

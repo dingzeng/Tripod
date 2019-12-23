@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Model;
 using Tripod.Service.Archive;
 
 namespace Tripod.Application.AdminApi.Controllers
@@ -30,6 +32,20 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpGet("{id}")]
         public Response<SupplierRegionDTO> Get(string id) => _client.GetSupplierRegion(new KeyObject() { Body = id });
+
+        [HttpGet("tree")]
+        public Response<List<TreeNode>> GetTree()
+        {
+            var response = _client.GetSupplierRegions(new Empty());
+            var children = response.SupplierRegions.Select(sr => new TreeNode() { Id = sr.Id.ToString(), Label = sr.Name });
+            var root = new TreeNode()
+            {
+                Id = "",
+                Label = "全部",
+                Children = children.ToList()
+            };
+            return new List<TreeNode>() { root };
+        }
 
         [HttpPost]
         public Response<SupplierRegionDTO> Post(SupplierRegionDTO model)

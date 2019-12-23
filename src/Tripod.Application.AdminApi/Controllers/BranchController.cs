@@ -6,6 +6,7 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Attributes;
 using Tripod.Application.AdminApi.Model;
 using Tripod.Service.Archive;
 
@@ -29,9 +30,11 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [PermissionApi("BRANCH_VIEW")]
         public Response<BranchDTO> Get(string id) => _client.GetBranch(new KeyObject() { Body = id });
 
         [HttpGet]
+        [PermissionApi("BRANCH_VIEW")]
         public Response<PagedList<BranchDTO>> Get(
             int pageIndex = 1, 
             int pageSize = 20, 

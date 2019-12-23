@@ -33,6 +33,30 @@ INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_CREATE
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_UPDATE','010202',2,'修改供应商');
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('SUPPLIER_DELETE','010202',3,'删除供应商');
 
+-- ItemCls
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_CLS_VIEW','010301',0,'查看商品类别');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_CLS_CREATE','010301',1,'新增商品类别');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_CLS_UPDATE','010301',2,'修改商品类别');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_CLS_DELETE','010301',3,'删除商品类别');
+
+-- ItemBrand
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_BRAND_VIEW','010302',0,'查看商品品牌');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_BRAND_CREATE','010302',1,'新增商品品牌');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_BRAND_UPDATE','010302',2,'修改商品品牌');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_BRAND_DELETE','010302',3,'删除商品品牌');
+
+-- ItemDepartment
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_DEPARTMENT_VIEW','010303',0,'查看商品部门');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_DEPARTMENT_CREATE','010303',1,'新增商品部门');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_DEPARTMENT_UPDATE','010303',2,'修改商品部门');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_DEPARTMENT_DELETE','010303',3,'删除商品部门');
+
+-- ItemUnit
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UNIT_VIEW','010304',0,'查看商品单位');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UNIT_CREATE','010304',1,'新增商品单位');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UNIT_UPDATE','010304',2,'修改商品单位');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UNIT_DELETE','010304',3,'删除商品单位');
+
 -- Role
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_VIEW','090101',0,'查看角色');
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_CREATE','090101',1,'新增角色');

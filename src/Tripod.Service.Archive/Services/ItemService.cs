@@ -64,11 +64,13 @@ namespace Tripod.Service.Archive.Services
         }
 
         // itemBrand
-        public override Task<GetItemBrandsResponse> GetItemBrands(Empty request, ServerCallContext context)
+        public override Task<GetItemBrandsResponse> GetItemBrands(GetItemBrandsRequest request, ServerCallContext context)
         {
-            var itemBrands = _itemBrandDao.GetAll();
+            var itemBrands = _itemBrandDao.GetPaging(pageIndex: request.PageIndex, pageSize: request.PageSize);
+
             var response = new GetItemBrandsResponse();
-            response.ItemBrands.AddRange(itemBrands.Select(ib => _mapper.Map<ItemBrandDTO>(ib)));
+            response.TotalCount = itemBrands.TotalCount;
+            response.ItemBrands.AddRange(itemBrands.List.Select(ib => _mapper.Map<ItemBrandDTO>(ib)));
             return Task.FromResult(response);
         }
 
@@ -98,11 +100,13 @@ namespace Tripod.Service.Archive.Services
         }
 
         // itemUnit
-        public override Task<GetItemUnitResponse> GetItemUnits(Empty request, ServerCallContext context)
+        public override Task<GetItemUnitResponse> GetItemUnits(GetItemUnitsRequest request, ServerCallContext context)
         {
-            var itemUnits = _itemUnitDao.GetAll();
+            var itemUnits = _itemUnitDao.GetPaging(request.PageIndex, request.PageSize);
+
             var response = new GetItemUnitResponse();
-            response.ItemUnits.AddRange(itemUnits.Select(iu => _mapper.Map<ItemUnitDTO>(iu)));
+            response.TotalCount = itemUnits.TotalCount;
+            response.ItemUnits.AddRange(itemUnits.List.Select(iu => _mapper.Map<ItemUnitDTO>(iu)));
             return Task.FromResult(response);
         }
 
@@ -133,11 +137,13 @@ namespace Tripod.Service.Archive.Services
         }
 
         // itemDepartment
-        public override Task<GetItemDepartmentsResponse> GetItemDepartments(Empty request, ServerCallContext context)
+        public override Task<GetItemDepartmentsResponse> GetItemDepartments(GetItemDepartmentsRequest request, ServerCallContext context)
         {
-            var itemDepartments = _itemDepartmentDao.GetAll();
+            var itemDepartments = _itemDepartmentDao.GetPaging(request.PageIndex, request.PageSize);
+
             var response = new GetItemDepartmentsResponse();
-            response.ItemDepartments.AddRange(itemDepartments.Select(id => _mapper.Map<ItemDepartmentDTO>(id)));
+            response.TotalCount = itemDepartments.TotalCount;
+            response.ItemDepartments.AddRange(itemDepartments.List.Select(id => _mapper.Map<ItemDepartmentDTO>(id)));
             return Task.FromResult(response);
         }
 
