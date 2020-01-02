@@ -107,6 +107,25 @@ namespace Tripod.Service.System.Services
             return Task.FromResult(new BooleanObject { Body = success });
         }
 
+        public override Task<BooleanObject> SetRolePermission(SetRolePermissionRequest request, ServerCallContext context)
+        {
+            var res = new BooleanObject();
+
+            if (request.Has)
+            {
+                if (!_roleDao.ExistPermission(request.RoleId, request.PermissionCode))
+                {
+                    res.Body = _roleDao.DeleteRolePermission(request.RoleId, request.PermissionCode);
+                }
+            }
+            else
+            {
+                res.Body = _roleDao.AddRolePermission(request.RoleId, request.PermissionCode);
+            }
+
+            return Task.FromResult(res);
+        }
+
         #endregion
 
         #region User

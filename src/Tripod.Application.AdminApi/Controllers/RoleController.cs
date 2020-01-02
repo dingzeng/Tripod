@@ -6,6 +6,7 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Model.Role;
 using Tripod.Service.System;
 
 namespace Tripod.Application.AdminApi.Controllers
@@ -42,21 +43,22 @@ namespace Tripod.Application.AdminApi.Controllers
         [HttpDelete("{id}")]
         public Response<bool> Delete(string id) => _client.DeleteRoleById(new KeyObject() { Body = id }).Body;
 
-        [HttpGet("permission")]
-        public Response<IEnumerable<PermissionDTO>> GetPermissions(string roleId)
+        [HttpGet("{roleId}/permissions")]
+        public Response<IEnumerable<PermissionDTO>> GetRolePermissions(string roleId)
         {
             return _client.GetRolePermissions(new KeyObject() { Body = roleId }).Permissions;
         }
 
         [HttpPut("permission")]
-        public Response<bool> UpdatePermissions(int roleId, [FromBody]List<string> model)
+        public Response<bool> UpdateRolePermission(UpdateRolePermissionModel model)
         {
-            var request = new UpdateRolePermissionsRequest()
-            {
-                RoleId = roleId
-            };
-            request.PermissionCodes.AddRange(model);
-            return _client.UpdateRolePermissions(request).Body;
+            var request = new SetRolePermissionRequest();
+            request.RoleId = model.RoleId;
+            request.PermissionCode = model.PermissionCode;
+            request.Has = model.Has;
+
+            var response = _client.SetRolePermission(request);
+            return response.Body;
         }
     }
 }

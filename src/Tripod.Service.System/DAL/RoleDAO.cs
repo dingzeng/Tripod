@@ -47,5 +47,59 @@ WHERE b.user_id = @userId";
                 return conn.Execute(builder.ToString(), new { roleId = roleId }) > 0;
             });
         }
+
+        public bool ExistPermission(int roleId, string permissionCode)
+        {
+            if (string.IsNullOrEmpty(permissionCode))
+            {
+                throw new ArgumentNullException(nameof(permissionCode));
+            }
+
+            var sql = "SELECT 1 FROM role_permission WHERE role_id = @roleId AND permission_code = @permissionCode;";
+            return Run(conn =>
+            {
+                return conn.Query(sql, new
+                {
+                    roleId,
+                    permissionCode
+                }).Count() > 0;
+            });
+        }
+
+        public bool DeleteRolePermission(int roleId, string permissionCode)
+        {
+            if (string.IsNullOrEmpty(permissionCode))
+            {
+                throw new ArgumentNullException(nameof(permissionCode));
+            }
+
+            var sql = "DELETE FROM role_permission WHERE role_id = @roleId AND permission_code = @permissionCode;";
+            return Run(conn =>
+            {
+                return conn.Execute(sql, new
+                {
+                    roleId,
+                    permissionCode
+                }) > 0;
+            });
+        }
+
+        public bool AddRolePermission(int roleId, string permissionCode)
+        {
+            if (string.IsNullOrEmpty(permissionCode))
+            {
+                throw new ArgumentNullException(nameof(permissionCode));
+            }
+
+            var sql = "INSERT INTO role_permission(role_id, permission_code) VALUES(@roleId, @permissionCode);";
+            return Run(conn =>
+            {
+                return conn.Execute(sql, new
+                {
+                    roleId,
+                    permissionCode
+                }) > 0;
+            });
+        }
     }
 }

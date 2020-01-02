@@ -22,6 +22,7 @@ service SystemSrv {
     rpc UpdateRole(RoleDTO) returns (BooleanObject);
     rpc GetRolePermissions(KeyObject) returns (PermissionsResponse);
     rpc UpdateRolePermissions(UpdateRolePermissionsRequest) returns (BooleanObject);
+    rpc SetRolePermission(SetRolePermissionRequest) returns (BooleanObject);
 
     // User
     rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);
@@ -74,6 +75,12 @@ message RolesResponse {
 message UpdateRolePermissionsRequest {
     int32 RoleId = 1;
     repeated string PermissionCodes = 2;
+}
+
+message SetRolePermissionRequest {
+    int32 RoleId = 1;
+    string PermissionCode = 2;
+    bool Has = 3;
 }
 
 // User

@@ -4,7 +4,6 @@
 **/obj
 **/.vs
 **/.vscode/*.json
-**/appsettings.json
 **/appsettings.Development.json
 
 # node
