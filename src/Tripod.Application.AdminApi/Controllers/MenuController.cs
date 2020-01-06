@@ -6,10 +6,14 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Model;
 using Tripod.Service.System;
 
 namespace Tripod.Application.AdminApi.Controllers
 {
+    /// <summary>
+    /// 后台系统菜单
+    /// </summary>
     [ApiController]
     [Route("system/[controller]")]
     public class MenuController : ControllerBase
@@ -28,6 +32,37 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
-        public Response<IEnumerable<MenuDTO>> Get() => _client.GetAllMenus(new Empty()).Menus;
+        public Response<IEnumerable<MenuDTO>> Get(string parentCode)
+        {
+            return _client.GetMenus(new GetMenusRequest() { ParentCode = parentCode ?? "" }).Menus;
+        }
+
+        [HttpGet("tree")]
+        public Response<List<TreeNode>> GetTree()
+        {
+            var response = new List<TreeNode>();
+            var menus = _client.GetMenus(new GetMenusRequest()).Menus;
+            var modules = menus.Where(m => string.IsNullOrEmpty(m.ParentCode));
+            foreach (var module in modules)
+            {
+                var node = new TreeNode();
+                node.Id = module.Code;
+                node.Label = module.Name;
+                node.Children = new List<TreeNode>();
+
+                foreach (var group in menus.Where(m => m.ParentCode == module.Code))
+                {
+                    node.Children.Add(new TreeNode()
+                    {
+                        Id = group.Code,
+                        Label = group.Name
+                    });
+                }
+
+                response.Add(node);
+            }
+
+            return response;
+        }
     }
 }

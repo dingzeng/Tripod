@@ -4,7 +4,7 @@ namespace Tripod.Application.AdminApi
 {
     public class Response<TData>
     {
-        public int Code { get; set; }
+        public ApiCode Code { get; set; }
 
         public TData Data { get; set; }
 
@@ -14,7 +14,7 @@ namespace Tripod.Application.AdminApi
         {
             return new Response<TData>()
             {
-                Code = 20000,
+                Code = ApiCode.SUCCESS,
                 Data = value
             };
         }

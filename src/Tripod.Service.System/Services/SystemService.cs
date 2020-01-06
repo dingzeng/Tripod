@@ -30,10 +30,10 @@ namespace Tripod.Service.System.Services
         }
 
         // Menu
-        public override Task<MenusResponse> GetAllMenus(Empty request, ServerCallContext context)
+        public override Task<GetMenusResponse> GetMenus(GetMenusRequest request, ServerCallContext context)
         {
-            var menus = _menuDao.GetAll();
-            var res = new MenusResponse();
+            var menus = _menuDao.GetMenus(request.ParentCode);
+            var res = new GetMenusResponse();
             res.Menus.AddRange(menus.Select(m => _mapper.Map<MenuDTO>(m)));
             return Task.FromResult(res);
         }
@@ -115,15 +115,31 @@ namespace Tripod.Service.System.Services
             {
                 if (!_roleDao.ExistPermission(request.RoleId, request.PermissionCode))
                 {
-                    res.Body = _roleDao.DeleteRolePermission(request.RoleId, request.PermissionCode);
+                    res.Body = _roleDao.AddRolePermission(request.RoleId, request.PermissionCode);
                 }
             }
             else
             {
-                res.Body = _roleDao.AddRolePermission(request.RoleId, request.PermissionCode);
+                res.Body = _roleDao.DeleteRolePermission(request.RoleId, request.PermissionCode);
             }
 
             return Task.FromResult(res);
+        }
+
+        public override Task<GetRolePermissionsFlagResponse> GetRolePermissionsFlag(KeyObject request, ServerCallContext context)
+        {
+            int roleId = Convert.ToInt32(request.Body);
+            var rolePermissionsFlag = _roleDao.GetRolePermissionsFlag(roleId);
+            var response = new GetRolePermissionsFlagResponse();
+            response.Flags.AddRange(rolePermissionsFlag.Select(rpf => new RolePermissionFlag()
+            {
+                MenuCode = rpf.MenuCode,
+                PermissionCode = rpf.PermissionCode,
+                PermissionName = rpf.PermissionName,
+                Flag = rpf.Flag
+            }));
+
+            return Task.FromResult(response);
         }
 
         #endregion

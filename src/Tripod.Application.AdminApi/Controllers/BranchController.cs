@@ -12,6 +12,9 @@ using Tripod.Service.Archive;
 
 namespace Tripod.Application.AdminApi.Controllers
 {
+    /// <summary>
+    /// 机构
+    /// </summary>
     [ApiController]
     [Route("archive/[controller]")]
     public class BranchController : ControllerBase
@@ -20,6 +23,11 @@ namespace Tripod.Application.AdminApi.Controllers
         private readonly ILogger<BranchController> _logger;
         private readonly BranchSrv.BranchSrvClient _client;
 
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="optionsAccessor"></param>
         public BranchController(ILogger<BranchController> logger, IOptionsMonitor<AppOptions> optionsAccessor)
         {
             _options = optionsAccessor.CurrentValue;
@@ -29,12 +37,28 @@ namespace Tripod.Application.AdminApi.Controllers
             _client = new BranchSrv.BranchSrvClient(channel);
         }
 
+        private void BuildTree(TreeNode node, IEnumerable<BranchDTO> branchs)
+        {
+            var children = branchs.Where(b => b.ParentId == node.Id);
+            foreach (var child in children)
+            {
+                var childNode = new TreeNode()
+                {
+                    Id = child.Id,
+                    Label = $"[{child.Id}]{child.Name}",
+                    Children = new List<TreeNode>()
+                };
+                node.Children.Add(childNode);
+                BuildTree(childNode, branchs);
+            }
+        }
+
         [HttpGet("{id}")]
-        [PermissionApi("BRANCH_VIEW")]
+        [PermissionFilter("BRANCH_VIEW")]
         public Response<BranchDTO> Get(string id) => _client.GetBranch(new KeyObject() { Body = id });
 
         [HttpGet]
-        [PermissionApi("BRANCH_VIEW")]
+        [PermissionFilter("BRANCH_VIEW")]
         public Response<PagedList<BranchDTO>> Get(
             int pageIndex = 1, 
             int pageSize = 20, 
@@ -55,6 +79,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("tree")]
+        [PermissionFilter("BRANCH_VIEW")]
         public Response<List<TreeNode>> GetTree()
         {
             var response = _client.GetBranchs(new GetBranchsRequest()
@@ -74,29 +99,16 @@ namespace Tripod.Application.AdminApi.Controllers
             return new List<TreeNode>() { root };
         }
 
-        private void BuildTree(TreeNode node, IEnumerable<BranchDTO> branchs)
-        {
-            var children = branchs.Where(b => b.ParentId == node.Id);
-            foreach (var child in children)
-            {
-                var childNode = new TreeNode()
-                {
-                    Id = child.Id,
-                    Label = $"[{child.Id}]{child.Name}",
-                    Children = new List<TreeNode>()
-                };
-                node.Children.Add(childNode);
-                BuildTree(childNode, branchs);
-            }
-        }
-
         [HttpPost]
+        [PermissionFilter("BRANCH_CREATE")]
         public Response<BranchDTO> Post(BranchDTO model) => _client.CreateBranch(model);
 
         [HttpPut]
+        [PermissionFilter("BRANCH_UPDATE")]
         public Response<bool> Put(BranchDTO model) => _client.UpdateBranch(model).Body;
 
         [HttpDelete("{id}")]
+        [PermissionFilter("BRANCH_DELETE")]
         public Response<bool> Delete(string id) => _client.DeleteBranch(new KeyObject() { Body = id }).Body;
 
         [HttpGet("store")]

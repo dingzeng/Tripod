@@ -3,11 +3,15 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Attributes;
 using Tripod.Application.AdminApi.Model;
 using Tripod.Service.Archive;
 
 namespace Tripod.Application.AdminApi.Controllers
 {
+    /// <summary>
+    /// 商品部门
+    /// </summary>
     [ApiController]
     [Route("archive/[controller]")]
     public class ItemDepartmentController: ControllerBase
@@ -25,6 +29,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
+        [PermissionFilter("ITEM_DEPARTMENT_VIEW")]
         public Response<PagedList<ItemDepartmentDTO>> Get(int pageIndex = 1, int pageSize = 20)
         {
             var request = new GetItemDepartmentsRequest();
@@ -40,6 +45,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [PermissionFilter("ITEM_DEPARTMENT_VIEW")]
         public Response<ItemDepartmentDTO> Get(string id)
         {
             return _client.GetItemDepartment(new KeyObject()
@@ -49,12 +55,15 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpPost]
+        [PermissionFilter("ITEM_DEPARTMENT_CREATE")]
         public Response<ItemDepartmentDTO> Post(ItemDepartmentDTO model) => _client.CreateItemDepartment(model);
 
         [HttpPut]
+        [PermissionFilter("ITEM_DEPARTMENT_UPDATE")]
         public Response<bool> Put(ItemDepartmentDTO model) => _client.UpdateItemDepartment(model).Body;
 
         [HttpDelete("{id}")]
+        [PermissionFilter("ITEM_DEPARTMENT_DELETE")]
         public Response<bool> Delete(string id) => _client.DeleteItemDepartment(new KeyObject() { Body = id }).Body;
     }
 }

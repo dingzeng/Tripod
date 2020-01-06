@@ -3,11 +3,15 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Attributes;
 using Tripod.Application.AdminApi.Model;
 using Tripod.Service.Archive;
 
 namespace Tripod.Application.AdminApi.Controllers
 {
+    /// <summary>
+    /// …Ã∆∑∆∑≈∆
+    /// </summary>
     [ApiController]
     [Route("archive/[controller]")]
     public class ItemBrandController : ControllerBase
@@ -25,6 +29,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
+        [PermissionFilter("ITEM_BRAND_VIEW")]
         public Response<PagedList<ItemBrandDTO>> Get(int pageIndex = 1, int pageSize = 20)
         {
             var request = new GetItemBrandsRequest();
@@ -40,6 +45,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [PermissionFilter("ITEM_BRAND_VIEW")]
         public Response<ItemBrandDTO> Get(string id)
         {
             return _client.GetItemBrand(new KeyObject()
@@ -49,12 +55,15 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpPost]
+        [PermissionFilter("ITEM_BRAND_CREATE")]
         public Response<ItemBrandDTO> Post(ItemBrandDTO model) => _client.CreateItemBrand(model);
 
         [HttpPut]
+        [PermissionFilter("ITEM_BRAND_UPDATE")]
         public Response<bool> Put(ItemBrandDTO model) => _client.UpdateItemBrand(model).Body;
 
         [HttpDelete("{id}")]
+        [PermissionFilter("ITEM_BRAND_DELETE")]
         public Response<bool> Delete(string id) => _client.DeleteItemBrand(new KeyObject() { Body = id }).Body;
     }
 }

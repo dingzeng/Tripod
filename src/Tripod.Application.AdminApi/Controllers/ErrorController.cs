@@ -39,7 +39,8 @@ namespace Tripod.Application.AdminApi.Controllers
                     // TODO record the exception detail.
                 }
             }
-            return new ObjectResult(response);
+            // NOTE 200
+            return new ObjectResult(response) { StatusCode = 200 };
         }
     }
 }

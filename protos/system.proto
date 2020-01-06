@@ -6,7 +6,7 @@ import "system_dtos.proto";
 
 service SystemSrv {
     // Menu
-    rpc GetAllMenus(Empty) returns (MenusResponse);
+    rpc GetMenus(GetMenusRequest) returns (GetMenusResponse);
 
     // Permission
     rpc GetAllPermissions(Empty) returns (PermissionsResponse);
@@ -23,6 +23,7 @@ service SystemSrv {
     rpc GetRolePermissions(KeyObject) returns (PermissionsResponse);
     rpc UpdateRolePermissions(UpdateRolePermissionsRequest) returns (BooleanObject);
     rpc SetRolePermission(SetRolePermissionRequest) returns (BooleanObject);
+    rpc GetRolePermissionsFlag(KeyObject) returns (GetRolePermissionsFlagResponse);
 
     // User
     rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserDTO);
@@ -56,7 +57,11 @@ message MenuNode {
     repeated MenuNode Children = 7;
 }
 
-message MenusResponse {
+message GetMenusRequest {
+    string ParentCode = 1;
+}
+
+message GetMenusResponse {
     repeated MenuDTO Menus = 1;
 }
 
@@ -81,6 +86,17 @@ message SetRolePermissionRequest {
     int32 RoleId = 1;
     string PermissionCode = 2;
     bool Has = 3;
+}
+
+message RolePermissionFlag {
+    string MenuCode = 1;
+    string PermissionCode = 2;
+    string PermissionName = 3;
+    bool Flag = 4;
+}
+
+message GetRolePermissionsFlagResponse {
+    repeated RolePermissionFlag Flags = 1;
 }
 
 // User

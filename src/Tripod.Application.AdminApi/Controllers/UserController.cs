@@ -6,12 +6,16 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tripod.Application.AdminApi.Attributes;
 using Tripod.Application.AdminApi.Model;
 using Tripod.Application.AdminApi.Model.User;
 using Tripod.Service.System;
 
 namespace Tripod.Application.AdminApi.Controllers
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     [ApiController]
     [Route("system/[controller]")]
     public class UserController : ControllerBase
@@ -40,6 +44,7 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet]
+        [PermissionFilter("USER_VIEW")]
         public Response<PagedList<UserDTO>> Get(int pageIndex = 1, int pageSize = 20, string keyword = "")
         {
             var response = _client.GetUsers(new PagingRequest()
@@ -52,22 +57,43 @@ namespace Tripod.Application.AdminApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [PermissionFilter("USER_VIEW")]
         public Response<UserDTO> Get(string id) => _client.GetUserById(new KeyObject() { Body = id });
 
         [HttpPost]
+        [PermissionFilter("USER_CREATE")]
         public Response<UserDTO> Post(UserDTO model) => _client.CreateUser(model);
 
         [HttpPut]
+        [PermissionFilter("USER_UPDATE")]
         public Response<bool> Put(UserDTO model) => _client.UpdateUser(model).Body;
 
+        [HttpDelete]
+        [PermissionFilter("USER_DELETE")]
+        public Response<bool> Delete(string id) => _client.DeleteUserById(new KeyObject() { Body = id }).Body;
+
+        #region User Role
+
+        /// <summary>
+        /// 获取用户关联的角色
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("role/{userId}")]
+        [PermissionFilter("USER_VIEW")]
         public Response<IEnumerable<RoleDTO>> GetRoles(string userId)
         {
             var response = _client.GetRolesByUserId(new KeyObject() { Body = userId });
             return response.Roles;
         }
 
+        /// <summary>
+        /// 修改用户关联的角色
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("role")]
+        [PermissionFilter("USER_UPDATE")]
         public Response<bool> UpdateRoles(UpdateRolesModel model)
         {
             var request = new UpdateUserRolesRequest();
@@ -76,18 +102,21 @@ namespace Tripod.Application.AdminApi.Controllers
 
             var response = _client.UpdateUserRoles(request);
             return response.Body;
-        }
+        } 
 
-        [HttpDelete]
-        public Response<bool> Delete(string id) => _client.DeleteUserById(new KeyObject() { Body = id }).Body;
+        #endregion
 
+        #region User Permission
+
+        /// <summary>
+        /// 获取用户拥有的操作权限
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("permission")]
+        [PermissionFilter("USER_VIEW")]
         public Response<IEnumerable<PermissionDTO>> GetPermissions(string userId) => _client.GetUserPermissions(new KeyObject() { Body = userId }).Permissions;
 
-        [HttpPut("permission")]
-        public Response<bool> PutPermissions(string userId, [FromBody]List<PermissionDTO> model)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

@@ -28,6 +28,11 @@ namespace Tripod.Application.AdminApi
             services.AddControllers();
             services.Configure<AppOptions>(Configuration.GetSection("App"));
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetSection("App").GetValue<string>("Redis");
+            });
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(build =>

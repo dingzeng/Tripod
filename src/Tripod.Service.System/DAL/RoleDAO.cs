@@ -101,5 +101,36 @@ WHERE b.user_id = @userId";
                 }) > 0;
             });
         }
+
+        public List<RolePermissionFlag> GetRolePermissionsFlag(int roleId)
+        {
+            return Run(conn =>
+            {
+                var sql = @"
+SELECT 
+    permission.menu_code AS menuCode,
+	permission.`code` AS permissionCode,
+    permission.`name` as permissionName,
+    CASE 
+		WHEN ifnull(role_permission.id, 0) > 0 THEN 1
+        ELSE 0
+	END AS flag
+FROM permission 
+LEFT JOIN role_permission ON permission.code = role_permission.permission_code AND role_id = @roleId
+";
+                return conn.Query<RolePermissionFlag>(sql, new { roleId }).ToList();
+            });
+        }
+    }
+
+    public class RolePermissionFlag
+    {
+        public string MenuCode { get; set; }
+
+        public string PermissionCode { get; set; }
+
+        public string PermissionName { get; set; }
+
+        public bool Flag { get; set; }
     }
 }
