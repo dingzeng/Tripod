@@ -46,6 +46,7 @@ namespace Tripod.Service.System.DAL
         {
             var sql = @"
 SELECT
+    DISTINCT
 	a.`code`, 
     a.parent_code, 
     a.`path`, 

@@ -221,15 +221,18 @@ namespace Tripod.Service.System.Services
             userPermissionMenus = userPermissionMenus.Distinct(new MenuEqualityComparer()).ToList();
 
             var response = new MenuTree();
-            var firstLevelMenus = userPermissionMenus.Where(s => string.IsNullOrEmpty(s.ParentCode)).Select(s => new MenuNode()
-            {
-                Code = s.Code,
-                ParentCode = s.ParentCode,
-                Path = s.Path,
-                Name = s.Name,
-                Icon = s.Icon,
-                IsLeaf = s.IsLeaf
-            }).ToList();
+            var firstLevelMenus = userPermissionMenus
+                .Where(s => string.IsNullOrEmpty(s.ParentCode))
+                .OrderBy(s => s.Code)
+                .Select(s => new MenuNode()
+                {
+                    Code = s.Code,
+                    ParentCode = s.ParentCode,
+                    Path = s.Path,
+                    Name = s.Name,
+                    Icon = s.Icon,
+                    IsLeaf = s.IsLeaf
+                }).ToList();
             response.Nodes.AddRange(firstLevelMenus);
             BuildMenuTree(userPermissionMenus, response.Nodes.ToList());
 
@@ -250,15 +253,18 @@ namespace Tripod.Service.System.Services
         {
             foreach (var node in nodes)
             {
-                var children = source.Where(s => s.ParentCode == node.Code).Select(s => new MenuNode()
-                {
-                    Code = s.Code,
-                    ParentCode = s.ParentCode,
-                    Path = s.Path,
-                    Name = s.Name,
-                    Icon = s.Icon,
-                    IsLeaf = s.IsLeaf
-                }).ToList();
+                var children = source
+                    .Where(s => s.ParentCode == node.Code)
+                    .OrderBy(s => s.Code)
+                    .Select(s => new MenuNode()
+                    {
+                        Code = s.Code,
+                        ParentCode = s.ParentCode,
+                        Path = s.Path,
+                        Name = s.Name,
+                        Icon = s.Icon,
+                        IsLeaf = s.IsLeaf
+                    }).ToList();
                 node.Children.AddRange(children);
                 BuildMenuTree(source, node.Children.ToList());
             }

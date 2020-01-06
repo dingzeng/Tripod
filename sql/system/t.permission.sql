@@ -57,6 +57,12 @@ INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UNIT_CREAT
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UNIT_UPDATE','010304',2,'修改商品单位');
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UNIT_DELETE','010304',3,'删除商品单位');
 
+-- Item
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_VIEW','010305',0,'查看商品');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_CREATE','010305',1,'新增商品');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_UPDATE','010305',2,'修改商品');
+INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ITEM_DELETE','010305',3,'删除商品');
+
 -- Role
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_VIEW','090101',0,'查看角色');
 INSERT INTO `permission`(`code`,menu_code,`type`,`name`) VALUES('ROLE_CREATE','090101',1,'新增角色');
