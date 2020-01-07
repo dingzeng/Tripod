@@ -126,5 +126,11 @@ namespace Tripod.Service.Archive.Services
             var success = _branchDao.UpdateBranchStores(request.BranchId, stores);
             return Task.FromResult(new BooleanObject() { Body = success });
         }
+
+        public override Task<BooleanObject> IsExistsBranchId(KeyObject request, ServerCallContext context)
+        {
+            var branch = _branchDao.Get(request.Body);
+            return Task.FromResult(new BooleanObject() { Body = branch != null });
+        }
     }
 }

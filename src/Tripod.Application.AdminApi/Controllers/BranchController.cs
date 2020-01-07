@@ -60,9 +60,9 @@ namespace Tripod.Application.AdminApi.Controllers
         [HttpGet]
         [PermissionFilter("BRANCH_VIEW")]
         public Response<PagedList<BranchDTO>> Get(
-            int pageIndex = 1, 
-            int pageSize = 20, 
-            string keyword = "", 
+            int pageIndex = 1,
+            int pageSize = 20,
+            string keyword = "",
             string parentId = "",
             string typeList = "")
         {
@@ -124,6 +124,12 @@ namespace Tripod.Application.AdminApi.Controllers
             request.Stores.AddRange(model);
             var response = _client.UpdateBranchStores(request);
             return response.Body;
+        }
+
+        [HttpGet("id_exists/{id}")]
+        public Response<bool> Exists(string id)
+        {
+            return _client.IsExistsBranchId(new KeyObject() { Body = id }).Body;
         }
     }
 }

@@ -22,6 +22,7 @@ service BranchSrv {
 	rpc DeleteBranch(KeyObject) returns (BooleanObject);
 	rpc GetBranchStores(KeyObject) returns (GetBranchStoresResponse);
 	rpc UpdateBranchStores(UpdateBranchStoresRequest) returns (BooleanObject);
+	rpc IsExistsBranchId(KeyObject) returns (BooleanObject);
 }
 
 service ItemSrv {
