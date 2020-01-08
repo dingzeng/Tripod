@@ -62,6 +62,8 @@ namespace Tripod.Application.AdminApi.Controllers
 
             var userInfo = new UserInfo()
             {
+                Id = user.Id,
+                Username = user.Username,
                 Name = user.Name,
                 Menus = menus.Nodes.ToList(),
                 Permissions = permissions.Permissions.ToList()

@@ -18,10 +18,10 @@ CREATE TABLE `supplier` (
     `tax_registration_no` VARCHAR(45) NOT NULL DEFAULT '' COMMENT '税务登记号',
     `business_license_no` VARCHAR(45) NOT NULL DEFAULT '' COMMENT '营业执照号',
     `memo` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '备注',
-    `create_oper_id` INT NOT NULL COMMENT '创建人',
+    `create_oper_id` BIGINT NOT NULL COMMENT '创建人',
 	`create_oper_name` VARCHAR(45) NOT NULL,
 	`create_time` DATETIME NOT NULL COMMENT '创建时间',
-    `last_update_oper_id` INT NOT NULL COMMENT '最后修改人',
+    `last_update_oper_id` BIGINT NOT NULL COMMENT '最后修改人',
 	`last_update_oper_name` VARCHAR(45) NOT NULL,
 	`last_update_time` DATETIME NOT NULL COMMENT '最后修改时间',
     PRIMARY KEY (`id`))

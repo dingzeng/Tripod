@@ -17,7 +17,7 @@ namespace Tripod.Application.AdminApi.Controllers
     /// </summary>
     [ApiController]
     [Route("archive/[controller]")]
-    public class BranchController : ControllerBase
+    public class BranchController : AdminControllerBase
     {
         private readonly AppOptions _options;
         private readonly ILogger<BranchController> _logger;
@@ -90,9 +90,8 @@ namespace Tripod.Application.AdminApi.Controllers
             });
 
             var root = new TreeNode();
-            var branch = response.Branchs.Where(b => b.Type == 0).First();
-            root.Id = branch.Id;
-            root.Label = $"[{branch.Id}]{branch.Name}";
+            root.Id = "";
+            root.Label = "全部机构";
             root.Children = new List<TreeNode>();
             BuildTree(root, response.Branchs);
 
@@ -101,11 +100,29 @@ namespace Tripod.Application.AdminApi.Controllers
 
         [HttpPost]
         [PermissionFilter("BRANCH_CREATE")]
-        public Response<BranchDTO> Post(BranchDTO model) => _client.CreateBranch(model);
+        public Response<BranchDTO> Post(BranchDTO model)
+        {
+            model.CreateOperId = CurrentUser.Id;
+            model.CreateOperName = CurrentUser.Name;
+            model.CreateTime = DateTime.Now.ToString();
+
+            model.LastUpdateOperId = CurrentUser.Id;
+            model.LastUpdateOperName = CurrentUser.Name;
+            model.LastUpdateTime = DateTime.Now.ToString();
+
+            return _client.CreateBranch(model);
+        }
 
         [HttpPut]
         [PermissionFilter("BRANCH_UPDATE")]
-        public Response<bool> Put(BranchDTO model) => _client.UpdateBranch(model).Body;
+        public Response<bool> Put(BranchDTO model)
+        {
+            model.LastUpdateOperId = CurrentUser.Id;
+            model.LastUpdateOperName = CurrentUser.Name;
+            model.LastUpdateTime = DateTime.Now.ToString();
+
+            return _client.UpdateBranch(model).Body;
+        }
 
         [HttpDelete("{id}")]
         [PermissionFilter("BRANCH_DELETE")]

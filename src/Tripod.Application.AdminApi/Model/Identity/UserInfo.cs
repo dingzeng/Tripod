@@ -7,6 +7,16 @@ namespace Tripod.Application.AdminApi.Model.Identity
     public class UserInfo
     {
         /// <summary>
+        /// Id
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
         /// 用户有【查看】权限的菜单集合
         /// </summary>
         /// <value></value>

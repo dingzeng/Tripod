@@ -20,10 +20,10 @@ message BranchDTO {
 	int32 ReturnStoreId = 13;
 	int32 PurchaseStoreId = 14;
 	string Memo = 15;
-	int32 CreateOperId = 16;
+	int64 CreateOperId = 16;
 	string CreateOperName = 17;
 	string CreateTime = 18;
-	int32 LastUpdateOperId = 19;
+	int64 LastUpdateOperId = 19;
 	string LastUpdateOperName = 20;
 	string LastUpdateTime = 21;
 }
@@ -70,10 +70,10 @@ message ItemDTO {
 	string PurchaseTaxRate = 28;
 	string SalesTaxRate = 29;
 	string Memo = 30;
-	int32 CreateOperId = 31;
+	int64 CreateOperId = 31;
 	string CreateOperName = 32;
 	string CreateTime = 33;
-	int32 LastUpdateOperId = 34;
+	int64 LastUpdateOperId = 34;
 	string LastUpdateOperName = 35;
 	string LastUpdateTime = 36;
 }
@@ -200,10 +200,10 @@ message SupplierDTO {
 	string TaxRegistrationNo = 15;
 	string BusinessLicenseNo = 16;
 	string Memo = 17;
-	int32 CreateOperId = 18;
+	int64 CreateOperId = 18;
 	string CreateOperName = 19;
 	string CreateTime = 20;
-	int32 LastUpdateOperId = 21;
+	int64 LastUpdateOperId = 21;
 	string LastUpdateOperName = 22;
 	string LastUpdateTime = 23;
 }
