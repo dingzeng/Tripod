@@ -127,7 +127,7 @@ namespace Tripod.Service.Archive.Services
             return Task.FromResult(new BooleanObject() { Body = success });
         }
 
-        public override Task<BooleanObject> IsExistsBranchId(KeyObject request, ServerCallContext context)
+        public override Task<BooleanObject> IsExistsBranch(KeyObject request, ServerCallContext context)
         {
             var branch = _branchDao.Get(request.Body);
             return Task.FromResult(new BooleanObject() { Body = branch != null });

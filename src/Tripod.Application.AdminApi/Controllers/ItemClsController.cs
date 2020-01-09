@@ -65,5 +65,11 @@ namespace Tripod.Application.AdminApi.Controllers
         [HttpDelete("{id}")]
         [PermissionFilter("ITEM_CLS_DELETE")]
         public Response<bool> Delete(string id) => _client.DeleteItemCls(new KeyObject() { Body = id }).Body;
+
+        [HttpGet("exists")]
+        public Response<bool> Exists(string id)
+        {
+            return _client.IsExistsItemCls(new KeyObject() { Body = id }).Body;
+        }
     }
 }

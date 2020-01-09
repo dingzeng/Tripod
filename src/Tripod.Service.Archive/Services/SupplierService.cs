@@ -68,13 +68,14 @@ namespace Tripod.Service.Archive.Services
         public override Task<SupplierDTO> GetSupplier(KeyObject request, ServerCallContext context)
         {
             var supplier = _supplierDao.Get(request.Body);
-            return Task.FromResult(_mapper.Map<SupplierDTO>(supplier));
+            var response = supplier == null ? null : _mapper.Map<SupplierDTO>(supplier);
+            return Task.FromResult(response);
         }
 
         public override Task<SupplierDTO> CreateSupplier(SupplierDTO request, ServerCallContext context)
         {
-            var id = _supplierDao.Insert(_mapper.Map<Supplier>(request));
-            var supplier = _supplierDao.Get(id);
+            _supplierDao.Insert(_mapper.Map<Supplier>(request));
+            var supplier = _supplierDao.Get(request.Id);
             return Task.FromResult(_mapper.Map<SupplierDTO>(supplier));
         }
 
@@ -88,6 +89,12 @@ namespace Tripod.Service.Archive.Services
         {
             var success = _supplierDao.Delete(new Supplier() { Id = request.Body });
             return Task.FromResult(new BooleanObject() { Body = success });
+        }
+
+        public override Task<BooleanObject> IsExistsSupplier(KeyObject request, ServerCallContext context)
+        {
+            var supplier = _supplierDao.Get(request.Body);
+            return Task.FromResult(new BooleanObject() { Body = supplier != null });
         }
     }
 }

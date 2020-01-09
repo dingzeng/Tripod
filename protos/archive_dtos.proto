@@ -185,7 +185,7 @@ message StoreDTO {
 message SupplierDTO {
 	string Id = 1;
 	string Name = 2;
-	string RegionId = 3;
+	int64 RegionId = 3;
 	int32 SellWay = 4;
 	int32 SettleWay = 5;
 	int32 SettleDays = 6;

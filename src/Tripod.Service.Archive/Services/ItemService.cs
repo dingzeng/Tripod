@@ -63,6 +63,12 @@ namespace Tripod.Service.Archive.Services
             return Task.FromResult(new BooleanObject() { Body = success });
         }
 
+        public override Task<BooleanObject> IsExistsItemCls(KeyObject request, ServerCallContext context)
+        {
+            var exists = _itemClsDao.Get(request.Body);
+            return Task.FromResult(new BooleanObject() { Body = exists != null });
+        }
+
         // itemBrand
         public override Task<GetItemBrandsResponse> GetItemBrands(GetItemBrandsRequest request, ServerCallContext context)
         {
@@ -99,6 +105,12 @@ namespace Tripod.Service.Archive.Services
             return Task.FromResult(new BooleanObject() { Body = success });
         }
 
+        public override Task<BooleanObject> IsExistsItemBrand(KeyObject request, ServerCallContext context)
+        {
+            var exists = _itemBrandDao.Get(request.Body);
+            return Task.FromResult(new BooleanObject() { Body = exists != null });
+        }
+
         // itemUnit
         public override Task<GetItemUnitResponse> GetItemUnits(GetItemUnitsRequest request, ServerCallContext context)
         {
@@ -132,8 +144,14 @@ namespace Tripod.Service.Archive.Services
         public override Task<BooleanObject> DeleteItemUnit(KeyObject request, ServerCallContext context)
         {
             var id = Convert.ToInt32(request.Body);
-            var success = _itemUnitDao.Update(new ItemUnit() { Id = id });
+            var success = _itemUnitDao.Delete(new ItemUnit() { Id = id });
             return Task.FromResult(new BooleanObject() { Body = success });
+        }
+
+        public override Task<BooleanObject> IsExistsItemUnit(KeyObject request, ServerCallContext context)
+        {
+            var exists = _itemUnitDao.Get(request.Body);
+            return Task.FromResult(new BooleanObject() { Body = exists != null });
         }
 
         // itemDepartment
@@ -171,6 +189,12 @@ namespace Tripod.Service.Archive.Services
             var id = Convert.ToInt32(request.Body);
             var success = _itemDepartmentDao.Update(new ItemDepartment() { Id = id });
             return Task.FromResult(new BooleanObject() { Body = success });
+        }
+
+        public override Task<BooleanObject> IsExistsItemDepartment(KeyObject request, ServerCallContext context)
+        {
+            var exists = _itemDepartmentDao.Get(request.Body);
+            return Task.FromResult(new BooleanObject() { Body = exists != null });
         }
     }
 }

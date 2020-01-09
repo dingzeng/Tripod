@@ -22,7 +22,7 @@ service BranchSrv {
 	rpc DeleteBranch(KeyObject) returns (BooleanObject);
 	rpc GetBranchStores(KeyObject) returns (GetBranchStoresResponse);
 	rpc UpdateBranchStores(UpdateBranchStoresRequest) returns (BooleanObject);
-	rpc IsExistsBranchId(KeyObject) returns (BooleanObject);
+	rpc IsExistsBranch(KeyObject) returns (BooleanObject);
 }
 
 service ItemSrv {
@@ -32,6 +32,7 @@ service ItemSrv {
 	rpc CreateItemCls(ItemClsDTO) returns(ItemClsDTO);
 	rpc UpdateItemCls(ItemClsDTO) returns(BooleanObject);
 	rpc DeleteItemCls(KeyObject) returns(BooleanObject);
+	rpc IsExistsItemCls(KeyObject) returns (BooleanObject);
 
 	// itemBrand
 	rpc GetItemBrands(GetItemBrandsRequest) returns(GetItemBrandsResponse);
@@ -39,6 +40,7 @@ service ItemSrv {
 	rpc CreateItemBrand(ItemBrandDTO) returns(ItemBrandDTO);
 	rpc UpdateItemBrand(ItemBrandDTO) returns(BooleanObject);
 	rpc DeleteItemBrand(KeyObject) returns(BooleanObject);
+	rpc IsExistsItemBrand(KeyObject) returns (BooleanObject);
 
 	// itemUnit
 	rpc GetItemUnits(GetItemUnitsRequest) returns(GetItemUnitResponse);
@@ -46,6 +48,7 @@ service ItemSrv {
 	rpc CreateItemUnit(ItemUnitDTO) returns(ItemUnitDTO);
 	rpc UpdateItemUnit(ItemUnitDTO) returns(BooleanObject);
 	rpc DeleteItemUnit(KeyObject) returns(BooleanObject);
+	rpc IsExistsItemUnit(KeyObject) returns (BooleanObject);
 
 	// itemDepartment
 	rpc GetItemDepartments(GetItemDepartmentsRequest) returns(GetItemDepartmentsResponse);
@@ -53,6 +56,7 @@ service ItemSrv {
 	rpc CreateItemDepartment(ItemDepartmentDTO) returns(ItemDepartmentDTO);
 	rpc UpdateItemDepartment(ItemDepartmentDTO) returns(BooleanObject);
 	rpc DeleteItemDepartment(KeyObject) returns(BooleanObject);
+	rpc IsExistsItemDepartment(KeyObject) returns (BooleanObject);
 
 	// item
 	rpc GetItems(GetItemsRequest) returns(GetItemsResponse);
@@ -60,6 +64,7 @@ service ItemSrv {
 	rpc CreateItem(ItemInfo) returns(ItemInfo);
 	rpc UpdateItem(ItemInfo) returns(BooleanObject);
 	rpc DeleteItem(KeyObject) returns(BooleanObject);
+	rpc IsExistsItem(KeyObject) returns (BooleanObject);
 }
 
 service PriceSrv {
@@ -80,6 +85,7 @@ service SupplierSrv {
 	rpc CreateSupplier(SupplierDTO) returns(SupplierDTO);
 	rpc UpdateSupplier(SupplierDTO) returns(BooleanObject);
 	rpc DeleteSupplier(KeyObject) returns(BooleanObject);
+	rpc IsExistsSupplier(KeyObject) returns (BooleanObject);
 }
 
 message GetItemBrandsRequest {

@@ -143,10 +143,10 @@ namespace Tripod.Application.AdminApi.Controllers
             return response.Body;
         }
 
-        [HttpGet("id_exists/{id}")]
+        [HttpGet("exists")]
         public Response<bool> Exists(string id)
         {
-            return _client.IsExistsBranchId(new KeyObject() { Body = id }).Body;
+            return _client.IsExistsBranch(new KeyObject() { Body = id }).Body;
         }
     }
 }

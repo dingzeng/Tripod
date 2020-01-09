@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE `supplier` (
     `id` VARCHAR(45) NOT NULL COMMENT '供应商编码',
     `name` VARCHAR(45) NOT NULL COMMENT '供应商名称',
-    `region_id` VARCHAR(45) NOT NULL COMMENT '所属区域id',
+    `region_id` BIGINT NOT NULL COMMENT '所属区域id',
     `sell_way` INT NOT NULL DEFAULT 0 COMMENT '经营方式（0-购销、1-联营、2-代销、3-租赁）',
     `settle_way` INT NOT NULL DEFAULT 0 COMMENT '结算方式（0-临时指定、1-货到付款、2-指定账期、3-指定日期）',
     `settle_days` INT NULL COMMENT '结算周期天数',
