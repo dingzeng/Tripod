@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -70,6 +72,43 @@ namespace Tripod.Application.AdminApi.Controllers
         public Response<bool> Exists(string id)
         {
             return _client.IsExistsItemCls(new KeyObject() { Body = id }).Body;
+        }
+
+        [HttpGet("tree")]
+        public Response<List<TreeNode>> Tree()
+        {
+            var root = new TreeNode();
+            root.Id = "";
+            root.Label = "È«²¿";
+
+            Func<ItemClsDTO, TreeNode> convert = (itemCls) =>
+            {
+                return new TreeNode()
+                {
+                    Id = itemCls.Id,
+                    Label = itemCls.Name,
+                    Children = new List<TreeNode>()
+                };
+            };
+
+            root.Children = new List<TreeNode>();
+
+            var itemClss = _client.GetItemClss(new GetItemClssRequest() { PageIndex = 1, PageSize = int.MaxValue });
+            var firstLevelItemClss = itemClss.ItemClss.Where(ic => string.IsNullOrEmpty(ic.ParentId));
+            foreach (var first in firstLevelItemClss)
+            {
+                root.Children.Add(convert(first));
+                foreach (var second in itemClss.ItemClss.Where(ic => ic.ParentId == first.Id))
+                {
+                    root.Children.Add(convert(second));
+                    foreach (var third in itemClss.ItemClss.Where(ic => ic.ParentId == second.Id))
+                    {
+                        root.Children.Add(convert(second));
+                    }
+                }
+            }
+
+            return new List<TreeNode>() { root };
         }
     }
 }

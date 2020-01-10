@@ -17,6 +17,9 @@ namespace Tripod.Service.Archive.Services
         private readonly ItemUnitDAO _itemUnitDao;
         private readonly ItemDepartmentDAO _itemDepartmentDao;
         private readonly ItemDAO _itemDao;
+        private readonly ItemBarcodeDAO _itemBarcodeDao;
+        private readonly ItemSubDAO _itemSubDao;
+        private readonly ItemPackageDAO _itemPackageDao;
         private readonly IMapper _mapper;
         public ItemService(IMapper mapper, ConfigurationOptions options)
         {
@@ -26,6 +29,9 @@ namespace Tripod.Service.Archive.Services
             _itemUnitDao = new ItemUnitDAO(options);
             _itemDepartmentDao = new ItemDepartmentDAO(options);
             _itemDao = new ItemDAO(options);
+            _itemBarcodeDao = new ItemBarcodeDAO(options);
+            _itemSubDao = new ItemSubDAO(options);
+            _itemPackageDao = new ItemPackageDAO(options);
         }
 
         // itemCls
@@ -195,6 +201,84 @@ namespace Tripod.Service.Archive.Services
         {
             var exists = _itemDepartmentDao.Get(request.Body);
             return Task.FromResult(new BooleanObject() { Body = exists != null });
+        }
+
+        // item
+        public override Task<ItemInfo> GetItem(KeyObject request, ServerCallContext context)
+        {
+            var itemId = request.Body;
+
+            var response = new ItemInfo();
+            var item = _itemDao.Get(itemId);
+            var barcodes = _itemBarcodeDao.GetItemBarcodesByItemId(itemId);
+            var subs = _itemSubDao.GetItemSubsByItemId(itemId);
+            var packages = _itemPackageDao.GetItemPackagesByItemId(itemId);
+
+            response.Item = _mapper.Map<ItemDTO>(item);
+            response.Barcodes.AddRange(barcodes.Select(b => _mapper.Map<ItemBarcodeDTO>(b)));
+            response.Packages.AddRange(packages.Select(p => _mapper.Map<ItemPackageDTO>(p)));
+            response.Subs.AddRange(subs.Select(s => _mapper.Map<ItemSubDTO>(s)));
+
+            return Task.FromResult(response);
+        }
+
+        public override Task<GetItemsResponse> GetItems(GetItemsRequest request, ServerCallContext context)
+        {
+            var page = _itemDao.Query(
+                 pageIndex: request.PageIndex,
+                 pageSize: request.PageSize,
+                 status: request.Status,
+                 primarySupplierId: request.PrimarySupplierId,
+                 itemClsId: request.ItemClsId,
+                 itemBrandId: request.ItemBrandId,
+                 itemDepartmentId: request.ItemDepartmentId,
+                 keyword: request.Keyword);
+
+            var response = new GetItemsResponse();
+            response.Items.AddRange(page.List.Select(item => _mapper.Map<ItemDTO>(item)));
+            response.TotalCount = page.TotalCount;
+
+            return Task.FromResult(response);
+        }
+
+        public override Task<ItemInfo> CreateItem(ItemInfo request, ServerCallContext context)
+        {
+            var item = _mapper.Map<Item>(request.Item);
+            var barcodes = request.Barcodes.Select(b => _mapper.Map<ItemBarcode>(b)).ToList();
+            var packages = request.Packages.Select(p => _mapper.Map<ItemPackage>(p)).ToList();
+            var subs = request.Subs.Select(sub => _mapper.Map<ItemSub>(sub)).ToList();
+
+            var itemInfo = new Tuple<Item, List<ItemBarcode>, List<ItemPackage>, List<ItemSub>>(item, barcodes, packages, subs);
+
+            _itemDao.CreateItem(itemInfo);
+
+            return GetItem(new KeyObject() { Body = item.Id }, context);
+        }
+
+        public override Task<BooleanObject> DeleteItem(KeyObject request, ServerCallContext context)
+        {
+            var success = _itemDao.Delete(new Item() { Id = request.Body });
+            return Task.FromResult(new BooleanObject() { Body = success });
+        }
+
+        public override Task<BooleanObject> IsExistsItem(KeyObject request, ServerCallContext context)
+        {
+            var exists = _itemDao.Get(request.Body) != null;
+            return Task.FromResult(new BooleanObject() { Body = exists });
+        }
+
+        public override Task<BooleanObject> UpdateItem(ItemInfo request, ServerCallContext context)
+        {
+            var item = _mapper.Map<Item>(request.Item);
+            var barcodes = request.Barcodes.Select(b => _mapper.Map<ItemBarcode>(b)).ToList();
+            var packages = request.Packages.Select(p => _mapper.Map<ItemPackage>(p)).ToList();
+            var subs = request.Subs.Select(sub => _mapper.Map<ItemSub>(sub)).ToList();
+
+            var itemInfo = new Tuple<Item, List<ItemBarcode>, List<ItemPackage>, List<ItemSub>>(item, barcodes, packages, subs);
+
+            var success = _itemDao.UpdateItem(itemInfo);
+
+            return Task.FromResult(new BooleanObject() { Body = success });
         }
     }
 }

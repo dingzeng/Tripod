@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -87,6 +89,26 @@ namespace Tripod.Application.AdminApi.Controllers
         public Response<bool> Exists(string id)
         {
             return _client.IsExistsSupplier(new KeyObject() { Body = id }).Body;
+        }
+
+        [HttpGet("tree")]
+        public Response<List<TreeNode>> Tree()
+        {
+            var suppliers = _client.GetSuppliers(new GetSuppliersRequest() { PageIndex = 1, PageSize = int.MaxValue });
+
+            var root = new TreeNode();
+            root.Id = "";
+            root.Label = "È«²¿";
+            root.Children = suppliers.Suppliers.Select(s =>
+            {
+                return new TreeNode()
+                {
+                    Id = s.Id,
+                    Label = s.Name
+                };
+            }).ToList();
+
+            return new List<TreeNode>() { root };
         }
     }
 }

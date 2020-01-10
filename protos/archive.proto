@@ -119,7 +119,7 @@ message GetItemsRequest {
 
 message GetItemsResponse {
 	int32 TotalCount = 1;
-	repeated ItemInfo Items = 2;
+	repeated ItemDTO Items = 2;
 }
 
 message ItemInfo {

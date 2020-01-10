@@ -9,13 +9,17 @@ namespace Tripod.Service.Archive.DAL
     public class ItemClsDAO : BaseDAO<ItemCls>
     {
         public ItemClsDAO(ConfigurationOptions options)
-            :base(options.ConnectionString)
+            : base(options.ConnectionString)
         {
         }
 
         public PagedList<ItemCls> GetItemClss(int pageIndex, int pageSize, string parentId = null)
         {
-            throw new NotImplementedException();
+            string condition = "";
+            if (string.IsNullOrEmpty(parentId))
+                condition += "AND parent_id = @parentId";
+
+            return GetPaging<ItemCls>(pageIndex: pageIndex, pageSize: pageSize, conditions: condition, param: new { parentId });
         }
     }
 }

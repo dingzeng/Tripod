@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -70,6 +72,23 @@ namespace Tripod.Application.AdminApi.Controllers
         public Response<bool> Exists(string id)
         {
             return _client.IsExistsItemBrand(new KeyObject() { Body = id }).Body;
+        }
+
+        [HttpGet("tree")]
+        public Response<List<TreeNode>> Tree()
+        {
+            var root = new TreeNode();
+            root.Id = "";
+            root.Label = "È«²¿";
+
+            var brands = _client.GetItemBrands(new GetItemBrandsRequest() { PageIndex = 1, PageSize = int.MaxValue });
+            root.Children = brands.ItemBrands.Select(ib => new TreeNode()
+            {
+                Id = ib.Id,
+                Label = ib.Name
+            }).ToList();
+
+            return new List<TreeNode>() { root };
         }
     }
 }
