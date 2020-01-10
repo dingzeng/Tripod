@@ -261,9 +261,15 @@ namespace Tripod.Service.Archive.Services
             return Task.FromResult(new BooleanObject() { Body = success });
         }
 
-        public override Task<BooleanObject> IsExistsItem(KeyObject request, ServerCallContext context)
+        public override Task<BooleanObject> IsExistsItemId(KeyObject request, ServerCallContext context)
         {
-            var exists = _itemDao.Get(request.Body) != null;
+            bool exists = _itemDao.Get(request.Body) != null;
+            return Task.FromResult(new BooleanObject() { Body = exists });
+        }
+
+        public override Task<BooleanObject> IsExistsItemBarcode(KeyObject request, ServerCallContext context)
+        {
+            bool exists = _itemBarcodeDao.IsExistsItemBarcode(request.Body);
             return Task.FromResult(new BooleanObject() { Body = exists });
         }
 

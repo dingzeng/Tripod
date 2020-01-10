@@ -81,5 +81,17 @@ namespace Tripod.Application.AdminApi.Controllers
         {
             return _client.DeleteItem(new KeyObject() { Body = id }).Body;
         }
+
+        [HttpGet("exists/id/{id}")]
+        public Response<bool> ExistsId(string id)
+        {
+            return _client.IsExistsItemId(new KeyObject() { Body = id }).Body;
+        }
+
+        [HttpGet("exists/barcode/{barcode}")]
+        public Response<bool> ExistsBarcode(string barcode)
+        {
+            return _client.IsExistsItemBarcode(new KeyObject() { Body = barcode }).Body;
+        }
     }
 }

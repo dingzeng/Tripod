@@ -64,7 +64,8 @@ service ItemSrv {
 	rpc CreateItem(ItemInfo) returns(ItemInfo);
 	rpc UpdateItem(ItemInfo) returns(BooleanObject);
 	rpc DeleteItem(KeyObject) returns(BooleanObject);
-	rpc IsExistsItem(KeyObject) returns (BooleanObject);
+	rpc IsExistsItemId(KeyObject) returns (BooleanObject);
+	rpc IsExistsItemBarcode(KeyObject) returns (BooleanObject);
 }
 
 service PriceSrv {

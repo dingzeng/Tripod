@@ -30,5 +30,17 @@ namespace Tripod.Service.Archive.DAL
                 return conn.Query<ItemBarcode>(sql, new { itemId }).ToList();
             });
         }
+
+        public bool IsExistsItemBarcode(string barcode)
+        {
+            if (string.IsNullOrEmpty(barcode))
+                throw new ArgumentNullException(nameof(barcode));
+
+            var sql = "SELECT (SELECT COUNT(1) FROM item WHERE barcode = @barcode) + (SELECT COUNT(1) FROM item WHERE barcode = @barcode) AS count;";
+            return Run(conn =>
+            {
+                return conn.Query<int>(sql, new { barcode }).First() > 0;
+            });
+        }
     }
 }

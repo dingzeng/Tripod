@@ -26,7 +26,7 @@ namespace Tripod.Service.Archive.DAL
 
             return Run(conn =>
             {
-                var sql = "SELECT * FROM item_parckage WHERE item_id = @itemId; ";
+                var sql = "SELECT * FROM item_package WHERE item_id = @itemId; ";
                 return conn.Query<ItemPackage>(sql, new { itemId }).ToList();
             });
         }
