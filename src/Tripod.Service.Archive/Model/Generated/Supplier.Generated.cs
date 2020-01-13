@@ -24,7 +24,7 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 所属区域id
 		/// <summary>
-		public string RegionId { get; set; }
+		public long RegionId { get; set; }
 
 		/// <summary>
 		/// 经营方式（0-购销、1-联营、2-代销、3-租赁）
@@ -99,7 +99,7 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 创建人
 		/// <summary>
-		public int CreateOperId { get; set; }
+		public long CreateOperId { get; set; }
 
 		/// <summary>
 		/// 
@@ -114,7 +114,7 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 最后修改人
 		/// <summary>
-		public int LastUpdateOperId { get; set; }
+		public long LastUpdateOperId { get; set; }
 
 		/// <summary>
 		/// 

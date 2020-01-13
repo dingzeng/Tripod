@@ -54,7 +54,7 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 商品部门
 		/// <summary>
-		public string ItemDepartmentId { get; set; }
+		public long ItemDepartmentId { get; set; }
 
 		/// <summary>
 		/// 
@@ -164,7 +164,7 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 创建人
 		/// <summary>
-		public int CreateOperId { get; set; }
+		public long CreateOperId { get; set; }
 
 		/// <summary>
 		/// 
@@ -179,7 +179,7 @@ namespace Tripod.Service.Archive.Model
 		/// <summary>
 		/// 最后修改人
 		/// <summary>
-		public int LastUpdateOperId { get; set; }
+		public long LastUpdateOperId { get; set; }
 
 		/// <summary>
 		/// 

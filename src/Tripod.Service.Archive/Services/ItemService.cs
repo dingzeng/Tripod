@@ -52,8 +52,8 @@ namespace Tripod.Service.Archive.Services
 
         public override Task<ItemClsDTO> CreateItemCls(ItemClsDTO request, ServerCallContext context)
         {
-            var id = _itemClsDao.Insert(_mapper.Map<ItemCls>(request));
-            var itemCls = _itemClsDao.Get(id);
+            _itemClsDao.Insert(_mapper.Map<ItemCls>(request));
+            var itemCls = _itemClsDao.Get(request.Id);
             return Task.FromResult(_mapper.Map<ItemClsDTO>(itemCls));
         }
 

@@ -11,9 +11,6 @@ service SystemSrv {
     // Permission
     rpc GetAllPermissions(Empty) returns (PermissionsResponse);
 
-    // PermissionApi
-    rpc GetAllPermissionApis(Empty) returns (GetAllPermissionApisResponse);
-
     // Role
     rpc GetAllRoles(Empty) returns (RolesResponse);
     rpc GetRoleById(KeyObject) returns (RoleDTO);
@@ -67,10 +64,6 @@ message GetMenusResponse {
 
 message PermissionsResponse {
     repeated PermissionDTO Permissions = 1;
-}
-
-message GetAllPermissionApisResponse {
-    repeated PermissionApiDTO PermissionApis = 1;
 }
 
 message RolesResponse {

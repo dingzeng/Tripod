@@ -40,5 +40,10 @@ namespace Tripod.Service.System.Model
 		/// 是否是叶子节点
 		/// <summary>
 		public int IsLeaf { get; set; }
+
+		/// <summary>
+		/// 顺序
+		/// <summary>
+		public int Sequence { get; set; }
 	}
 }

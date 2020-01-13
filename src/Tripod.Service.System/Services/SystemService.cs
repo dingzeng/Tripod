@@ -47,15 +47,6 @@ namespace Tripod.Service.System.Services
             return Task.FromResult(res);
         }
 
-        // PermissionApi
-        public override Task<GetAllPermissionApisResponse> GetAllPermissionApis(Empty request, ServerCallContext context)
-        {
-            var permissionApis = _permissionApiDao.GetAll();
-            var res = new GetAllPermissionApisResponse();
-            res.PermissionApis.AddRange(permissionApis.Select(pa => _mapper.Map<PermissionApiDTO>(pa)));
-            return Task.FromResult(res);
-        }
-
         #region Role
 
         public override Task<RolesResponse> GetAllRoles(Empty request, ServerCallContext context)

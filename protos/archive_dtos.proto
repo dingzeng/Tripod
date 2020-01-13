@@ -48,7 +48,7 @@ message ItemDTO {
 	string ItemClsName = 6;
 	string ItemBrandId = 7;
 	string ItemBrandName = 8;
-	string ItemDepartmentId = 9;
+	int64 ItemDepartmentId = 9;
 	string ItemDepartmentName = 10;
 	int32 ItemUnitId = 11;
 	string ItemUnitName = 12;
@@ -56,19 +56,19 @@ message ItemDTO {
 	string PrimarySupplierName = 14;
 	int32 Status = 15;
 	int32 IsFresh = 16;
-	string RetailPrice = 17;
-	string PurchasePrice = 18;
-	string SalesPrice = 19;
-	string DeliveryPrice = 20;
-	string ReferProfitRate = 21;
+	double RetailPrice = 17;
+	double PurchasePrice = 18;
+	double SalesPrice = 19;
+	double DeliveryPrice = 20;
+	double ReferProfitRate = 21;
 	string Size = 22;
 	int32 TransportMode = 23;
 	int32 QualityDays = 24;
 	int32 WarningDays = 25;
 	int32 LeastDeliveryQty = 26;
 	string ProductionPlace = 27;
-	string PurchaseTaxRate = 28;
-	string SalesTaxRate = 29;
+	double PurchaseTaxRate = 28;
+	double SalesTaxRate = 29;
 	string Memo = 30;
 	int64 CreateOperId = 31;
 	string CreateOperName = 32;
@@ -100,7 +100,7 @@ message ItemDeliveryPriceDTO {
 	int32 Id = 1;
 	string ItemId = 2;
 	string BranchId = 3;
-	string DeliveryPrice = 4;
+	double DeliveryPrice = 4;
 	string Memo = 5;
 }
 
@@ -116,8 +116,8 @@ message ItemPackageDTO {
 	int32 ItemUnitId = 4;
 	string ItemUnitName = 5;
 	int32 FactorQty = 6;
-	string RetailPrice = 7;
-	string SalesPrice = 8;
+	double RetailPrice = 7;
+	double SalesPrice = 8;
 	int32 IsDefaultPurchaseUnit = 9;
 	int32 IsDefaultDeliveryUnit = 10;
 	string Memo = 11;
@@ -133,7 +133,7 @@ message ItemPurchasePriceDTO {
 	int32 ItemUnitId = 7;
 	string ItemUnitName = 8;
 	int32 FactorQty = 9;
-	string PurchasePrice = 10;
+	double PurchasePrice = 10;
 	string Memo = 11;
 }
 
@@ -145,8 +145,8 @@ message ItemSellingPriceDTO {
 	int32 ItemUnitId = 5;
 	string ItemUnitName = 6;
 	int32 FactorQty = 7;
-	string RetailPrice = 8;
-	string SalesPrice = 9;
+	double RetailPrice = 8;
+	double SalesPrice = 9;
 	string Memo = 10;
 }
 
@@ -155,8 +155,8 @@ message ItemSubDTO {
 	string ItemId = 2;
 	string Barcode = 3;
 	string Name = 4;
-	string RetailPrice = 5;
-	string SalesPrice = 6;
+	double RetailPrice = 5;
+	double SalesPrice = 6;
 	string Memo = 7;
 }
 
@@ -165,8 +165,8 @@ message ItemSubPriceDTO {
 	string ItemId = 2;
 	string Barcode = 3;
 	string BranchId = 4;
-	string RetailPrice = 5;
-	string SalesPrice = 6;
+	double RetailPrice = 5;
+	double SalesPrice = 6;
 	string Memo = 7;
 }
 

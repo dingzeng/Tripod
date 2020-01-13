@@ -9,7 +9,7 @@ CREATE TABLE `item` (
     `item_cls_name` VARCHAR(45) NOT NULL,
     `item_brand_id` VARCHAR(45) NOT NULL COMMENT '商品品牌',
     `item_brand_name` VARCHAR(45) NOT NULL,
-    `item_department_id` VARCHAR(45) NOT NULL DEFAULT '' COMMENT '商品部门',
+    `item_department_id` BIGINT NOT NULL COMMENT '商品部门',
     `item_department_name` VARCHAR(45) NOT NULL DEFAULT '',
     `item_unit_id` INT NOT NULL COMMENT '库存单位',
     `item_unit_name` VARCHAR(45) NOT NULL,
