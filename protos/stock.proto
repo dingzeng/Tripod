@@ -1,9 +1,0 @@
-syntax = "proto3";
-option csharp_namespace = "Tripod.Service.Stock";
-package Stock;
-import "common.proto";
-import "stock_dtos.proto";
-
-service ItemStockSrv {
-    rpc Test(Empty) returns(Empty);
-}
