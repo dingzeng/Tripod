@@ -8,3 +8,5 @@
 
 # node
 package-lock.json
+
+**/wwwroot/
