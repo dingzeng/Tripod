@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Archive.API</name>
+    </assembly>
+    <members>
+        <member name="M:Archive.API.Controllers.BranchController.GetBranchByIdAsync(System.String)">
+            <summary>
+            根据id获取机构
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Archive.API.Controllers.BranchController.GetBranchesAsync(System.Int32,System.Int32,System.String,System.String,Archive.API.Model.BranchType[])">
+            <summary>
+            获取机构分页数据
+            </summary>
+            <param name="pageSize">页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="keyword">搜索关键字：编码或名称</param>
+            <param name="parentId">父机构id</param>
+            <param name="typeList">机构类型</param>
+            <returns></returns>
+        </member>
+        <member name="T:Archive.API.Model.Branch">
+            <summary>
+            机构档案
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.Id">
+            <summary>
+            机构编码
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ParentId">
+            <summary>
+            上级机构编码
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ParentName">
+            <summary>
+            上级机构名称
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.Name">
+            <summary>
+            机构名称
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ShortName">
+            <summary>
+            机构简称
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.Type">
+            <summary>
+            机构类型
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ContactsName">
+            <summary>
+            联系人
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ContactsMobile">
+            <summary>
+            移动电话
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ContactsTel">
+            <summary>
+            固定电话
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ContactsEmail">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.GiftStoreId">
+            <summary>
+            默认赠送仓库
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.ReturnStoreId">
+            <summary>
+            默认退货仓库
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.PurchaseStoreId">
+            <summary>
+            默认进货仓库
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.Memo">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.CreateOperId">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.CreateOperName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.LastUpdateOperId">
+            <summary>
+            最后修改人
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.LastUpdateOperName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Archive.API.Model.Branch.LastUpdateTime">
+            <summary>
+            最后修改时间
+            </summary>
+        </member>
+        <member name="T:Archive.API.Model.BranchType">
+            <summary>
+            机构类型
+            </summary>
+        </member>
+        <member name="F:Archive.API.Model.BranchType.Headquarters">
+            <summary>
+            总部
+            </summary>
+        </member>
+        <member name="F:Archive.API.Model.BranchType.RegionalCentre">
+            <summary>
+            区域中心
+            </summary>
+        </member>
+        <member name="F:Archive.API.Model.BranchType.DC">
+            <summary>
+            配送中心
+            </summary>
+        </member>
+        <member name="F:Archive.API.Model.BranchType.SelfShop">
+            <summary>
+            自营店
+            </summary>
+        </member>
+        <member name="F:Archive.API.Model.BranchType.Franchisee">
+            <summary>
+            加盟店
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -26,7 +27,6 @@ namespace Archive.API
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -53,6 +53,13 @@ namespace Archive.API
 
             app.UseHttpsRedirection();
 
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "{documentName}/swagger.json";
+            }).UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/v1/swagger.json", "API V1");
+            });
             app.UseRouting();
             app.UseCors("CorsPolicy");
 
@@ -109,10 +116,12 @@ namespace Archive.API
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "档案服务HTTP接口",
+                    Title = "档案服务API",
                     Version = "v1",
-                    Description = "档案服务HTTP接口"
+                    Description = "档案服务API"
                 });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "Archive.API.xml");
+                options.IncludeXmlComments(filePath);
             });
 
             return services;

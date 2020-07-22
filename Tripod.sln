@@ -5,24 +5,9 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827ACAA8-371F-4364-B4E9-7EB5430E8580}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{9DD4C67D-9A94-4F3D-880B-783A70D94AE1}"
-	ProjectSection(SolutionItems) = preProject
-		protos\archive.proto = protos\archive.proto
-		protos\archive_dtos.proto = protos\archive_dtos.proto
-		protos\common.proto = protos\common.proto
-		protos\purchase.proto = protos\purchase.proto
-		protos\purchase_dtos.proto = protos\purchase_dtos.proto
-		protos\stock.proto = protos\stock.proto
-		protos\stock_dtos.proto = protos\stock_dtos.proto
-		protos\system.proto = protos\system.proto
-		protos\system_dtos.proto = protos\system_dtos.proto
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{66AA2A30-055F-4AE3-A1BC-61EE18FC50FC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{52095E91-FB90-42F0-9665-8CE4112D714F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{19346F98-6130-48A2-81A8-E3F0C24762D9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{19346F98-6130-48A2-81A8-E3F0C24762D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{BA913F1D-617A-465C-B0EC-02151CB2B7A3}"
 EndProject
@@ -36,6 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System", "System", "{40D7F8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Archive.API", "src\Services\Archive\Archive.API\Archive.API.csproj", "{4CC5CFA8-8848-44FA-AAF6-FFFB745A7B80}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8F8FDE98-DA58-40E8-B598-03791A9FBC94}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tripod.Core", "src\Common\Tripod.Core\Tripod.Core.csproj", "{007C5963-F32E-4DB6-97BF-23BB5863F558}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +38,10 @@ Global
 		{4CC5CFA8-8848-44FA-AAF6-FFFB745A7B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CC5CFA8-8848-44FA-AAF6-FFFB745A7B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CC5CFA8-8848-44FA-AAF6-FFFB745A7B80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007C5963-F32E-4DB6-97BF-23BB5863F558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007C5963-F32E-4DB6-97BF-23BB5863F558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007C5963-F32E-4DB6-97BF-23BB5863F558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007C5963-F32E-4DB6-97BF-23BB5863F558}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +55,7 @@ Global
 		{FAAFC8F6-BF81-433D-BBEB-0622B5271AB4} = {52095E91-FB90-42F0-9665-8CE4112D714F}
 		{40D7F88B-6941-4499-943F-088BDEF0F866} = {52095E91-FB90-42F0-9665-8CE4112D714F}
 		{4CC5CFA8-8848-44FA-AAF6-FFFB745A7B80} = {87337627-FD67-4723-96FD-A45A11A79304}
+		{007C5963-F32E-4DB6-97BF-23BB5863F558} = {19346F98-6130-48A2-81A8-E3F0C24762D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4238784-7DEA-420E-8B9A-4678A88338B2}

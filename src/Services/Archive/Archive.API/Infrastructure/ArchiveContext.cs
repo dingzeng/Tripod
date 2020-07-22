@@ -17,6 +17,7 @@ namespace Archive.API.Infrastructure
         }
 
         public DbSet<Branch> Branches { get; set; }
+        public DbSet<BranchStore> BranchStores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
