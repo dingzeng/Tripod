@@ -30,6 +30,6 @@ namespace Archive.API
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory());
     }
 }

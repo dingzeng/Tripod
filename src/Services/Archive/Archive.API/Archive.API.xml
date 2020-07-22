@@ -102,34 +102,29 @@
             备注
             </summary>
         </member>
-        <member name="P:Archive.API.Model.Branch.CreateOperId">
+        <member name="T:Archive.API.Model.BranchStore">
             <summary>
-            创建人
+            机构仓库
             </summary>
         </member>
-        <member name="P:Archive.API.Model.Branch.CreateOperName">
+        <member name="P:Archive.API.Model.BranchStore.Id">
             <summary>
-            
+            自增编码
             </summary>
         </member>
-        <member name="P:Archive.API.Model.Branch.CreateTime">
+        <member name="P:Archive.API.Model.BranchStore.BranchId">
             <summary>
-            创建时间
+            所属机构编码
             </summary>
         </member>
-        <member name="P:Archive.API.Model.Branch.LastUpdateOperId">
+        <member name="P:Archive.API.Model.BranchStore.Name">
             <summary>
-            最后修改人
+            仓库名称
             </summary>
         </member>
-        <member name="P:Archive.API.Model.Branch.LastUpdateOperName">
+        <member name="P:Archive.API.Model.BranchStore.IsUsable">
             <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Archive.API.Model.Branch.LastUpdateTime">
-            <summary>
-            最后修改时间
+            是否可用
             </summary>
         </member>
         <member name="T:Archive.API.Model.BranchType">
