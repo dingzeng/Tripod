@@ -1,21 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Projects\github\dingzeng\Tripod\src\Services\Archive\Archive.API\Archive.API.xml</DocumentationFile>
+    <DocumentationFile>Archive.API.xml</DocumentationFile>
   </PropertyGroup>
+
+  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Code\github\dingzeng\Tripod\src\Services\Archive\Archive.API\Archive.API.xml</DocumentationFile>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <Folder Include="Proto\" />
     <Folder Include="Grpc\" />
     <Folder Include="ViewModel\Branch\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\..\..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

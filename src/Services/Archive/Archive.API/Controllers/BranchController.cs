@@ -5,10 +5,10 @@ using System.Net;
 using System.Threading.Tasks;
 using Archive.API.Infrastructure;
 using Archive.API.Model;
-using Archive.API.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Tripod.Core;
 
 namespace Archive.API.Controllers
 {
@@ -59,7 +59,7 @@ namespace Archive.API.Controllers
         /// <param name="typeList">机构类型</param>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(typeof(PaginatedItemsViewModel<Branch>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(PaginatedItems<Branch>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetBranchesAsync(
             int pageSize = 10,
             int pageIndex = 1,
@@ -89,7 +89,7 @@ namespace Archive.API.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            var model = new PaginatedItemsViewModel<Branch>(pageIndex, pageSize, totalItems, itemsOnPage);
+            var model = new PaginatedItems<Branch>(pageIndex, pageSize, totalItems, itemsOnPage);
 
             return Ok(model);
         }

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcSystem";
+
+package UserApi;
+
+service UserGrpc {
+	rpc CheckUsernameAndPassword(CheckUsernameAndPasswordRequest) returns (UserDTO) {}
+}
+
+message CheckUsernameAndPasswordRequest {
+	string username = 1;
+	string password = 2;
+}
+
+message UserDTO {
+	string userId = 1;
+	string username = 2;
+}

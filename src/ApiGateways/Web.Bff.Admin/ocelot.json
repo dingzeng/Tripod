@@ -1,5 +1,19 @@
 {
   "Routes": [
+    // Identity Service
+    {
+      "DownstreamPathTemplate": "/login",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60000
+        }
+      ],
+      "UpstreamPathTemplate": "/login",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    // Archive Service
     {
       "DownstreamPathTemplate": "/api/{version}/{everything}",
       "DownstreamScheme": "https",
@@ -11,9 +25,22 @@
       ],
       "UpstreamPathTemplate": "/api/{version}/archive/{everything}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    // System Service
+    {
+      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44397
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/system/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44310"
+    "BaseUrl": "http://localhost:5000"
   }
 }
