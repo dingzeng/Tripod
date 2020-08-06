@@ -12,15 +12,29 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Identity.API.Controllers
 {
+    /// <summary>
+    /// 登录
+    /// </summary>
     [ApiController]
     public class AccountController : ControllerBase
     {
         private readonly UserGrpc.UserGrpcClient _userClient;
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="userClient"></param>
         public AccountController(UserGrpc.UserGrpcClient userClient)
         {
             _userClient = userClient;
         }
 
+        /// <summary>
+        /// JWT 登录
+        /// </summary>
+        /// <param name="securityKey"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromServices] SymmetricSecurityKey securityKey, [FromBody] LoginModel model)
@@ -31,6 +45,10 @@ namespace Identity.API.Controllers
                 Password = model.Password
             };
             var response = await _userClient.CheckUsernameAndPasswordAsync(request);
+            if(String.IsNullOrEmpty(response.UserId))
+            {
+                return NotFound();
+            }
 
             string userId = response.UserId;
             string username = response.Username;
@@ -50,6 +68,10 @@ namespace Identity.API.Controllers
             return Ok(content);
         }
 
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout()

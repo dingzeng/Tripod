@@ -4,6 +4,31 @@
         <name>Identity.API</name>
     </assembly>
     <members>
+        <member name="T:Identity.API.Controllers.AccountController">
+            <summary>
+            登录
+            </summary>
+        </member>
+        <member name="M:Identity.API.Controllers.AccountController.#ctor(GrpcSystem.UserGrpc.UserGrpcClient)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="userClient"></param>
+        </member>
+        <member name="M:Identity.API.Controllers.AccountController.Login(Microsoft.IdentityModel.Tokens.SymmetricSecurityKey,Identity.API.ViewModel.LoginModel)">
+            <summary>
+            JWT 登录
+            </summary>
+            <param name="securityKey"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Identity.API.Controllers.AccountController.Logout">
+            <summary>
+            登出
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Identity.API.CustomExtensionMethods">
             <summary>
             自定义扩展

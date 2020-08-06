@@ -4,6 +4,26 @@
         <name>System.API</name>
     </assembly>
     <members>
+        <member name="T:System.API.Grpc.UserService">
+            <summary>
+            用户服务
+            </summary>
+        </member>
+        <member name="M:System.API.Grpc.UserService.#ctor(Microsoft.Extensions.Logging.ILogger{System.API.Grpc.UserService},System.API.Infrastructure.SystemContext)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="logger"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:System.API.Grpc.UserService.CheckUsernameAndPassword(GrpcSystem.CheckUsernameAndPasswordRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            检查用户名和密码，并返回存在的用户数据
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="P:System.API.Model.Menu.Code">
             <summary>
             编码
