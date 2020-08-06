@@ -22,6 +22,11 @@
             <param name="typeList">机构类型</param>
             <returns></returns>
         </member>
+        <member name="T:Archive.API.Controllers.ItemController">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Archive.API.Model.Branch">
             <summary>
             机构档案
@@ -156,6 +161,71 @@
             <summary>
             加盟店
             </summary>
+        </member>
+        <member name="T:Archive.API.Startup">
+            <summary>
+            Startup
+            </summary>
+        </member>
+        <member name="M:Archive.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:Archive.API.Startup.Configuration">
+            <summary>
+            配置对象
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:Archive.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            配置服务
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Archive.API.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            配置DI容器
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:Archive.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            配置中简件
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:Archive.API.CustomExtensionMethods">
+            <summary>
+            自定义扩展
+            </summary>
+        </member>
+        <member name="M:Archive.API.CustomExtensionMethods.AddCustomMVC(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            配置MVC服务
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Archive.API.CustomExtensionMethods.AddCustomDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            配置数据库上下文
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Archive.API.CustomExtensionMethods.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            配置Swagger服务
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

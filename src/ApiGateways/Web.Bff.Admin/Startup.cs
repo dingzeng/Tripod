@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Ocelot;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -32,25 +34,6 @@ namespace Web.Bff.Admin
         {
             services.AddControllers();
             services.AddOcelot();
-
-            var secrityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTKey"]));
-            services.AddSingleton(secrityKey);
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => { })
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.FromSeconds(30),
-                        ValidateIssuerSigningKey = true,
-                        ValidAudience = "localhost",
-                        ValidIssuer = "localhost",
-                        IssuerSigningKey = secrityKey
-                    };
-                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,15 +45,72 @@ namespace Web.Bff.Admin
             }
 
             app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGet("/", (context) =>
+                {
+                    return Task.Run(() =>
+                    {
+                        context.Response.WriteAsync("Admin API Bff/Gateway Runing...");
+                    });
+                });
             });
             app.UseOcelot().Wait();
+        }
+    }
+
+    /// <summary>
+    /// 自定义扩展
+    /// </summary>
+    public static class CustomExtensionMethods
+    {
+        /// <summary>
+        /// 配置MVC服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddCustomMVC(this IServiceCollection services, IConfiguration configuration)
+        {
+            // 添加MVC控制器服务
+            services.AddControllers();
+            
+            // 添加跨域服务
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+            return services;
+        }
+        
+        /// <summary>
+        /// 配置Swagger服务
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Admin Bff/Gateway API",
+                    Version = "v1",
+                    Description = "Admin Bff/Gateway API"
+                });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "Web.Bff.Admin.xml");
+                options.IncludeXmlComments(filePath);
+            });
+
+            return services;
         }
     }
 }

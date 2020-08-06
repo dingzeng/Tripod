@@ -8,10 +8,6 @@
     <DocumentationFile>Archive.API.xml</DocumentationFile>
   </PropertyGroup>
 
-  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Code\github\dingzeng\Tripod\src\Services\Archive\Archive.API\Archive.API.xml</DocumentationFile>
-  </PropertyGroup>-->
-
   <ItemGroup>
     <Folder Include="Proto\" />
     <Folder Include="Grpc\" />

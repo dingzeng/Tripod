@@ -54,8 +54,6 @@ namespace System.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseSwagger(options =>
             {
                 options.RouteTemplate = "{documentName}/swagger.json";
@@ -72,6 +70,13 @@ namespace System.API
             {
                 endpoints.MapControllers();
                 endpoints.MapGrpcService<UserService>();
+                endpoints.MapGet("/", (context) =>
+                {
+                    return Task.Run(() =>
+                    {
+                        context.Response.WriteAsync("System Service Runing...");
+                    });
+                });
             });
         }
     }
@@ -120,9 +125,9 @@ namespace System.API
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "系统服务API",
+                    Title = "System Service API",
                     Version = "v1",
-                    Description = "系统服务API"
+                    Description = "System Service API"
                 });
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "System.API.xml");
                 options.IncludeXmlComments(filePath);
