@@ -6,6 +6,11 @@ package UserApi;
 
 service UserGrpc {
 	rpc CheckUsernameAndPassword(CheckUsernameAndPasswordRequest) returns (UserDTO) {}
+	rpc GetUserById(IdRequest) returns (UserDTO) {};
+}
+
+message IdRequest {
+	string id = 1;
 }
 
 message CheckUsernameAndPasswordRequest {

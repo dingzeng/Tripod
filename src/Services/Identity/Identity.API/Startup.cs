@@ -12,6 +12,8 @@ namespace Identity.API
 {
     using Grpc.Net.Client;
     using GrpcSystem;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
@@ -29,8 +31,6 @@ namespace Identity.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["IdentitySecurityKey"])));
-
             services.AddScoped(provider =>
             {
                 var httpClientHandler = new HttpClientHandler() { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
@@ -43,7 +43,8 @@ namespace Identity.API
 
             services
                 .AddCustomMVC(Configuration)
-                .AddSwagger(Configuration);
+                .AddSwagger(Configuration)
+                .AddCustomIdentity(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +59,8 @@ namespace Identity.API
                .UseSwaggerUI(options => options.SwaggerEndpoint("/v1/swagger.json", "API V1"));
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -122,6 +125,30 @@ namespace Identity.API
                 options.IncludeXmlComments(filePath);
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddCustomIdentity(this IServiceCollection services, IConfiguration configuration)
+        {
+            var secrityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["IdentitySecurityKey"]));
+            services.AddSingleton(secrityKey);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => { })
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.FromSeconds(30),
+                        ValidateIssuerSigningKey = true,
+                        ValidAudience = "localhost",
+                        ValidIssuer = "localhost",
+                        IssuerSigningKey = secrityKey
+                    };
+                });
             return services;
         }
     }

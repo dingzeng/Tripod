@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GrpcSystem;
 using Identity.API.ViewModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +18,7 @@ namespace Identity.API.Controllers
     /// <summary>
     /// 登录
     /// </summary>
+    [Route("api")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -45,9 +49,9 @@ namespace Identity.API.Controllers
                 Password = model.Password
             };
             var response = await _userClient.CheckUsernameAndPasswordAsync(request);
-            if(String.IsNullOrEmpty(response.UserId))
+            if (string.IsNullOrEmpty(response.UserId))
             {
-                return NotFound();
+                return BadRequest(new { Message = "用户名或密码错误。" });
             }
 
             string userId = response.UserId;
@@ -66,6 +70,28 @@ namespace Identity.API.Controllers
                     signingCredentials: signingCredentials);
             var content = new JwtSecurityTokenHandler().WriteToken(token);
             return Ok(content);
+        }
+
+        [HttpGet]
+        [Route("userinfo")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Userinfo([FromServices] SymmetricSecurityKey securityKey)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value;
+
+            var user = await _userClient.GetUserByIdAsync(new IdRequest() { Id = userId });
+            if (string.IsNullOrEmpty(user.UserId))
+            {
+                return NotFound();
+            }
+            else
+            {
+                var response = new UserInfo()
+                {
+                    Name = user.Username
+                };
+                return Ok(response);
+            }
         }
 
         /// <summary>

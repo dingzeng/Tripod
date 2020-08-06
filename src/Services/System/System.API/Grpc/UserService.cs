@@ -51,5 +51,24 @@ namespace System.API.Grpc
                 };
             }
         }
+
+        public override async Task<UserDTO> GetUserById(IdRequest request, ServerCallContext context)
+        {
+            var userId = Convert.ToInt32(request.Id);
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return new UserDTO();
+            }
+            else
+            {
+                return new UserDTO()
+                {
+                    UserId = user.Id.ToString(),
+                    Username = user.Username
+                };
+            }
+        }
     }
 }
