@@ -1,0 +1,47 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Tripod.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "bff:admin",
+            "command":"dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "-p",
+                "${workspaceFolder}/src/ApiGateways/Web.Bff.Admin/Web.Bff.Admin.csproj"
+            ]
+        },
+        {
+            "label": "api:identity",
+            "command":"dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "-p",
+                "${workspaceFolder}/src/Services/Identity/Identity.API/Identity.API.csproj"
+            ]
+        },
+        {
+            "label": "api:system",
+            "command":"dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "-p",
+                "${workspaceFolder}/src/Services/System/System.API/System.API.csproj"
+            ]
+        }
+    ]
+}

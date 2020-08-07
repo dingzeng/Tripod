@@ -2,13 +2,13 @@
 
 ## 服务端口
 
-|Service|http|https|
-|---|---|---|
-|Web.Bff.Admin|5000||
-|Identity.API|5001||
-|Archive.API|5002||
-|System.API|5003|50030|
-|Stock.API|5004||
+|Service|http|https|短标识|
+|---|---|---|---|
+|Web.Bff.Admin|5000|-|-|
+|Identity.API|5001|-|i|
+|Archive.API|5002|-|a|
+|System.API|5003|50030|s|
+|Stock.API|5004|-|t|
 
 
 ## 接口规范
@@ -32,3 +32,5 @@
             - 菜单2
     - 模块3
 - 系统3
+
+## TODO

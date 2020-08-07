@@ -2,7 +2,7 @@
   <div>
     <list-page
       load-page
-      uri="/system/user"
+      uri="/api/s/user"
       dialog-title="用户"
       dialog-width="500px"
       :columns="columns"
