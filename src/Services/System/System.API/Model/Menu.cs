@@ -6,6 +6,9 @@ using Tripod.Core;
 
 namespace System.API.Model
 {
+	/// <summary>
+	/// 菜单
+	/// </summary>
 	public partial class Menu : Entity
 	{
 		/// <summary>
@@ -36,7 +39,7 @@ namespace System.API.Model
 		/// <summary>
 		/// 是否是叶子节点
 		/// </summary>
-		public int IsLeaf { get; set; }
+		public bool IsLeaf { get; set; }
 
 		/// <summary>
 		/// 顺序

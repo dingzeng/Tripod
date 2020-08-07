@@ -6,10 +6,13 @@ using Tripod.Core;
 
 namespace System.API.Model
 {
+	/// <summary>
+	/// 权限
+	/// </summary>
 	public partial class Permission : Entity
 	{
 		/// <summary>
-		/// 
+		/// 权限编码
 		/// </summary>
 		public string Code { get; set; }
 
@@ -19,12 +22,7 @@ namespace System.API.Model
 		public string MenuCode { get; set; }
 
 		/// <summary>
-		/// 权限类型
-		/// </summary>
-		public PermissionType Type { get; set; }
-
-		/// <summary>
-		/// 
+		/// 权限名称
 		/// </summary>
 		public string Name { get; set; }
 	}
