@@ -1,7 +1,7 @@
 <template>
   <div>
     <list-page
-      uri="/system/role"
+      uri="/api/s/role"
       dialog-title="角色"
       dialog-width="500px"
       :columns="columns"
@@ -76,7 +76,7 @@ export default {
   methods: {
     nodeClick(data) {
       request({
-        url: '/system/menu/?parentCode=' + data.id,
+        url: '/api/s/menu/?parentCode=' + data.id,
         method: 'get'
       }).then(response => {
         this.menus = response.data
@@ -92,7 +92,7 @@ export default {
     setCheckState(permissionCode, args) {
       const has = args[0]
       request({
-        url: '/system/role/permission',
+        url: '/api/s/role/permission',
         method: 'put',
         data: {
           roleId: this.currentRoleId,
@@ -113,7 +113,7 @@ export default {
           this.currentRoleId = row.id
           this.currentRoleName = row.name
           request({
-            url: '/system/role/permission_flag?roleId=' + row.id,
+            url: '/api/s/role/permission_flag?roleId=' + row.id,
             method: 'get'
           }).then(response => {
             this.drawerVisible = true
@@ -141,10 +141,10 @@ export default {
   },
   mounted() {
     request({
-      url: '/system/menu/tree',
+      url: '/api/s/menu/tree',
       method: 'get'
     }).then(response => {
-      this.menuGroupsData = response.data
+      this.menuGroupsData = response
     })
   }
 }

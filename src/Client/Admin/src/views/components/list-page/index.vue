@@ -142,9 +142,9 @@ export default {
       type: Boolean,
       default: false
     },
-    loadPage: {
+    isLoadPage: {
       type: Boolean,
-      default: () => false
+      default: false
     },
     operations: {
       type: Array,
@@ -307,7 +307,7 @@ export default {
     }
   },
   mounted() {
-    if (this.loadPage) {
+    if (this.isLoadPage) {
       request({
         url: this.uri + '/_page',
         method: 'get'
@@ -327,12 +327,11 @@ export default {
         request.pageSize = this.pageSize
       }
       this.queryFn(request).then(response => {
-        const { data } = response
         if (this.isPaging) {
-          this.data = data.list
-          this.totalCount = data.totalCount
+          this.data = response.data
+          this.totalCount = response.count
         } else {
-          this.data = data
+          this.data = response
         }
       })
     },
@@ -340,7 +339,7 @@ export default {
       this.innerAction = 'add'
       this.dialogVisible = true
       this.initFn().then(response => {
-        this.innerModel = Object.assign({}, this.model, response.data)
+        this.innerModel = Object.assign({}, this.model, response)
         this.$nextTick(() => {
           this.modelChanged = false
         })
@@ -350,24 +349,16 @@ export default {
       this.innerAction = 'edit'
       this.dialogVisible = true
       this.getFn(row[this.pk]).then(response => {
-        if (response.code !== 20000) {
-          this.$message.error(response.message)
-          return
-        }
-        this.innerModel = response.data
+        this.innerModel = response
         this.$nextTick(() => {
           this.modelChanged = false
         })
-        this.$emit('model-load', response.data)
+        this.$emit('model-load', response)
       })
     },
     handleDelete(index, row) {
       this.$confirm('确定要删除吗？', '提示').then(() => {
         this.deleteFn(row[this.pk]).then(response => {
-          if (response.code !== 20000) {
-            this.$message.error(response.message)
-            return
-          }
           this.$message.success('删除成功')
           this.$emit('on-delete')
           this.query()
@@ -398,10 +389,6 @@ export default {
               : this.updateFn(this.innerModel)
 
           promise.then(response => {
-            if (response.code !== 20000) {
-              this.$message.error(response.message)
-              return
-            }
             this.$message.success('保存成功')
             this.$emit('on-save')
             this.query()

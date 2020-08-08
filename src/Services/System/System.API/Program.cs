@@ -19,7 +19,7 @@ namespace System.API
             var host = CreateHostBuilder(args).Build();
             host.MigrateDbContext<SystemContext>((context, services) =>
             {
-                
+                new SystemContextSeed().Seed(context);
             });
 
             host.Run();

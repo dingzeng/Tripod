@@ -13,7 +13,7 @@ namespace System.API.Controllers
     /// 角色
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RoleController : ControllerBase
     {
         private readonly ILogger<RoleController> _logger;

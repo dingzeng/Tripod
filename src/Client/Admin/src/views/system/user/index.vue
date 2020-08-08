@@ -139,12 +139,8 @@ export default {
   methods: {
     confirmRelation() {
       updateUserRoles(this.relateModel.userId, this.relateModel.roleIdList).then(response => {
-        if (!response.data) {
-          this.$message.error('修改失败')
-        } else {
-          this.$message.success('修改成功')
-          this.relateRoleDialogVisible = false
-        }
+        this.$message.success('修改成功')
+        this.relateRoleDialogVisible = false
       })
     }
   }

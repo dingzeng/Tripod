@@ -1,11 +1,13 @@
 using System;
 using System.API.Infrastructure;
 using System.API.Model;
+using System.API.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Tripod.Core;
 
 namespace System.API.Controllers
 {
@@ -13,7 +15,7 @@ namespace System.API.Controllers
     /// 用户
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
@@ -40,28 +42,38 @@ namespace System.API.Controllers
         /// <param name="status"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IEnumerable<User>> Get(
-            int pageIndex = 1, 
+        public async Task<PaginatedItems<User>> Get(
+            int pageIndex = 1,
             int pageSize = 20,
             string branchId = "",
             string keyword = "",
-            int? status = null
+            bool? status = null
             )
         {
             var query = _context.Users.AsQueryable();
-            if(!string.IsNullOrEmpty(branchId)) {
+            if (!string.IsNullOrEmpty(branchId))
+            {
                 query = query.Where(i => i.BranchId == branchId);
             }
-            if(!string.IsNullOrEmpty(keyword)) {
+            if (!string.IsNullOrEmpty(keyword))
+            {
                 query = query.Where(i => i.Username.Contains(keyword) || i.Name.Contains(keyword) || i.Mobile.Contains(keyword));
             }
-            if(status.HasValue) {
+            if (status.HasValue)
+            {
                 query = query.Where(i => i.Status == status.Value);
             }
-            
-            return query.Skip((pageIndex - 1) * pageSize).Take(pageSize).OrderByDescending(i => i.Id);
+
+            var data = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).OrderByDescending(i => i.Id);
+            var response = new PaginatedItems<User>(
+                pageIndex: pageIndex,
+                pageSize: pageSize,
+                count: query.Count(),
+                data: data);
+
+            return response;
         }
-        
+
         [HttpGet]
         [Route("{id}")]
         public async Task<User> Get(int id)
@@ -75,7 +87,8 @@ namespace System.API.Controllers
         {
             _context.Users.Add(model);
             var line = await _context.SaveChangesAsync();
-            if(line < 1) {
+            if (line < 1)
+            {
                 return BadRequest();
             }
             return Ok(model);
@@ -85,7 +98,8 @@ namespace System.API.Controllers
         public async Task<IActionResult> Put(User model)
         {
             var user = _context.Users.FirstOrDefault(i => i.Id == model.Id);
-            if(user == null) {
+            if (user == null)
+            {
                 return BadRequest();
             }
 
@@ -98,7 +112,8 @@ namespace System.API.Controllers
             user.SupplierPermissionFlag = model.SupplierPermissionFlag;
 
             var line = await _context.SaveChangesAsync();
-            if(line < 1) {
+            if (line < 1)
+            {
                 return BadRequest();
             }
             return Ok(user);
@@ -109,13 +124,56 @@ namespace System.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var user = _context.Users.FirstOrDefault(i => i.Id == id);
-            if(user == null) {
+            if (user == null)
+            {
                 return BadRequest();
             }
 
             _context.Remove(user);
             var line = await _context.SaveChangesAsync();
-            if(line < 1) {
+            if (line < 1)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("role/{userId}")]
+        public async Task<IActionResult> GetUserRoles(long userId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var roles = user.UserRoles.Select(ur => ur.Role).ToList();
+            return Ok(roles);
+        }
+
+        [HttpPut]
+        [Route("role")]
+        public async Task<IActionResult> UpdateUserRole(UpdateUserRoleModel model)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == model.UserId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            user.UserRoles.Clear();
+            foreach (var roleId in model.RoleIdList)
+            {
+                user.UserRoles.Add(new UserRole()
+                {
+                    UserId = model.UserId,
+                    RoleId = roleId
+                });
+            }
+            var line = _context.SaveChanges();
+            if (line < 1)
+            {
                 return BadRequest();
             }
             return Ok();

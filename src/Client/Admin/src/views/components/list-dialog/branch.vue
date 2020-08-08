@@ -35,7 +35,7 @@ export default {
   name: 'BranchListDialog',
   data() {
     return {
-      uri: '/archive/branch',
+      uri: '/api/a/branch',
       columns: [],
       innerQueryParams: {
         keyword: '',
@@ -54,7 +54,7 @@ export default {
   },
   mounted() {
     loadBranchTreeData().then(response => {
-      this.branchTreeData = response.data
+      this.branchTreeData = response
     })
   },
   created() {
@@ -66,8 +66,7 @@ export default {
       },
       {
         prop: 'name',
-        label: '机构名称',
-        width: 200
+        label: '机构名称'
       },
       {
         prop: 'type',
@@ -78,7 +77,8 @@ export default {
       },
       {
         prop: 'contactsName',
-        label: '联系人'
+        label: '联系人',
+        width: 100
       }
     ]
   }

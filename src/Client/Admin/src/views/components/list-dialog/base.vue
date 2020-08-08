@@ -103,12 +103,11 @@ export default {
         request.pageSize = this.pageSize
       }
       this.queryFn(request).then(response => {
-        const { data } = response
         if (this.isPaging) {
-          this.data = data.list
-          this.totalCount = data.totalCount
+          this.data = response.data
+          this.totalCount = response.count
         } else {
-          this.data = data
+          this.data = response
         }
       })
     },

@@ -13,7 +13,7 @@ using Tripod.Core;
 namespace Archive.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/branch")]
+    [Route("api/[controller]")]
     public class BranchController : ControllerBase
     {
         private readonly ArchiveContext _archiveContext;
@@ -32,7 +32,7 @@ namespace Archive.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Branch>> GetBranchByIdAsync([FromRoute]string id)
+        public async Task<ActionResult<Branch>> GetBranchByIdAsync([FromRoute] string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -65,10 +65,8 @@ namespace Archive.API.Controllers
             int pageIndex = 1,
             string keyword = "",
             string parentId = "",
-            BranchType[] typeList = null)
+            [FromQuery] BranchType[] typeList = null)
         {
-            var totalItems = await _archiveContext.Branches.LongCountAsync();
-
             var query = _archiveContext.Branches.AsQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -78,18 +76,22 @@ namespace Archive.API.Controllers
             {
                 query = query.Where(b => b.ParentId == parentId);
             }
-            if (typeList != null)
+            if (typeList != null && typeList.Count() > 0)
             {
                 query = query.Where(b => typeList.Contains(b.Type));
             }
 
             var itemsOnPage = await query
-                .OrderByDescending(b => b.CreateTime)
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
+                .OrderByDescending(b => b.CreateTime)
                 .ToListAsync();
 
-            var model = new PaginatedItems<Branch>(pageIndex, pageSize, totalItems, itemsOnPage);
+            var model = new PaginatedItems<Branch>(
+                pageIndex: pageIndex,
+                pageSize: pageSize,
+                count: query.Count(),
+                data: itemsOnPage);
 
             return Ok(model);
         }
@@ -127,7 +129,7 @@ namespace Archive.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBranchAsync([FromBody]Branch model)
+        public async Task<IActionResult> CreateBranchAsync([FromBody] Branch model)
         {
             //model.CreateOperId = CurrentUser.Id;
             //model.CreateOperName = CurrentUser.Name;
@@ -144,7 +146,7 @@ namespace Archive.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBranchAsync([FromBody]Branch model)
+        public async Task<IActionResult> UpdateBranchAsync([FromBody] Branch model)
         {
             var branch = await _archiveContext.Branches.FirstOrDefaultAsync(b => b.Id == model.Id);
             if (branch == null)
@@ -176,7 +178,7 @@ namespace Archive.API.Controllers
 
         [HttpGet]
         [Route("exists/{id}")]
-        public async Task<ActionResult<bool>> IsExists([FromRoute]string id)
+        public async Task<ActionResult<bool>> IsExists([FromRoute] string id)
         {
             var exists = await _archiveContext.Branches.AnyAsync(b => b.Id == id);
 
@@ -185,7 +187,7 @@ namespace Archive.API.Controllers
 
         [HttpGet]
         [Route("store/{branchId}")]
-        public async Task<ActionResult<IList<BranchStore>>> GetStoresAsync([FromRoute]string branchId)
+        public async Task<ActionResult<IList<BranchStore>>> GetStoresAsync([FromRoute] string branchId)
         {
             var branchStores = await _archiveContext.BranchStores.Where(bs => bs.BranchId == branchId).ToListAsync();
 
@@ -194,7 +196,7 @@ namespace Archive.API.Controllers
 
         [HttpDelete]
         [Route("store/{id}")]
-        public async Task<IActionResult> CreateBranchStore([FromRoute]int id)
+        public async Task<IActionResult> CreateBranchStore([FromRoute] int id)
         {
             var branchStore = await _archiveContext.BranchStores.FirstOrDefaultAsync(bs => bs.Id == id);
             if (branchStore == null)
@@ -210,7 +212,7 @@ namespace Archive.API.Controllers
 
         [HttpPut]
         [Route("store")]
-        public async Task<IActionResult> CreateOrUpdateBranchStore([FromBody]BranchStore model)
+        public async Task<IActionResult> CreateOrUpdateBranchStore([FromBody] BranchStore model)
         {
             if (model.Id != 0)
             {

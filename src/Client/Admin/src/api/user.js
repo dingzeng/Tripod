@@ -27,14 +27,14 @@ export function logout(token) {
 
 export function getUserRoles(userId) {
   return request({
-    url: '/system/user/role/' + userId,
+    url: '/api/s/user/role/' + userId,
     method: 'get'
   })
 }
 
 export function updateUserRoles(userId, roleIdList) {
   return request({
-    url: '/system/user/role',
+    url: '/api/s/user/role',
     data: {
       userId,
       roleIdList

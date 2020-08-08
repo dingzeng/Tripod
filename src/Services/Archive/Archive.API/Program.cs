@@ -18,7 +18,7 @@ namespace Archive.API
             var host = CreateHostBuilder(args).Build();
             host.MigrateDbContext<ArchiveContext>((context, services) =>
             {
-
+                new ArchiveContextSeed().Seed(context);
             });
 
             host.Run();

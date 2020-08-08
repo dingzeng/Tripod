@@ -2,21 +2,21 @@ import request from '@/utils/request'
 
 export function getRoles() {
   return request({
-    url: '/system/role',
+    url: '/api/s/role',
     method: 'get'
   })
 }
 
 export function getRole(id) {
   return request({
-    url: '/system/role/' + id,
+    url: '/api/s/role/' + id,
     method: 'get'
   })
 }
 
 export function addRole(data) {
   return request({
-    url: '/role',
+    url: '/api/s/role',
     method: 'post',
     data
   })
@@ -24,7 +24,7 @@ export function addRole(data) {
 
 export function updateRole(id, data) {
   return request({
-    url: `/role/${id}`,
+    url: `/api/s/role/${id}`,
     method: 'put',
     data
   })
@@ -32,7 +32,7 @@ export function updateRole(id, data) {
 
 export function deleteRole(id) {
   return request({
-    url: `/role/${id}`,
+    url: `/api/s/role/${id}`,
     method: 'delete'
   })
 }

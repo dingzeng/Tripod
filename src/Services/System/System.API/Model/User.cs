@@ -44,19 +44,19 @@ namespace System.API.Model
 		public string Mobile { get; set; }
 
 		/// <summary>
-		/// 状态 0-禁用、1-启用
+		/// 启用状态
 		/// </summary>
-		public int Status { get; set; }
+		public bool Status { get; set; }
 
 		/// <summary>
-		/// 商品部门权限标记 0-授权全部、1-指定授权
+		/// 商品部门权限标记
 		/// </summary>
-		public int ItemDepartmentPermissionFlag { get; set; }
+		public PermissionFlag ItemDepartmentPermissionFlag { get; set; }
 
 		/// <summary>
-		/// 供应商权限标记 0-授权全部、1-指定授权
+		/// 供应商权限标记
 		/// </summary>
-		public int SupplierPermissionFlag { get; set; }
+		public PermissionFlag SupplierPermissionFlag { get; set; }
 
 		public IList<UserRole> UserRoles { get; set; }
 	}
