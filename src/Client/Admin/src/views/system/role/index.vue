@@ -79,7 +79,7 @@ export default {
         url: '/api/s/menu/?parentCode=' + data.id,
         method: 'get'
       }).then(response => {
-        this.menus = response.data
+        this.menus = response
       })
     },
     getMenuPermissions(menuCode) {
@@ -117,7 +117,7 @@ export default {
             method: 'get'
           }).then(response => {
             this.drawerVisible = true
-            this.permissionsFlag = response.data
+            this.permissionsFlag = response
           })
         }
       }
@@ -141,7 +141,7 @@ export default {
   },
   mounted() {
     request({
-      url: '/api/s/menu/tree',
+      url: '/api/s/menu/tree?maxLevel=2',
       method: 'get'
     }).then(response => {
       this.menuGroupsData = response

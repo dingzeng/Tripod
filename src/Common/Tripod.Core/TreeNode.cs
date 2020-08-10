@@ -10,6 +10,8 @@ namespace Tripod.Core
 
         public string Label { get; set; }
 
+        public int Level { get; set; }
+
         public List<TreeNode> Children { get; set; }
     }
 }

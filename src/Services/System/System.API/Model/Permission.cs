@@ -25,5 +25,7 @@ namespace System.API.Model
 		/// 权限名称
 		/// </summary>
 		public string Name { get; set; }
+
+		public IList<RolePermission> RolePermissions { get; set; }
 	}
 }

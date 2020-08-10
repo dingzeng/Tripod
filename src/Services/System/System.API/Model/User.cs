@@ -51,12 +51,12 @@ namespace System.API.Model
 		/// <summary>
 		/// 商品部门权限标记
 		/// </summary>
-		public PermissionFlag ItemDepartmentPermissionFlag { get; set; }
+		public PermissionRangeFlag ItemDepartmentPermissionFlag { get; set; }
 
 		/// <summary>
 		/// 供应商权限标记
 		/// </summary>
-		public PermissionFlag SupplierPermissionFlag { get; set; }
+		public PermissionRangeFlag SupplierPermissionFlag { get; set; }
 
 		public IList<UserRole> UserRoles { get; set; }
 	}

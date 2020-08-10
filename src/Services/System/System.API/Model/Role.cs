@@ -23,6 +23,8 @@ namespace System.API.Model
 		/// </summary>
 		public string Memo { get; set; }
 
+        public IList<RolePermission> RolePermissions { get; set; }
+
         public IList<UserRole> UserRoles { get; set; }
     }
 }

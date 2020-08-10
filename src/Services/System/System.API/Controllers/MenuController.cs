@@ -31,29 +31,46 @@ namespace System.API.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Get(string parentCode = "")
+        {
+            var query = _context.Menus.AsQueryable();
+            if (!string.IsNullOrEmpty(parentCode))
+            {
+                query = query.Where(i => i.ParentCode == parentCode);
+            }
+            return Ok(query.ToList());
+        }
+
+        [HttpGet]
         [Route("tree")]
-        public async Task<IActionResult> GetTree()
+        public async Task<IActionResult> GetTree(int maxLevel = 4)
         {
             var menus = await _context.Menus.ToListAsync();
 
             var root = new TreeNode();
             root.Id = string.Empty;
+            root.Level = 0;
             root.Children = new List<TreeNode>();
-            BuildMenuTree(menus, root);
+            BuildMenuTree(menus, root, maxLevel);
 
             return Ok(root.Children);
         }
 
-        private void BuildMenuTree(List<Menu> menus, TreeNode node)
+        private void BuildMenuTree(List<Menu> menus, TreeNode node, int maxLevel)
         {
+            if (node.Level >= maxLevel)
+            {
+                return;
+            }
             foreach (var menu in menus.Where(m => m.ParentCode == node.Id))
             {
                 TreeNode sub = new TreeNode();
                 sub.Id = menu.Code;
+                sub.Level = node.Level + 1;
                 sub.Label = menu.Name;
                 sub.Children = new List<TreeNode>();
                 node.Children.Add(sub);
-                BuildMenuTree(menus, sub);
+                BuildMenuTree(menus, sub, maxLevel);
             }
         }
     }

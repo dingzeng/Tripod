@@ -27,6 +27,11 @@ namespace System.API.Infrastructure
                     context.Menus.AddRange(GetMenus());
                 }
 
+                if (!context.Permissions.Any())
+                {
+                    context.Permissions.AddRange(GetPermissions());
+                }
+
                 context.SaveChanges();
             }
         }
@@ -42,8 +47,8 @@ namespace System.API.Infrastructure
                 Name = "张三",
                 Mobile = "15871369831",
                 Status = true,
-                ItemDepartmentPermissionFlag = PermissionFlag.All,
-                SupplierPermissionFlag = PermissionFlag.All
+                ItemDepartmentPermissionFlag = PermissionRangeFlag.All,
+                SupplierPermissionFlag = PermissionRangeFlag.All
             };
         }
 
@@ -53,12 +58,12 @@ namespace System.API.Infrastructure
             {
                 Name = "管理员",
                 Memo = "种子数据"
-            };
-        }
+        };
+    }
 
-        private IEnumerable<Menu> GetMenus()
-        {
-            return new List<Menu>()
+    private IEnumerable<Menu> GetMenus()
+    {
+        return new List<Menu>()
             {
                 new Menu{ Code = "ARCHIVE", ParentCode = "", Path = "", Name = "档案", Icon = "", IsLeaf = false, Sequence = 1 },
                 new Menu{ Code = "PURCHASE", ParentCode = "", Path = "", Name = "采购", Icon = "", IsLeaf = false, Sequence = 2 },
@@ -76,6 +81,22 @@ namespace System.API.Infrastructure
                 new Menu{ Code = "SYSTEM_USER", ParentCode = "SYSTEM_USER_MANAGE", Path = "/system/user", Name = "用户管理", Icon = "", IsLeaf = true, Sequence = 2 },
                 new Menu{ Code = "SYSTEM_SETTING", ParentCode = "SYSTEM", Path = "", Name = "系统设置", Icon = "", IsLeaf = false, Sequence = 2 },
             };
-        }
     }
+
+    private IEnumerable<Permission> GetPermissions()
+    {
+        return new List<Permission>()
+            {
+                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_VIEW", Name = "查看" },
+                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_CREATE", Name = "新增" },
+                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_MODIFY", Name = "修改" },
+                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_DELETE", Name = "删除" },
+
+                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_VIEW", Name = "查看" },
+                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_CREATE", Name = "新增" },
+                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_MODIFY", Name = "修改" },
+                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_DELETE", Name = "删除" },
+            };
+    }
+}
 }

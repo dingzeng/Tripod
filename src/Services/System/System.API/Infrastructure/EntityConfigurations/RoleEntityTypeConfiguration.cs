@@ -14,6 +14,11 @@ namespace System.API.Infrastructure.EntityConfigurations
         {
             builder.ToTable("Role");
             builder.HasKey(r => r.Id);
+
+            builder
+                .HasMany(r => r.RolePermissions)
+                .WithOne(rp => rp.Role)
+                .HasForeignKey(rp => rp.RoleId);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace System.API.Model
 {
-    public enum PermissionFlag
+    public enum PermissionRangeFlag
     {
         All = 0,
         Special = 1
