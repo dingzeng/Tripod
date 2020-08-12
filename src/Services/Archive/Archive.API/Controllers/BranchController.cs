@@ -109,7 +109,7 @@ namespace Archive.API.Controllers
             root.Children = new List<TreeNode>();
             BuildTree(root, branches);
 
-            return Ok(root);
+            return Ok(new List<TreeNode>() { root });
         }
 
         private void BuildTree(TreeNode node, IEnumerable<Branch> branchs)
@@ -196,7 +196,7 @@ namespace Archive.API.Controllers
 
         [HttpDelete]
         [Route("store/{id}")]
-        public async Task<IActionResult> CreateBranchStore([FromRoute] int id)
+        public async Task<IActionResult> DeleteBranchStore([FromRoute] int id)
         {
             var branchStore = await _archiveContext.BranchStores.FirstOrDefaultAsync(bs => bs.Id == id);
             if (branchStore == null)

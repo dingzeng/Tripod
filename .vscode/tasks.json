@@ -14,7 +14,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "bff:admin",
+            "label": "gateway",
             "command":"dotnet",
             "type": "process",
             "args": [
@@ -24,7 +24,7 @@
             ]
         },
         {
-            "label": "api:identity",
+            "label": "identity",
             "command":"dotnet",
             "type": "process",
             "args": [
@@ -34,7 +34,17 @@
             ]
         },
         {
-            "label": "api:system",
+            "label": "archive",
+            "command":"dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "-p",
+                "${workspaceFolder}/src/Services/Archive/Archive.API/Archive.API.csproj"
+            ]
+        },
+        {
+            "label": "system",
             "command":"dotnet",
             "type": "process",
             "args": [
