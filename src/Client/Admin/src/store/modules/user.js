@@ -51,14 +51,12 @@ const actions = {
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
-        const { data } = response
-
-        if (!data) {
+        if (!response) {
           reject('验证失败，请重新登录.')
         }
 
         // const { roles, name, avatar, introduction } = data
-        const { menus, permissions, name, avatar, introduction } = data
+        const { menus, permissions, name, avatar, introduction } = response
 
         commit('SET_MENUS', menus)
         commit('SET_PERMISSIONS', permissions)
@@ -67,7 +65,7 @@ const actions = {
         commit('SET_INTRODUCTION', introduction)
         setMenus(menus)
         setPermissions(permissions)
-        resolve(data)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })

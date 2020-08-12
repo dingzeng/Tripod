@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Tripod.Core;
 
@@ -142,7 +143,7 @@ namespace System.API.Controllers
         [Route("role/{userId}")]
         public async Task<IActionResult> GetUserRoles(long userId)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.Include(u => u.UserRoles).FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 return BadRequest();
@@ -156,7 +157,7 @@ namespace System.API.Controllers
         [Route("role")]
         public async Task<IActionResult> UpdateUserRole(UpdateUserRoleModel model)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == model.UserId);
+            var user = _context.Users.Include(u => u.UserRoles).FirstOrDefault(u => u.Id == model.UserId);
             if (user == null)
             {
                 return BadRequest();

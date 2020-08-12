@@ -80,6 +80,7 @@ namespace Identity.API.Controllers
             var userId = User.Claims.FirstOrDefault(c => c.Type == "userId").Value;
 
             var user = await _userClient.GetUserByIdAsync(new IdRequest() { Id = userId });
+            var menusAndPermissions = await _userClient.GetUserMenusAndPermissionsAsync(new IdRequest() { Id = userId });
             if (string.IsNullOrEmpty(user.UserId))
             {
                 return NotFound();
@@ -88,7 +89,11 @@ namespace Identity.API.Controllers
             {
                 var response = new UserInfo()
                 {
-                    Name = user.Username
+                    Name = user.Username,
+                    Avatar = "",
+                    Introduction = "",
+                    Menus = menusAndPermissions.Menus,
+                    Permissions = menusAndPermissions.Permissions
                 };
                 return Ok(response);
             }
@@ -102,7 +107,7 @@ namespace Identity.API.Controllers
         [Route("logout")]
         public async Task<IActionResult> Logout()
         {
-            throw new NotImplementedException();
+            return Ok();
         }
     }
 }

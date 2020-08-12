@@ -28,21 +28,18 @@
           <el-tree :data="menuGroupsData" @node-click="nodeClick"></el-tree>
         </el-col>
         <el-col :span="16">
-          <dl>
-            <template v-for="menu in menus">
-              <dt :key="'dt' + menu.code">
-                <strong>{{ menu.name }}</strong>
-              </dt>
-              <dd :key="'dd' + menu.code">
-                <el-checkbox
-                  v-for="p in getMenuPermissions(menu.code)"
-                  :key="p.permissionCode"
-                  :value="getCheckState(p.permissionCode)"
-                  @input="setCheckState(p.permissionCode, arguments)"
-                >{{ p.permissionName }}</el-checkbox>
-              </dd>
-            </template>
-          </dl>
+          <el-form>
+            <el-form-item v-for="menu in menus" :label="menu.name" :key="menu.code">
+              <el-checkbox
+                v-for="p in getMenuPermissions(menu.code)"
+                :key="p.permissionCode"
+                :value="getCheckState(p.permissionCode)"
+                @input="setCheckState(p.permissionCode, arguments)"
+              >
+                {{ p.permissionName }}
+              </el-checkbox>
+            </el-form-item>
+          </el-form>
         </el-col>
       </el-row>
     </el-drawer>

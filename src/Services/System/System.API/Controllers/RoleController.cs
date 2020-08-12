@@ -119,7 +119,7 @@ namespace System.API.Controllers
         public async Task<IActionResult> GetRolePermissionFlags(int roleId)
         {
             List<RolePermissionFlag> rolePermissionFlags = new List<RolePermissionFlag>();
-            var permissions = await _context.Permissions.ToListAsync();
+            var permissions = await _context.Permissions.Include(p => p.RolePermissions).ToListAsync();
             foreach (var permission in permissions)
             {
                 rolePermissionFlags.Add(new RolePermissionFlag()
@@ -138,7 +138,7 @@ namespace System.API.Controllers
         [Route("permission")]
         public async Task<IActionResult> SetRolePermission(SetRolePermissionModel model)
         {
-            var role = _context.Roles.FirstOrDefault(r => r.Id == model.RoleId);
+            var role = _context.Roles.Include(r => r.RolePermissions).FirstOrDefault(r => r.Id == model.RoleId);
             if (role == null)
             {
                 return BadRequest();

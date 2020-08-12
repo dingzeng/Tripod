@@ -12,5 +12,9 @@ namespace Identity.API.ViewModel
         public string Avatar { get; set; }
 
         public string Introduction { get; set; }
+
+        public IList<GrpcSystem.MenuDTO> Menus { get; set; }
+
+		public IList<GrpcSystem.PermissionDTO> Permissions { get; set; }
     }
 }

@@ -32,7 +32,7 @@
           <el-input v-model="model.mobile" />
         </el-form-item>
         <el-form-item prop="status" label="状态">
-          <el-switch v-model="model.status" :active-value="1" :inactive-value="0" />
+          <el-switch v-model="model.status" :active-value="true" :inactive-value="false" />
         </el-form-item>
       </template>
     </list-page>
@@ -76,7 +76,7 @@ export default {
             this.relateRoleDialogVisible = true
             getUserRoles(row.id).then(response => {
               this.relateModel.userId = row.id
-              this.relateModel.roleIdList = response.data.map(b => b.id)
+              this.relateModel.roleIdList = response.map(b => b.id)
             })
           }
         }
@@ -91,7 +91,7 @@ export default {
   },
   mounted() {
     getRoles().then(response => {
-      this.allRoles = response.data.map(b => {
+      this.allRoles = response.map(b => {
         return {
           key: b.id,
           label: b.name
@@ -126,12 +126,12 @@ export default {
         type: 'tag',
         label: '状态',
         tagTypes: {
-          0: 'info',
-          1: 'success'
+          false: 'info',
+          true: 'success'
         },
         tagLabels: {
-          0: '禁用',
-          1: '启用'
+          false: '禁用',
+          true: '启用'
         }
       }
     ]

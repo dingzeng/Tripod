@@ -7,6 +7,7 @@ package UserApi;
 service UserGrpc {
 	rpc CheckUsernameAndPassword(CheckUsernameAndPasswordRequest) returns (UserDTO) {}
 	rpc GetUserById(IdRequest) returns (UserDTO) {};
+	rpc GetUserMenusAndPermissions(IdRequest) returns (MenusAndPermissionDTO) {};
 }
 
 message IdRequest {
@@ -21,4 +22,24 @@ message CheckUsernameAndPasswordRequest {
 message UserDTO {
 	string userId = 1;
 	string username = 2;
+}
+
+message MenusAndPermissionDTO {
+	repeated MenuDTO menus = 1;
+	repeated PermissionDTO permissions = 2;
+}
+
+message MenuDTO {
+	string code = 1;
+	string path = 2;
+	string name = 3;
+	string icon = 4;
+	bool isLeaf = 5;
+	repeated MenuDTO children = 6;
+}
+
+message PermissionDTO {
+	string code = 1;
+	string menuCode = 2;
+	string name = 3;
 }
