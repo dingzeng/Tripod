@@ -2,7 +2,7 @@
   <div>
     <list-page
       ref="listpage"
-      uri="archive/branch"
+      uri="/api/a/branch"
       dialog-title="机构"
       show-data-maintain
       :query-params="queryParams"

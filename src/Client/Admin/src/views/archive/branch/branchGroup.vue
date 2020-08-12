@@ -1,7 +1,7 @@
 <template>
   <div>
     <list-page
-      uri="/archive/branchGroup"
+      uri="/api/a/branchGroup"
       dialog-title="店组管理"
       :query-params="queryParams"
       :columns="columns"

@@ -17,8 +17,7 @@ namespace System.API.Infrastructure.EntityConfigurations
 
             builder
                 .HasMany(p => p.RolePermissions)
-                .WithOne(p => p.Permission)
-                .HasForeignKey(p => p.PermissionCode);
+                .WithOne(p => p.Permission);
         }
     }
 }

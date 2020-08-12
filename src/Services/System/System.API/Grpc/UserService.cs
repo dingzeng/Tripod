@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.API.Infrastructure;
+using System.API.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,15 +77,23 @@ namespace System.API.Grpc
         {
             var response = new MenusAndPermissionDTO();
             var userId = Convert.ToInt32(request.Id);
-            var permissions = await _context.Roles.Include(r => r.UserRoles).Include(r => r.RolePermissions)
+            var user = await _context.Users.FirstAsync(u => u.Id == userId);
+
+            List<Permission> permissions;
+            if(user.Username == "administrator")
+            {
+                permissions = _context.Permissions.ToList();
+            } else {
+                permissions = await _context.Roles.Include(r => r.UserRoles).Include(r => r.RolePermissions)
                             .Where(r => r.UserRoles.Any(ur => ur.UserId == userId))
                             .SelectMany(r => r.RolePermissions.Select(rp => rp.Permission))
                             .Distinct()
                             .ToListAsync();
+            }
             
             var menuNodes = new List<MenuDTO>();
             var items = await _context.Menus.ToListAsync();
-            foreach (var module in items.Where(i => string.IsNullOrEmpty(i.ParentCode)))
+            foreach (var module in items.Where(i => string.IsNullOrEmpty(i.ParentCode)).OrderBy(i => i.Sequence))
             {
                 var moduleNode = new MenuDTO(){
                     Code = module.Code,
@@ -93,7 +102,7 @@ namespace System.API.Grpc
                     Icon = module.Icon,
                     IsLeaf = module.IsLeaf
                 };
-                foreach (var group in items.Where(i => i.ParentCode == module.Code))
+                foreach (var group in items.Where(i => i.ParentCode == module.Code).OrderBy(i => i.Sequence))
                 {
                     var groupNode = new MenuDTO() {
                         Code = group.Code,
@@ -102,7 +111,7 @@ namespace System.API.Grpc
                         Icon = group.Icon,
                         IsLeaf = group.IsLeaf
                     };
-                    foreach (var menu in items.Where(i => i.ParentCode == group.Code))
+                    foreach (var menu in items.Where(i => i.ParentCode == group.Code).OrderBy(i => i.Sequence))
                     {
                         var menuNode = new MenuDTO() {
                             Code = menu.Code,

@@ -1,8 +1,13 @@
 ﻿using System;
 using System.API.Model;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Tripod.Core;
 
 namespace System.API.Infrastructure
 {
@@ -12,91 +17,74 @@ namespace System.API.Infrastructure
         {
             using (context)
             {
-                if (!context.Users.Any())
+                if (!context.Users.Any(u => u.Name == "administrator"))
                 {
-                    context.Users.AddRange(GetUsers());
+                    context.Users.Add(GetAdministrator());
                 }
 
-                if (!context.Roles.Any())
-                {
-                    context.Roles.AddRange(GetRoles());
-                }
-
-                if (!context.Menus.Any())
-                {
-                    context.Menus.AddRange(GetMenus());
-                }
-
-                if (!context.Permissions.Any())
-                {
-                    context.Permissions.AddRange(GetPermissions());
-                }
+                SeedMenus(context);
+                SeedPermissions(context);
 
                 context.SaveChanges();
             }
         }
 
-        private IEnumerable<User> GetUsers()
+        private void SeedMenus(SystemContext context)
         {
-            yield return new User()
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE [Menu]");
+            var filePath = Path.Combine(System.AppContext.BaseDirectory, "Setup/menus.csv");
+            var menus = CsvHelper.ReadFromCsv<Menu>(filePath);
+            context.Menus.AddRange(menus);
+        }
+
+        private void SeedPermissions(SystemContext context)
+        {
+            var filePath = Path.Combine(System.AppContext.BaseDirectory, "Setup/permissions.csv");
+            var filePermissions = CsvHelper.ReadFromCsv<Permission>(filePath);
+            var dbPermissions = context.Permissions.ToList();
+
+            var comparer = new PermissionEqualityComparer();
+            var doUpdatePermissions = dbPermissions.Intersect(filePermissions, comparer).ToList();
+            var doInsertPermissions = filePermissions.Except(doUpdatePermissions, comparer);
+            var doDeletePermission = dbPermissions.Except(doUpdatePermissions, comparer);
+
+            foreach (var item in doUpdatePermissions)
             {
-                BranchId = "00",
-                BranchName = "总部",
-                Username = "9001",
+                var entity = context.Permissions.First(p => p.Code == item.Code);
+                entity.Name = item.Name;
+                entity.MenuCode = item.MenuCode;
+            }
+            context.Permissions.AddRange(doInsertPermissions);
+            context.Permissions.RemoveRange(doDeletePermission);
+        }
+
+        private User GetAdministrator()
+        {
+            return new User()
+            {
+                BranchId = "",
+                BranchName = "",
+                Username = "administrator",
                 Password = "888888",
-                Name = "张三",
-                Mobile = "15871369831",
+                Name = "超级管理员",
+                Mobile = "",
                 Status = true,
                 ItemDepartmentPermissionFlag = PermissionRangeFlag.All,
                 SupplierPermissionFlag = PermissionRangeFlag.All
             };
         }
+    }
 
-        private IEnumerable<Role> GetRoles()
+    public class PermissionEqualityComparer : EqualityComparer<Permission>
+    {
+        public override bool Equals([AllowNull] Permission x, [AllowNull] Permission y)
         {
-            yield return new Role()
-            {
-                Name = "管理员",
-                Memo = "种子数据"
-        };
+            return x.Code == y.Code;
+        }
+
+        public override int GetHashCode([DisallowNull] Permission obj)
+        {
+            return obj.Code.GetHashCode();
+        }
     }
-
-    private IEnumerable<Menu> GetMenus()
-    {
-        return new List<Menu>()
-            {
-                new Menu{ Code = "ARCHIVE", ParentCode = "", Path = "", Name = "档案", Icon = "", IsLeaf = false, Sequence = 1 },
-                new Menu{ Code = "PURCHASE", ParentCode = "", Path = "", Name = "采购", Icon = "", IsLeaf = false, Sequence = 2 },
-                new Menu{ Code = "STOCK", ParentCode = "", Path = "", Name = "库存", Icon = "", IsLeaf = false, Sequence = 3 },
-                new Menu{ Code = "DELIVERY", ParentCode = "", Path = "", Name = "配送", Icon = "", IsLeaf = false, Sequence = 4 },
-                new Menu{ Code = "SALE", ParentCode = "", Path = "", Name = "批发", Icon = "", IsLeaf = false, Sequence = 5 },
-                new Menu{ Code = "RETAIL", ParentCode = "", Path = "", Name = "零售", Icon = "", IsLeaf = false, Sequence = 6 },
-                new Menu{ Code = "SETTLEMENT", ParentCode = "", Path = "", Name = "结算", Icon = "", IsLeaf = false, Sequence = 7 },
-                new Menu{ Code = "REPORT", ParentCode = "", Path = "", Name = "报表", Icon = "", IsLeaf = false, Sequence = 8 },
-
-                // SYSTEM
-                new Menu{ Code = "SYSTEM", ParentCode = "", Path = "", Name = "系统", Icon = "", IsLeaf = false, Sequence = 9 },
-                new Menu{ Code = "SYSTEM_USER_MANAGE", ParentCode = "SYSTEM", Path = "", Name = "用户管理", Icon = "", IsLeaf = false, Sequence = 1 },
-                new Menu{ Code = "SYSTEM_ROLE", ParentCode = "SYSTEM_USER_MANAGE", Path = "/system/role", Name = "角色管理", Icon = "", IsLeaf = true, Sequence = 1 },
-                new Menu{ Code = "SYSTEM_USER", ParentCode = "SYSTEM_USER_MANAGE", Path = "/system/user", Name = "用户管理", Icon = "", IsLeaf = true, Sequence = 2 },
-                new Menu{ Code = "SYSTEM_SETTING", ParentCode = "SYSTEM", Path = "", Name = "系统设置", Icon = "", IsLeaf = false, Sequence = 2 },
-            };
-    }
-
-    private IEnumerable<Permission> GetPermissions()
-    {
-        return new List<Permission>()
-            {
-                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_VIEW", Name = "查看" },
-                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_CREATE", Name = "新增" },
-                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_MODIFY", Name = "修改" },
-                new Permission{ MenuCode = "SYSTEM_ROLE", Code = "SYSTEM_ROLE_DELETE", Name = "删除" },
-
-                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_VIEW", Name = "查看" },
-                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_CREATE", Name = "新增" },
-                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_MODIFY", Name = "修改" },
-                new Permission{ MenuCode = "SYSTEM_USER", Code = "SYSTEM_USER_DELETE", Name = "删除" },
-            };
-    }
-}
 }

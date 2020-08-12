@@ -15,13 +15,11 @@ namespace System.API.Infrastructure.EntityConfigurations
             builder.HasKey(ur => ur.Id);
             builder
                 .HasOne(ur => ur.Role)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId);
+                .WithMany(r => r.UserRoles);
 
             builder
                 .HasOne(ur => ur.User)
-                .WithMany(u => u.UserRoles)
-                .HasForeignKey(ur => ur.UserId);
+                .WithMany(u => u.UserRoles);
         }
     }
 }
