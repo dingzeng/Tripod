@@ -3,10 +3,11 @@ ARCHIVE,,,基础档案,el-icon-files,false,1
     ARCHIVE_BRANCH_MANAGE,ARCHIVE,,机构管理,,false,1
         ARCHIVE_BRANCH_GROUP,ARCHIVE_BRANCH_MANAGE,/branch-group,店组管理,,true,1
         ARCHIVE_BRANCH,ARCHIVE_BRANCH_MANAGE,/branch,机构档案,,true,2
-    ARCHIVE_ITEM_RELATION,ARCHIVE,,商品关联信息,,false,2
-        ARCHIVE_CATEGORY,ARCHIVE_ITEM_RELATION,/category,商品类别,,true,1
-        ARCHIVE_BRAND,ARCHIVE_ITEM_RELATION,/brand/,商品品牌,,true,2
-        ARCHIVE_DEPARTMENT,ARCHIVE_ITEM_RELATION,/department,商品部门,,true,3
+    ARCHIVE_ITEM_MANAGE,ARCHIVE,,商品管理,,false,2
+        ARCHIVE_CATEGORY,ARCHIVE_ITEM_MANAGE,/category,商品类别,,true,1
+        ARCHIVE_BRAND,ARCHIVE_ITEM_MANAGE,/brand/,商品品牌,,true,2
+        ARCHIVE_DEPARTMENT,ARCHIVE_ITEM_MANAGE,/department,商品部门,,true,3
+        ARCHIVE_ITEM,ARCHIVE_ITEM_MANAGE,/item,商品档案,,true,4
 
 
 PURCHASE,,,采购业务,el-icon-s-order,false,2

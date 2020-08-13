@@ -21,6 +21,7 @@ namespace Archive.API.Infrastructure.EntityConfigurations
             .WithMany(b => b.Children);
 
             builder.Property(b => b.Name).IsRequired();
+            builder.Property(b => b.Path).IsRequired();
             builder.Property(b => b.ShortName).IsRequired();
         }
     }

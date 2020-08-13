@@ -130,7 +130,7 @@ export default {
   computed: {
     parentBranchQueryParams() {
       return {
-        typeList: '0,1'
+        typeList: [0, 1]
       }
     },
     modelRules() {
@@ -146,10 +146,10 @@ export default {
             validator(rule, value, callback) {
               if (vm.action === 'add') {
                 request({
-                  url: '/archive/branch/exists/?id=' + value,
+                  url: `/api/a/branch/${value}/_exists`,
                   method: 'get'
                 }).then(response => {
-                  if (response.data) {
+                  if (response) {
                     callback(new Error('编码已存在'))
                   } else {
                     callback()
@@ -180,12 +180,12 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      this.queryParams.parentId = data.id
+      this.queryParams.ancestorId = data.id
       this.$refs.listpage.query()
     },
     refreshTree() {
       loadBranchTreeData().then(response => {
-        this.branchTreeData = response.data
+        this.branchTreeData = response
       })
     },
     branchTypeDisabled(key) {

@@ -7,7 +7,7 @@ namespace Archive.API.Model
   /// <summary>
   /// 店组
   /// </summary>
-  public class BranchGroup: RecordEntity
+  public class BranchGroup
   {
     /// <summary>
     /// 自增编码
@@ -23,6 +23,11 @@ namespace Archive.API.Model
     /// 是否为私有(仅创建用户可见)
     /// </summary>
     public bool IsPrivate { get; set; }
+
+    /// <summary>
+    /// 创建人Id
+    /// </summary>
+		public long CreateOperId { get; set; }
 
     /// <summary>
     /// 机构组机构关系

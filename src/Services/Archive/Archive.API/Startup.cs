@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace Archive.API
 {
@@ -121,7 +122,10 @@ namespace Archive.API
         public static IServiceCollection AddCustomMVC(this IServiceCollection services, IConfiguration configuration)
         {
             // 添加MVC控制器服务
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(option => {
+                    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
             
             // 添加跨域服务
             services.AddCors(options =>

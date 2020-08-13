@@ -27,6 +27,11 @@ namespace Archive.API.Model
         public Branch Parent { get; set; }
 
         /// <summary>
+        /// 机构数的节点路径，eg:,00,01,
+        /// </summary>
+        public string Path { get; set; }
+
+        /// <summary>
         /// 机构名称
         /// </summary>
         public string Name { get; set; }

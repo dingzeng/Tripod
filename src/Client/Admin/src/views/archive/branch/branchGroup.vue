@@ -18,6 +18,9 @@
         <el-form-item prop="name" label="店组名称">
           <el-input v-model="model.name" />
         </el-form-item>
+        <el-form-item prop="isPrivate" label="私有">
+          <el-checkbox v-model="model.isPrivate"></el-checkbox>
+        </el-form-item>
       </template>
     </list-page>
     <el-dialog title="关联机构" :visible.sync="relateBranchDialogVisible" width="650px" :close-on-click-modal="false">

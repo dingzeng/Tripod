@@ -56,6 +56,7 @@ namespace Archive.API.Controllers
         /// <param name="pageIndex">页码</param>
         /// <param name="keyword">搜索关键字：编码或名称</param>
         /// <param name="parentId">父机构id</param>
+        /// <param name="ancestorId">祖先节点id</param>
         /// <param name="typeList">机构类型</param>
         /// <returns></returns>
         [HttpGet]
@@ -65,6 +66,7 @@ namespace Archive.API.Controllers
             int pageIndex = 1,
             string keyword = "",
             string parentId = "",
+            string ancestorId = "",
             [FromQuery] BranchType[] typeList = null)
         {
             var query = _archiveContext.Branches.AsQueryable();
@@ -75,6 +77,9 @@ namespace Archive.API.Controllers
             if (!string.IsNullOrEmpty(parentId))
             {
                 query = query.Where(b => b.ParentId == parentId);
+            }
+            if(!string.IsNullOrEmpty(ancestorId)) {
+                query = query.Where(b => b.Path.Contains("," + ancestorId + ","));
             }
             if (typeList != null && typeList.Count() > 0)
             {
@@ -101,15 +106,14 @@ namespace Archive.API.Controllers
         [ProducesResponseType(typeof(TreeNode), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetBranchTreeAsync()
         {
-            var branches = await _archiveContext.Branches.ToListAsync();
+            var branches = await _archiveContext.Branches.Where(b => b.Type == BranchType.Headquarters || b.Type == BranchType.RegionalCentre).ToListAsync();
 
             var root = new TreeNode();
-            root.Id = "";
-            root.Label = "全部机构";
+            root.Id = null;
             root.Children = new List<TreeNode>();
             BuildTree(root, branches);
 
-            return Ok(new List<TreeNode>() { root });
+            return Ok(root.Children);
         }
 
         private void BuildTree(TreeNode node, IEnumerable<Branch> branchs)
@@ -131,18 +135,13 @@ namespace Archive.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBranchAsync([FromBody] Branch model)
         {
-            //model.CreateOperId = CurrentUser.Id;
-            //model.CreateOperName = CurrentUser.Name;
-            //model.CreateTime = DateTime.Now.ToString();
-
-            //model.LastUpdateOperId = CurrentUser.Id;
-            //model.LastUpdateOperName = CurrentUser.Name;
-            //model.LastUpdateTime = DateTime.Now.ToString();
+            var parent = _archiveContext.Branches.First(b => b.Id == model.ParentId);
+            model.Path = parent.Path + model.Id + ",";
 
             _archiveContext.Branches.Add(model);
             await _archiveContext.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetBranchByIdAsync), new { id = model.Id }, null);
+            
+            return Ok(model);
         }
 
         [HttpPut]
@@ -154,10 +153,24 @@ namespace Archive.API.Controllers
                 return NotFound();
             }
 
+            var parent = _archiveContext.Branches.First(b => b.Id == model.ParentId);
+            model.Path = parent.Path + model.Id + ",";
+
+            branch.ParentId = model.ParentId;
+            branch.Name = model.Name;
+            branch.ShortName = model.ShortName;
+            branch.Type = model.Type;
+            branch.ContactsName = model.ContactsName;
+            branch.ContactsMobile = model.ContactsMobile;
+            branch.ContactsTel = model.ContactsTel;
+            branch.ContactsEmail = model.ContactsEmail;
+            branch.Address = model.Address;
+            branch.Memo = model.Memo;
+
             _archiveContext.Branches.Update(branch);
             await _archiveContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetBranchByIdAsync), new { id = model.Id }, null);
+            return Ok(model);
         }
 
         [HttpDelete]
@@ -177,8 +190,8 @@ namespace Archive.API.Controllers
         }
 
         [HttpGet]
-        [Route("exists/{id}")]
-        public async Task<ActionResult<bool>> IsExists([FromRoute] string id)
+        [Route("{id}/_exists")]
+        public async Task<ActionResult<bool>> Exists([FromRoute] string id)
         {
             var exists = await _archiveContext.Branches.AnyAsync(b => b.Id == id);
 
