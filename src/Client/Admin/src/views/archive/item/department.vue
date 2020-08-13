@@ -1,22 +1,21 @@
 <template>
   <div>
     <list-page
-      uri="/archive/itemUnit"
-      dialog-title="商品单位"
+      uri="/api/a/department"
+      dialog-title="商品部门"
       :columns="columns"
       :model.sync="model"
       :model-rules="modelRules"
-      :query-params.sync="queryParams"
     >
-      <template slot="queryForm">
-        <el-form-item prop="keyword">
-          <el-input v-model="queryParams.keyword" placeholder="编码/名称" />
-        </el-form-item>
-      </template>
       <template>
         <el-row>
           <el-col>
-            <el-form-item label="名称" required>
+            <el-form-item label="编码" required>
+              <el-input v-model="model.id"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col>
+            <el-form-item prop="name" label="名称">
               <el-input v-model="model.name"></el-input>
             </el-form-item>
           </el-col>
@@ -29,11 +28,10 @@
 <script>
 import ListPage from '@/views/components/list-page/index'
 export default {
-  name: 'ItemUnit',
+  name: 'Department',
   components: { ListPage },
   data() {
     return {
-      queryParams: {},
       columns: [],
       model: {},
       modelRules: {

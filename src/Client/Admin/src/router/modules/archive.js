@@ -4,52 +4,34 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'branch-group',
+      path: '/branch-group',
       component: () => import('@/views/archive/branch/branchGroup'),
       name: 'ArchiveBranchGroup',
       meta: { title: '机构组' }
     },
     {
-      path: 'branch',
+      path: '/branch',
       component: () => import('@/views/archive/branch/branch'),
       name: 'ArchiveBranch',
       meta: { title: '机构档案' }
     },
     {
-      path: 'supplier-region',
-      component: () => import('@/views/archive/supplier/supplierRegion'),
-      name: 'ArchiveSupplierRegion',
-      meta: { title: '供应商区域' }
-    },
-    {
-      path: 'supplier',
-      component: () => import('@/views/archive/supplier/supplier'),
-      name: 'ArchiveSupplier',
-      meta: { title: '供应商' }
-    },
-    {
-      path: 'item-cls',
-      component: () => import('@/views/archive/item/itemCls'),
+      path: '/category',
+      component: () => import('@/views/archive/item/category'),
       name: 'ArchiveItemCls',
       meta: { title: '商品类别' }
     },
     {
-      path: 'item-brand',
-      component: () => import('@/views/archive/item/itemBrand'),
+      path: '/brand',
+      component: () => import('@/views/archive/item/brand'),
       name: 'ArchiveItemBrand',
       meta: { title: '商品品牌' }
     },
     {
-      path: 'item-department',
-      component: () => import('@/views/archive/item/itemDepartment'),
+      path: '/department',
+      component: () => import('@/views/archive/item/department'),
       name: 'ArchiveItemDepartment',
       meta: { title: '商品部门' }
-    },
-    {
-      path: 'itemUnit',
-      component: () => import('@/views/archive/item/itemUnit'),
-      name: 'ArchiveItemUnit',
-      meta: { title: '商品单位' }
     },
     {
       path: 'item',

@@ -4,14 +4,16 @@ using Archive.API.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Archive.API.Migrations
 {
     [DbContext(typeof(ArchiveContext))]
-    partial class ArchiveContextModelSnapshot : ModelSnapshot
+    [Migration("20200813035456_AddItemCls")]
+    partial class AddItemCls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,7 +112,7 @@ namespace Archive.API.Migrations
                     b.ToTable("BranchStores");
                 });
 
-            modelBuilder.Entity("Archive.API.Model.Brand", b =>
+            modelBuilder.Entity("Archive.API.Model.ItemCls", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -120,33 +122,7 @@ namespace Archive.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brand");
-                });
-
-            modelBuilder.Entity("Archive.API.Model.Category", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("Archive.API.Model.Department", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Department");
+                    b.ToTable("ItemCls");
                 });
 #pragma warning restore 612, 618
         }

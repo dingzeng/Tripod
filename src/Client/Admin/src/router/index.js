@@ -6,6 +6,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 import ArchiveModule from './modules/archive'
 import SystemModule from './modules/system'
+import PurchaseModule from './modules/purchase'
 
 export const constantRoutes = [
   {
@@ -67,6 +68,7 @@ export const constantRoutes = [
     ]
   },
   ArchiveModule,
+  PurchaseModule,
   SystemModule,
 
   // 404 page must be placed at the end !!!

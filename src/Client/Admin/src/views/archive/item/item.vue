@@ -1,7 +1,7 @@
 <template>
   <div>
     <list-page
-      uri="/archive/item"
+      uri="/api/a/item"
       dialogTitle="商品"
       dialogWidth="1200px"
       :columns="columns"

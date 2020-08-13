@@ -1,15 +1,19 @@
 Code,ParentCode,Path,Name,Icon,IsLeaf,Sequence
 ARCHIVE,,,基础档案,el-icon-files,false,1
     ARCHIVE_BRANCH_MANAGE,ARCHIVE,,机构管理,,false,1
-        ARCHIVE_BRANCH_GROUP,ARCHIVE_BRANCH_MANAGE,/archive/branch-group,店组管理,,true,1
-        ARCHIVE_BRANCH,ARCHIVE_BRANCH_MANAGE,/archive/branch,机构档案,,true,2
+        ARCHIVE_BRANCH_GROUP,ARCHIVE_BRANCH_MANAGE,/branch-group,店组管理,,true,1
+        ARCHIVE_BRANCH,ARCHIVE_BRANCH_MANAGE,/branch,机构档案,,true,2
     ARCHIVE_ITEM_RELATION,ARCHIVE,,商品关联信息,,false,2
-        ARCHIVE_ITEM_CLS,ARCHIVE_ITEM_RELATION,/archive/item-cls/,商品类别,,true,1
-        ARCHIVE_ITEM_BRAND,ARCHIVE_ITEM_RELATION,/archive/item-brand/,商品品牌,,true,2
-        ARCHIVE_ITEM_DEPARTMENT,ARCHIVE_ITEM_RELATION,/archive/item-department/,商品部门,,true,3
+        ARCHIVE_CATEGORY,ARCHIVE_ITEM_RELATION,/category,商品类别,,true,1
+        ARCHIVE_BRAND,ARCHIVE_ITEM_RELATION,/brand/,商品品牌,,true,2
+        ARCHIVE_DEPARTMENT,ARCHIVE_ITEM_RELATION,/department,商品部门,,true,3
 
 
-PURCHASE,,,采购业务,,false,2
+PURCHASE,,,采购业务,el-icon-s-order,false,2
+    PURCHASE_BASIC_INFO,PURCHASE,,基础信息,,false,1
+        PURCHASE_SUPPLIER_REGION,PURCHASE_BASIC_INFO,/supplier-region,供应商区域,,true,1
+        PURCHASE_SUPPLIER,PURCHASE_BASIC_INFO,/supplier,供应商档案,,true,2
+
 STOCK,,,库存模块,,false,3
 DELIVERY,,,配送业务,,false,4
 SALE,,,批发销售,,false,5
@@ -19,5 +23,5 @@ REPORT,,,报表中心,el-icon-s-data,false,8
 
 SYSTEM,,,系统管理,el-icon-setting,false,9
 SYSTEM_USER_MANAGE,SYSTEM,,用户管理,,false,1
-SYSTEM_ROLE,SYSTEM_USER_MANAGE,/system/role,角色管理,,true,1
-SYSTEM_SETTING,SYSTEM_USER_MANAGE,/system/user,用户管理,,true,2
+SYSTEM_ROLE,SYSTEM_USER_MANAGE,/role,角色管理,,true,1
+SYSTEM_SETTING,SYSTEM_USER_MANAGE,/user,用户管理,,true,2

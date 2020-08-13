@@ -18,10 +18,16 @@ namespace Archive.API.Infrastructure
 
         public DbSet<Branch> Branches { get; set; }
         public DbSet<BranchStore> BranchStores { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BranchEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BrandEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentEntityTypeConfiguration());
         }
     }
 }

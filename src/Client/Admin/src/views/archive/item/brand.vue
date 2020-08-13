@@ -1,7 +1,7 @@
 <template>
   <div>
     <list-page
-      uri="/archive/itemBrand"
+      uri="/api/a/brand"
       dialog-title="商品品牌"
       :columns="columns"
       :query-params.sync="queryParams"
@@ -37,7 +37,7 @@
 import request from '@/utils/request'
 import ListPage from '@/views/components/list-page/index'
 export default {
-  name: 'ItemBrand',
+  name: 'Brand',
   components: { ListPage },
   data() {
     return {
@@ -76,10 +76,10 @@ export default {
           {
             validator(rule, value, callback) {
               request({
-                url: '/archive/itemBrand/exists/?id=' + value,
+                url: `/api/a/brand/${value}/_exists`,
                 method: 'get'
               }).then(response => {
-                if (response.data && vm.originalId !== value) {
+                if (response && vm.originalId !== value) {
                   callback(new Error('编码已存在'))
                 } else {
                   callback()

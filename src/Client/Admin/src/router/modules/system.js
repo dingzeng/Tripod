@@ -4,13 +4,13 @@ export default {
   component: Layout,
   children: [
     {
-      path: 'role',
+      path: '/role',
       component: () => import('@/views/system/role/index'),
       name: 'SystemRole',
       meta: { title: '系统角色', icon: 'bug' }
     },
     {
-      path: 'user',
+      path: '/user',
       component: () => import('@/views/system/user/index'),
       name: 'SystemUser',
       meta: { title: '用户', icon: 'bug' }
