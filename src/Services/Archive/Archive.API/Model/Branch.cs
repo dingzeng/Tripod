@@ -9,7 +9,7 @@ namespace Archive.API.Model
     /// <summary>
     /// 机构档案
     /// </summary>
-    public class Branch : RecordEntity
+    public class Branch
     {
         /// <summary>
         /// 机构编码
@@ -82,5 +82,10 @@ namespace Archive.API.Model
         /// </summary>
         /// <value></value>
         public IList<BranchStore> Stores { get; set; }
+
+        /// <summary>
+        /// 机构组机构关系
+        /// </summary>
+        public IList<BranchGroupBranch> BranchGroupBranches { get; set; }
     }
 }

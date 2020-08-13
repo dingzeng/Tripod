@@ -16,6 +16,7 @@ namespace Archive.API.Infrastructure
 
         }
 
+        public DbSet<BranchGroup> BranchGroups { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<BranchStore> BranchStores { get; set; }
 
@@ -44,6 +45,8 @@ namespace Archive.API.Infrastructure
             modelBuilder.ApplyConfiguration(new ItemPurchasePriceEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ItemDeliveryPriceEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ItemSellingPriceEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BranchGroupEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BranchGroupBranchEntityTypeConfiguration());
         }
     }
 }

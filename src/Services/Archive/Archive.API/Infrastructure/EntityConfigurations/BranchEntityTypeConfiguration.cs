@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace Archive.API.Infrastructure.EntityConfigurations
 {
     using Model;
+  using Tripod.Core;
 
-    public class BranchEntityTypeConfiguration : IEntityTypeConfiguration<Branch>
+  public class BranchEntityTypeConfiguration : IEntityTypeConfiguration<Branch>
     {
         public void Configure(EntityTypeBuilder<Branch> builder)
         {

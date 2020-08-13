@@ -4,14 +4,16 @@ using Archive.API.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Archive.API.Migrations
 {
     [DbContext(typeof(ArchiveContext))]
-    partial class ArchiveContextModelSnapshot : ModelSnapshot
+    [Migration("20200813124322_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,9 @@ namespace Archive.API.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("BranchGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ContactsEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -38,6 +43,28 @@ namespace Archive.API.Migrations
 
                     b.Property<string>("ContactsTel")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CreateOperId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreateOperName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("LastUpdateOperId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LastUpdateOperName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastUpdateTime")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Memo")
                         .HasColumnType("nvarchar(max)");
@@ -57,6 +84,8 @@ namespace Archive.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchGroupId");
 
                     b.HasIndex("ParentId");
 
@@ -511,6 +540,10 @@ namespace Archive.API.Migrations
 
             modelBuilder.Entity("Archive.API.Model.Branch", b =>
                 {
+                    b.HasOne("Archive.API.Model.BranchGroup", null)
+                        .WithMany("Branches")
+                        .HasForeignKey("BranchGroupId");
+
                     b.HasOne("Archive.API.Model.Branch", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");

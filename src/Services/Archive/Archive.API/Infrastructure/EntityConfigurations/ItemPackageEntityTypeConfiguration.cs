@@ -19,10 +19,10 @@ namespace Archive.API.Infrastructure.EntityConfigurations
 
             builder.Property(ip => ip.Barcode).IsRequired().HasMaxLength(20);
             builder.Property(ip => ip.UnitName).IsRequired().HasMaxLength(10);
-            builder.Property(ip => ip.PurchasePrice).HasColumnType("nvarchar(18,4)");
-            builder.Property(ip => ip.DeliveryPrice).HasColumnType("nvarchar(18,4)");
-            builder.Property(ip => ip.SalesPrice).HasColumnType("nvarchar(18,4)");
-            builder.Property(ip => ip.RetailPrice).HasColumnType("nvarchar(18,4)");
+            builder.Property(ip => ip.PurchasePrice).HasColumnType("decimal(18,4)");
+            builder.Property(ip => ip.DeliveryPrice).HasColumnType("decimal(18,4)");
+            builder.Property(ip => ip.SalesPrice).HasColumnType("decimal(18,4)");
+            builder.Property(ip => ip.RetailPrice).HasColumnType("decimal(18,4)");
         }
     }
 }

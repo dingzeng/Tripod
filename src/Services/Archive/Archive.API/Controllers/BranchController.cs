@@ -84,7 +84,7 @@ namespace Archive.API.Controllers
             var itemsOnPage = await query
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
-                .OrderByDescending(b => b.CreateTime)
+                .OrderBy(b => b.Id)
                 .ToListAsync();
 
             var model = new PaginatedItems<Branch>(

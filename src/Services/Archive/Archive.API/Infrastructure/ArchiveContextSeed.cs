@@ -30,7 +30,7 @@ namespace Archive.API.Infrastructure
             yield return new Branch()
             {
                 Id = "00",
-                ParentId = "",
+                ParentId = null,
                 Name = "总部",
                 ShortName = "总部",
                 Type = BranchType.Headquarters,
