@@ -23,6 +23,6 @@ SETTLEMENT,,,财务结算,el-icon-s-finance,false,7
 REPORT,,,报表中心,el-icon-s-data,false,8
 
 SYSTEM,,,系统管理,el-icon-setting,false,9
-SYSTEM_USER_MANAGE,SYSTEM,,用户管理,,false,1
-SYSTEM_ROLE,SYSTEM_USER_MANAGE,/role,角色管理,,true,1
-SYSTEM_SETTING,SYSTEM_USER_MANAGE,/user,用户管理,,true,2
+    SYSTEM_USER_MANAGE,SYSTEM,,用户管理,,false,1
+        SYSTEM_ROLE,SYSTEM_USER_MANAGE,/role,角色管理,,true,1
+        SYSTEM_USER,SYSTEM_USER_MANAGE,/user,用户管理,,true,2

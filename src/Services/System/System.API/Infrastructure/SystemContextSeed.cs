@@ -17,7 +17,7 @@ namespace System.API.Infrastructure
         {
             using (context)
             {
-                if (!context.Users.Any(u => u.Name == "administrator"))
+                if (!context.Users.Any(u => u.Username == "administrator"))
                 {
                     context.Users.Add(GetAdministrator());
                 }
