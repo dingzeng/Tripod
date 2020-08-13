@@ -11,6 +11,8 @@ namespace Archive.API.Infrastructure.EntityConfigurations
         {
             builder.ToTable("Department");
             builder.HasKey(i => i.Id);
+
+            builder.Property(b => b.Name).IsRequired();
         }
     }
 }

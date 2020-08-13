@@ -13,8 +13,14 @@ namespace Archive.API.Infrastructure.EntityConfigurations
         public void Configure(EntityTypeBuilder<BranchStore> builder)
         {
             builder.ToTable("BranchStore");
-
             builder.HasKey(bs => bs.Id);
+
+            builder.HasOne(s => s.Branch)
+            .WithMany(b => b.Stores)
+            .HasForeignKey(s => s.BranchId)
+            .IsRequired();
+
+            builder.Property(s => s.Name).IsRequired();
         }
     }
 }

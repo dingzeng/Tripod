@@ -22,9 +22,9 @@ namespace Archive.API.Model
         public string ParentId { get; set; }
 
         /// <summary>
-        /// 上级机构名称
+        /// 上级机构
         /// </summary>
-        public string ParentName { get; set; }
+        public Branch Parent { get; set; }
 
         /// <summary>
         /// 机构名称
@@ -67,23 +67,20 @@ namespace Archive.API.Model
         public string Address { get; set; }
 
         /// <summary>
-        /// 默认赠送仓库
-        /// </summary>
-        public int? GiftStoreId { get; set; }
-
-        /// <summary>
-        /// 默认退货仓库
-        /// </summary>
-        public int? ReturnStoreId { get; set; }
-
-        /// <summary>
-        /// 默认进货仓库
-        /// </summary>
-        public int? PurchaseStoreId { get; set; }
-
-        /// <summary>
         /// 备注
         /// </summary>
         public string Memo { get; set; }
+
+        /// <summary>
+        /// 子机构
+        /// </summary>
+        /// <value></value>
+        public IList<Branch> Children { get; set; }
+
+        /// <summary>
+        /// 仓库
+        /// </summary>
+        /// <value></value>
+        public IList<BranchStore> Stores { get; set; }
     }
 }

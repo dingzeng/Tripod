@@ -21,6 +21,12 @@ namespace Archive.API.Model
 		public string BranchId { get; set; }
 
 		/// <summary>
+		/// 所属机构
+		/// </summary>
+		/// <value></value>
+		public Branch Branch { get; set; }
+
+		/// <summary>
 		/// 仓库名称
 		/// </summary>
 		public string Name { get; set; }
@@ -28,6 +34,21 @@ namespace Archive.API.Model
 		/// <summary>
 		/// 是否可用
 		/// </summary>
-		public int IsUsable { get; set; }
+		public bool IsUsable { get; set; }
+
+        /// <summary>
+        /// 是否为默认赠送仓库
+        /// </summary>
+        public bool IsDefaultGiftStoreId { get; set; }
+
+        /// <summary>
+        /// 是否为默认退货仓库
+        /// </summary>
+        public bool IsDefaultReturnStore { get; set; }
+
+        /// <summary>
+        /// 是否为默认进货仓库
+        /// </summary>
+        public bool IsDefaultPurchaseStore { get; set; }
 	}
 }

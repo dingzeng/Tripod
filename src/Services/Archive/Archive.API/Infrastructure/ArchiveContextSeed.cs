@@ -31,7 +31,6 @@ namespace Archive.API.Infrastructure
             {
                 Id = "00",
                 ParentId = "",
-                ParentName = "",
                 Name = "总部",
                 ShortName = "总部",
                 Type = BranchType.Headquarters,
