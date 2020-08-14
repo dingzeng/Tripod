@@ -31,7 +31,14 @@
         <el-row>
           <el-col>
             <el-form-item prop="parentId" label="上级类别">
-              <ref-input v-model="model.parentId" type="category" :label.sync="model.parentName" :disabled="action != 'add'"></ref-input>
+              <ref-input
+                v-model="model.parentId"
+                type="category"
+                :label.sync="model.parentName"
+                :disabled="action != 'add'"
+                :queryParams="{level: 2}"
+              >
+              </ref-input>
             </el-form-item>
           </el-col>
           <el-col>

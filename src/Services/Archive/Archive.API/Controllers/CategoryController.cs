@@ -24,8 +24,22 @@ namespace Archive.API.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="keyword"></param>
+        /// <param name="ancestorId"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult Get(int pageIndex = 1, int pageSize = 20, string keyword = "", string ancestorId = "")
+        public IActionResult Get(
+            int pageIndex = 1, 
+            int pageSize = 20, 
+            string keyword = "", 
+            string ancestorId = "",
+            int? level = null)
         {
             var query = _archiveContext.Categories.AsQueryable();
             if(string.IsNullOrEmpty(keyword)) {
@@ -34,6 +48,10 @@ namespace Archive.API.Controllers
 
             if(!string.IsNullOrEmpty(ancestorId)) {
                 query = query.Where(i => i.Path.Contains("," + ancestorId + ","));
+            }
+
+            if(level.HasValue) {
+                query = query.Where(i => i.Level <= level);
             }
 
             var data = query.Skip((pageIndex - 1) * pageSize)
