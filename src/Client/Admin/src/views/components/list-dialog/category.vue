@@ -5,8 +5,13 @@
       :uri="uri"
       :columns="columns"
       :query-params="innerQueryParams"
-      dialog-title="选择商品单位"
+      dialog-title="选择商品类别"
     >
+      <template slot="queryForm">
+        <el-form-item>
+          <el-input v-model="innerQueryParams.keyword" placeholder="类别编码、名称"></el-input>
+        </el-form-item>
+      </template>
     </list-dialog>
   </div>
 </template>
@@ -14,10 +19,10 @@
 <script>
 import mixin from './mixin'
 export default {
-  name: 'ItemUnitListDialog',
+  name: 'CategoryListDialog',
   data() {
     return {
-      uri: '/archive/itemUnit',
+      uri: '/api/a/category',
       columns: [],
       innerQueryParams: {}
     }

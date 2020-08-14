@@ -34,7 +34,7 @@ export default {
       meta: { title: '商品部门' }
     },
     {
-      path: 'item',
+      path: '/item',
       component: () => import('@/views/archive/item/item'),
       name: 'ArchiveItem',
       meta: { title: '商品' }

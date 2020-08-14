@@ -5,7 +5,7 @@
       :uri="uri"
       :columns="columns"
       :query-params="innerQueryParams"
-      dialog-title="选择商品部门"
+      dialog-title="选择商品品牌"
     >
     </list-dialog>
   </div>
@@ -14,10 +14,10 @@
 <script>
 import mixin from './mixin'
 export default {
-  name: 'ItemDepartmentListDialog',
+  name: 'BrandListDialog',
   data() {
     return {
-      uri: '/archive/itemDepartment',
+      uri: '/api/a/brand',
       columns: [],
       innerQueryParams: {}
     }

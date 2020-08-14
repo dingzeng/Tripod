@@ -35,98 +35,98 @@
           <el-tab-pane label="基础信息">
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="item.id" label="编码">
-                  <el-input v-model="model.item.id" :disabled="action != 'add'"></el-input>
+                <el-form-item prop="id" label="编码">
+                  <el-input v-model="model.id" :disabled="action != 'add'"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.barcode" label="国际条码">
-                  <el-input v-model="model.item.barcode" :disabled="action != 'add'"></el-input>
+                <el-form-item prop="barcode" label="国际条码">
+                  <el-input v-model="model.barcode" :disabled="action != 'add'"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.status" label="状态">
+                <el-form-item prop="status" label="状态">
                   <!-- TODO  -->
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="item.name" label="名称">
-                  <el-input v-model="model.item.name"></el-input>
+                <el-form-item prop="name" label="名称">
+                  <el-input v-model="model.name"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.shortName" label="简称">
-                  <el-input v-model="model.item.shortName"></el-input>
+                <el-form-item prop="shortName" label="简称">
+                  <el-input v-model="model.shortName"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.itemUnitId" label="包装单位">
-                  <ref-input v-model="model.item.itemUnitId" type="itemUnit" :label.sync="model.item.itemUnitName"></ref-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item prop="item.itemClsId" label="类别">
-                  <ref-input v-model="model.item.itemClsId" type="itemCls" :label.sync="model.item.itemClsName"></ref-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item prop="item.itemBrandId" label="品牌">
-                  <ref-input v-model="model.item.itemBrandId" type="itemBrand" :label.sync="model.item.itemBrandName"></ref-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item prop="item.itemDepartmentId" label="商品部门">
-                  <ref-input v-model="model.item.itemDepartmentId" type="itemDepartment" :label.sync="model.item.itemDepartmentName"></ref-input>
+                <el-form-item prop="unitName" label="库存单位">
+                  <el-input v-model="model.unitName"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="item.supplierId" label="主供应商">
-                  <ref-input v-model="model.item.supplierId" type="supplier" :label.sync="model.item.supplierName"></ref-input>
+                <el-form-item prop="categoryId" label="类别">
+                  <ref-input v-model="model.categoryId" type="category" :label.sync="model.categoryName"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.purchasePrice" label="采购价">
-                  <el-input v-model="model.item.purchasePrice"></el-input>
+                <el-form-item prop="itemBrandId" label="品牌">
+                  <ref-input v-model="model.itemBrandId" type="itemBrand" :label.sync="model.itemBrandName"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.isFresh" label="生鲜商品">
-                  <el-checkbox v-model="model.item.isFresh"></el-checkbox>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item prop="item.retailPrice" label="零售价">
-                  <el-input v-model="model.item.retailPrice"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item prop="item.salesPrice" label="批发价">
-                  <el-input v-model="model.item.salesPrice"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item prop="item.deliveryPrice" label="配送价">
-                  <el-input v-model="model.item.deliveryPrice"></el-input>
+                <el-form-item prop="itemDepartmentId" label="商品部门">
+                  <ref-input v-model="model.itemDepartmentId" type="itemDepartment" :label.sync="model.itemDepartmentName"></ref-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="item.referProfitRate" label="参考利率">
-                  <el-input v-model="model.item.referProfitRate"></el-input>
+                <el-form-item prop="supplierId" label="主供应商">
+                  <ref-input v-model="model.supplierId" type="supplier" :label.sync="model.supplierName"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.transportMode" label="物流模式">
-                  <el-select v-model="model.item.transportMode">
+                <el-form-item prop="purchasePrice" label="采购价">
+                  <el-input v-model="model.purchasePrice"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item prop="isFresh" label="生鲜商品">
+                  <el-checkbox v-model="model.isFresh"></el-checkbox>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item prop="retailPrice" label="零售价">
+                  <el-input v-model="model.retailPrice"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item prop="salesPrice" label="批发价">
+                  <el-input v-model="model.salesPrice"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item prop="deliveryPrice" label="配送价">
+                  <el-input v-model="model.deliveryPrice"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item prop="referProfitRate" label="参考利率">
+                  <el-input v-model="model.referProfitRate"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item prop="transportMode" label="物流模式">
+                  <el-select v-model="model.transportMode">
                     <el-option
                       v-for="(label,key) in transportMode"
                       :key="key"
@@ -137,49 +137,49 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.size" label="规格">
-                  <el-input v-model="model.item.size"></el-input>
+                <el-form-item prop="size" label="规格">
+                  <el-input v-model="model.size"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="item.leastDeliveryQty" label="最小配送数量">
-                  <el-input-number v-model="model.item.leastDeliveryQty"></el-input-number>
+                <el-form-item prop="leastDeliveryQty" label="最小配送数量">
+                  <el-input-number v-model="model.leastDeliveryQty"></el-input-number>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.qualityDays" label="保质天数">
-                  <el-input-number v-model="model.item.qualityDays"></el-input-number>
+                <el-form-item prop="qualityDays" label="保质天数">
+                  <el-input-number v-model="model.qualityDays"></el-input-number>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="item.warningDays" label="临期预计天数">
-                  <el-input-number v-model="model.item.warningDays"></el-input-number>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item prop="item.productionPlace" label="产地">
-                  <el-input v-model="model.item.productionPlace"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item prop="item.purchaseTaxRate" label="进项税税率">
-                  <el-input v-model="model.item.purchaseTaxRate"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item prop="item.salesTaxRate" label="销项税税率">
-                  <el-input v-model="model.item.salesTaxRate"></el-input>
+                <el-form-item prop="warningDays" label="临期预计天数">
+                  <el-input-number v-model="model.warningDays"></el-input-number>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="item.memo" label="备注">
-                  <el-input v-model="model.item.memo"></el-input>
+                <el-form-item prop="productionPlace" label="产地">
+                  <el-input v-model="model.productionPlace"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item prop="purchaseTaxRate" label="进项税税率">
+                  <el-input v-model="model.purchaseTaxRate"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item prop="salesTaxRate" label="销项税税率">
+                  <el-input v-model="model.salesTaxRate"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item prop="memo" label="备注">
+                  <el-input v-model="model.memo"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -229,30 +229,30 @@ export default {
       if (this.treeType === 0) {
         this.queryParams.primarySupplierId = data.id
       } else if (this.treeType === 1) {
-        this.queryParams.itemClsId = data.id
+        this.queryParams.categoryId = data.id
       } else if (this.treeType === 2) {
         this.queryParams.itemBrandId = data.id
       }
       this.$refs.listpage.query()
     },
     modelLoad(model) {
-      this.originalId = model.item.id
-      this.originalBarcode = model.item.barcode
+      this.originalId = model.id
+      this.originalBarcode = model.barcode
     },
     loadTreeData() {
       let url = ''
       if (this.treeType === 0) {
-        url = '/archive/supplier/tree'
+        url = '/api/p/supplier/tree'
       } else if (this.treeType === 1) {
-        url = '/archive/itemCls/tree'
+        url = '/api/a/category/tree'
       } else if (this.treeType === 2) {
-        url = '/archive/itemBrand/tree'
+        url = '/api/a/brand/tree'
       }
       request({
         url,
         method: 'get'
       }).then(response => {
-        this.treeData = response.data
+        this.treeData = response
       })
     },
     treeTypeChange(type) {
@@ -277,7 +277,7 @@ export default {
         label: '名称'
       },
       {
-        prop: 'itemClsName',
+        prop: 'categoryName',
         width: 100,
         label: '商品类别'
       },
@@ -360,7 +360,7 @@ export default {
                   url: '/archive/item/exists/id/' + value,
                   method: 'get'
                 }).then(response => {
-                  if (response.data && vm.originalId !== value) {
+                  if (response && vm.originalId !== value) {
                     callback(new Error('编码已存在'))
                   } else {
                     callback()
@@ -378,7 +378,7 @@ export default {
                   url: '/archive/item/exists/barcode/' + value,
                   method: 'get'
                 }).then(response => {
-                  if (response.data && vm.originalBarcode !== value) {
+                  if (response && vm.originalBarcode !== value) {
                     callback(new Error('国际条码已存在'))
                   } else {
                     callback()
@@ -398,7 +398,7 @@ export default {
           itemUnitId: [
             { required: true, message: '必填', trigger: 'blur' }
           ],
-          itemClsId: [
+          categoryId: [
             { required: true, message: '必填', trigger: 'blur' }
           ],
           itemBrandId: [

@@ -19,6 +19,7 @@
           <el-input v-model="queryParams.keyword" placeholder="编码/名称" />
         </el-form-item>
       </template>
+
       <template slot="mainLeft">
         <el-tree
           default-expand-all
@@ -27,6 +28,7 @@
           @node-click="handleNodeClick"
         />
       </template>
+
       <template>
         <el-divider></el-divider>
         <el-row>

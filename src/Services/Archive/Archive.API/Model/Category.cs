@@ -5,7 +5,7 @@ using Tripod.Core;
 namespace Archive.API.Model
 {
     /// <summary>
-    /// 分类
+    /// 类别
     /// </summary>
     public class Category : Entity
     {
@@ -20,6 +20,30 @@ namespace Archive.API.Model
         /// </summary>
         /// <value></value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 父类别Id
+        /// </summary>
+        /// <value></value>
+        public string ParentId { get; set; }
+
+        /// <summary>
+        /// 父类别
+        /// </summary>
+        /// <value></value>
+        public Category Parent { get; set; }
+
+        /// <summary>
+        /// 节点层级
+        /// </summary>
+        /// <value></value>
+        public int Level { get; set; }
+
+        /// <summary>
+        /// 路径
+        /// </summary>
+        /// <value></value>
+        public string Path { get; set; }
 
         /// <summary>
         /// 商品

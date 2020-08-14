@@ -7,8 +7,9 @@
 |Web.Bff.Admin|5000|-|-|
 |Identity.API|5001|-|i|
 |Archive.API|5002|-|a|
-|System.API|5003|50030|s|
+|Purchase|5005|-|p|
 |Stock.API|5004|-|t|
+|System.API|5003|50030|s|
 
 
 ## 接口规范
