@@ -42,7 +42,7 @@ namespace Archive.API.Controllers
             int? level = null)
         {
             var query = _archiveContext.Categories.AsQueryable();
-            if(string.IsNullOrEmpty(keyword)) {
+            if(!string.IsNullOrEmpty(keyword)) {
                 query  = query.Where(i => i.Id.Contains(keyword) || i.Name.Contains(keyword));
             }
 

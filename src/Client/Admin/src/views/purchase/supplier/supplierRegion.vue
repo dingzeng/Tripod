@@ -1,7 +1,7 @@
 <template>
   <div>
     <list-page
-      uri="/archive/supplierRegion"
+      uri="/api/p/supplier-region"
       dialog-title="供应商区域"
       :columns="columns"
       :is-paging="false"

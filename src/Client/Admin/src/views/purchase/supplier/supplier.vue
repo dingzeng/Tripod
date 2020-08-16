@@ -2,7 +2,7 @@
   <div>
     <list-page
       ref="listpage"
-      uri="/archive/supplier"
+      uri="/api/p/supplier"
       dialog-title="供应商"
       :query-params="queryParams"
       :columns="columns"
@@ -15,6 +15,16 @@
       <template slot="queryForm">
         <el-form-item prop="keyword">
           <el-input v-model="queryParams.keyword" placeholder="编码/名称" />
+        </el-form-item>
+        <el-form-item prop="type">
+          <el-select v-model="queryParams.type" placeholder="经营方式" clearable>
+            <el-option v-for="(label,value) in sellWay" :key="value" :label="label" :value="value"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="settlementMode">
+          <el-select v-model="queryParams.settlementMode" placeholder="结算方式" clearable>
+            <el-option v-for="(label,value) in settleWay" :key="value" :label="label" :value="value"></el-option>
+          </el-select>
         </el-form-item>
       </template>
       <template slot="mainLeft">
@@ -148,7 +158,6 @@ import { sellWay, settleWay } from '@/utils/enum'
 import request from '@/utils/request'
 import ListPage from '@/views/components/list-page/index'
 import RefInput from '@/views/components/ref-input/index'
-import { loadSupplierRegionTreeData } from '@/api/supplier'
 export default {
   name: 'Supplier',
   components: { ListPage, RefInput },
@@ -178,8 +187,18 @@ export default {
     }
   },
   mounted() {
-    loadSupplierRegionTreeData().then(response => {
-      this.supplierRegionTreeData = response.data
+    request({
+      url: '/api/p/supplier-region',
+      method: 'GET'
+    }).then(response => {
+      this.supplierRegionTreeData = response.map(s => {
+        return {
+          id: s.id,
+          label: s.name,
+          children: [],
+          level: 1
+        }
+      })
     })
   },
   created() {
@@ -252,20 +271,21 @@ export default {
           {
             validator(rule, value, callback) {
               request({
-                url: '/archive/supplier/exists/?id=' + value,
+                url: `/api/p/supplier/${value}/_exists`,
                 method: 'get'
               }).then(response => {
-                if (response.data && vm.originalId !== value) {
+                if (response && vm.originalId !== value) {
                   callback(new Error('编码已存在'))
                 } else {
                   callback()
                 }
               })
-            }
+            },
+            trigger: 'blur'
           }
         ],
         name: [
-          { required: true, message: '名称不存在', trigger: 'blur' },
+          { required: true, message: '名称必填', trigger: 'blur' },
           { type: 'string', max: 20, message: '长度不能超过20位字符' }
         ],
         regionId: [

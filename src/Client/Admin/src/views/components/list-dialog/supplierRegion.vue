@@ -18,7 +18,7 @@ export default {
   name: 'SupplierRegionListDialog',
   data() {
     return {
-      uri: '/archive/supplierRegion',
+      uri: '/api/p/supplier-region',
       columns: [],
       innerQueryParams: {
         keyword: ''

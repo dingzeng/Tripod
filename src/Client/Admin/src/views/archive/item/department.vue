@@ -10,7 +10,7 @@
       <template>
         <el-row>
           <el-col>
-            <el-form-item label="编码" required>
+            <el-form-item prop="id" label="编码" required>
               <el-input v-model="model.id"></el-input>
             </el-form-item>
           </el-col>

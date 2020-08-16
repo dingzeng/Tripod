@@ -35,12 +35,12 @@
           <el-tab-pane label="基础信息">
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="id" label="编码">
+                <el-form-item prop="id" label="编码" required>
                   <el-input v-model="model.id" :disabled="action != 'add'"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="barcode" label="国际条码">
+                <el-form-item prop="barcode" label="国际条码" required>
                   <el-input v-model="model.barcode" :disabled="action != 'add'"></el-input>
                 </el-form-item>
               </el-col>
@@ -52,41 +52,41 @@
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="name" label="名称">
+                <el-form-item prop="name" label="名称" required>
                   <el-input v-model="model.name"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="shortName" label="简称">
+                <el-form-item prop="shortName" label="简称" required>
                   <el-input v-model="model.shortName"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="unitName" label="库存单位">
+                <el-form-item prop="unitName" label="库存单位" required>
                   <el-input v-model="model.unitName"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="categoryId" label="类别">
+                <el-form-item prop="categoryId" label="类别" required>
                   <ref-input v-model="model.categoryId" type="category" :label.sync="model.categoryName"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="itemBrandId" label="品牌">
-                  <ref-input v-model="model.itemBrandId" type="itemBrand" :label.sync="model.itemBrandName"></ref-input>
+                <el-form-item prop="brandId" label="品牌" required>
+                  <ref-input v-model="model.brandId" type="brand" :label.sync="model.brandName"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="itemDepartmentId" label="商品部门">
-                  <ref-input v-model="model.itemDepartmentId" type="itemDepartment" :label.sync="model.itemDepartmentName"></ref-input>
+                <el-form-item prop="departmentId" label="商品部门" required>
+                  <ref-input v-model="model.departmentId" type="department" :label.sync="model.departmentName"></ref-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="supplierId" label="主供应商">
+                <el-form-item prop="supplierId" label="主供应商" required>
                   <ref-input v-model="model.supplierId" type="supplier" :label.sync="model.supplierName"></ref-input>
                 </el-form-item>
               </el-col>
@@ -103,7 +103,7 @@
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="retailPrice" label="零售价">
+                <el-form-item prop="retailPrice" label="零售价" required>
                   <el-input v-model="model.retailPrice"></el-input>
                 </el-form-item>
               </el-col>
@@ -125,7 +125,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="transportMode" label="物流模式">
+                <el-form-item prop="transportMode" label="物流模式" required>
                   <el-select v-model="model.transportMode">
                     <el-option
                       v-for="(label,key) in transportMode"
@@ -246,13 +246,24 @@ export default {
       } else if (this.treeType === 1) {
         url = '/api/a/category/tree'
       } else if (this.treeType === 2) {
-        url = '/api/a/brand/tree'
+        url = '/api/a/brand'
       }
       request({
         url,
         method: 'get'
       }).then(response => {
-        this.treeData = response
+        if (this.treeType == 2) {
+          this.treeData = response.data.map(b => {
+            return {
+              id: b.id,
+              label: b.name,
+              children: [],
+              level: 1
+            }
+          })
+        } else {
+          this.treeData = response
+        }
       })
     },
     treeTypeChange(type) {

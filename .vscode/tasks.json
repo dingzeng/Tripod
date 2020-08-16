@@ -44,6 +44,16 @@
             ]
         },
         {
+            "label": "purchase",
+            "command":"dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "-p",
+                "${workspaceFolder}/src/Services/Purchase/Purchase.API/Purchase.API.csproj"
+            ]
+        },
+        {
             "label": "system",
             "command":"dotnet",
             "type": "process",

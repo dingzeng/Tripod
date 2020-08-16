@@ -377,12 +377,12 @@ export default {
       this.dialogVisible = false
     },
     doSave() {
-      if (!this.modelChanged) {
-        this.dialogVisible = false
-        return
-      }
       this.$refs.modelForm.validate(valid => {
         if (valid) {
+          if (!this.modelChanged) {
+            this.dialogVisible = false
+            return
+          }
           if (this.innerAction === 'view') {
             this.dialogVisible = false
             return
