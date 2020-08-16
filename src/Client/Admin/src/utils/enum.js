@@ -8,14 +8,14 @@ export const branchType = {
   4: '加盟店'
 }
 
-export const sellWay = {
+export const supplierType = {
   0: '购销',
   1: '联营',
   2: '代销',
   3: '租赁'
 }
 
-export const settleWay = {
+export const settlementMode = {
   0: '临时指定',
   1: '货到付款',
   2: '指定账期',

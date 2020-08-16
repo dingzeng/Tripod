@@ -61,7 +61,14 @@ namespace Archive.API.Controllers
             }
 
             if(!string.IsNullOrEmpty(categoryId)) {
-                query = query.Where(i => i.CategoryId == categoryId);
+                var categoy = _context.Categories.First(c => c.Id == categoryId);
+                if(categoy.Level == 1) {
+                    query  = query.Where(i => i.CategoryId1 == categoryId);
+                }else if(categoy.Level == 2) {
+                    query  = query.Where(i => i.CategoryId2 == categoryId);
+                }else if(categoy.Level == 3) {
+                    query  = query.Where(i => i.CategoryId3 == categoryId);
+                }
             }
 
             if(!string.IsNullOrEmpty(brandId)) {

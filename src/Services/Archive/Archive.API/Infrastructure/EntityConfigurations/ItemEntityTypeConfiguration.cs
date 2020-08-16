@@ -12,10 +12,9 @@ namespace Archive.API.Infrastructure.EntityConfigurations
             builder.ToTable("Item");
             builder.HasKey(i => i.Id);
 
-            builder.HasOne(i => i.Category)
-            .WithMany(c => c.Items)
-            .HasForeignKey(i => i.CategoryId)
-            .IsRequired();
+            builder.HasOne(i => i.Category1).WithMany().HasForeignKey(i => i.CategoryId1);
+            builder.HasOne(i => i.Category2).WithMany().HasForeignKey(i => i.CategoryId2);
+            builder.HasOne(i => i.Category3).WithMany().HasForeignKey(i => i.CategoryId3);
 
             builder.HasOne(i => i.Brand)
             .WithMany(b => b.Items)
@@ -31,8 +30,8 @@ namespace Archive.API.Infrastructure.EntityConfigurations
             builder.Property(i => i.Name).IsRequired();
             builder.Property(i => i.ShortName).IsRequired();
             builder.Property(i => i.UnitName).IsRequired();
-            builder.Property(i => i.PrimarySupplierId).HasMaxLength(10).IsRequired();
-            builder.Property(i => i.PrimarySupplierName).IsRequired();
+            builder.Property(i => i.SupplierId).HasMaxLength(10).IsRequired();
+            builder.Property(i => i.SupplierName).IsRequired();
 
             builder.Property(i => i.RetailPrice).HasColumnType("decimal(18,4)");
             builder.Property(i => i.PurchasePrice).HasColumnType("decimal(18,4)");

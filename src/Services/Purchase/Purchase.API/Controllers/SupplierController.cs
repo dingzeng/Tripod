@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Purchase.API.Infrastructure;
 using Purchase.API.Model;
+using Purchase.API.ViewModel;
 
 namespace Purchase.API.Controllers
 {
@@ -32,40 +34,46 @@ namespace Purchase.API.Controllers
                 return BadRequest();
             }
 
-            return Ok(entity);
+            return Ok(new SupplierModel(entity));
         }
 
         [HttpGet]
         public IActionResult Get(int pageIndex = 1, int pageSize = 20, string keyword = "")
         {
-			var query = _context.Suppliers.AsQueryable();
+			var query = _context.Suppliers.Include(s => s.Region).AsQueryable();
 
 			if(!string.IsNullOrEmpty(keyword)) {
 				query = query.Where(i => i.Name.Contains(keyword) || i.Id.Contains(keyword));
 			}
 
-			var data = new Tripod.Core.PaginatedItems<Supplier>(
+            var data = query.Select(s => new SupplierModel(s));
+
+			var page = new Tripod.Core.PaginatedItems<SupplierModel>(
 				pageIndex: pageIndex,
 				pageSize: pageSize,
 				count: query.Count(),
-				data: query.ToList());
+				data: data);
 
-            return Ok(data);
+            return Ok(page);
         }
 
         [HttpPost]
-        public IActionResult Post(Supplier model)
+        public IActionResult Post(SupplierModel model)
         {
-            _context.Suppliers.Add(model);
+            var entity = model.ToEntity();
+
+            _context.Suppliers.Add(entity);
             _context.SaveChanges();
 
             return Ok();
         }
 
         [HttpPut]
-        public IActionResult Put(Supplier model)
+        public IActionResult Put(SupplierModel model)
         {
-            _context.Suppliers.Update(model);
+            var entity = model.ToEntity();
+
+            _context.Suppliers.Update(entity);
             _context.SaveChanges();
 
             return Ok();

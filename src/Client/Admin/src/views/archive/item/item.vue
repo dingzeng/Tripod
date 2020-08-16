@@ -8,7 +8,6 @@
       :queryParams.sync="queryParams"
       :model.sync="model"
       :modelRules="modelRules"
-      :leftSpan="4"
       :action.sync="action"
       @model-load="modelLoad"
     >
@@ -16,19 +15,15 @@
         <el-form-item prop="keyword">
           <el-input v-model="queryParams.keyword" placeholder="编码/国际条码/名称"></el-input>
         </el-form-item>
-      </template>
-      <template slot="mainLeft">
-        <el-select v-model="treeType" @change="treeTypeChange">
-          <el-option :value="0" label="供应商" />
-          <el-option :value="1" label="商品类别" />
-          <el-option :value="2" label="商品品牌" />
-        </el-select>
-        <el-tree
-          :data="treeData"
-          @node-click="handleNodeClick"
-          default-expand-all
-        >
-        </el-tree>
+        <el-form-item prop="categoryId">
+          <ref-input v-model="queryParams.categoryId" type="category" placeholder="类别"></ref-input>
+        </el-form-item>
+        <el-form-item prop="brandId">
+          <ref-input v-model="queryParams.brandId" type="brand" placeholder="品牌"></ref-input>
+        </el-form-item>
+        <el-form-item prop="departmentId">
+          <ref-input v-model="queryParams.departmentId" type="department" placeholder="商品部门"></ref-input>
+        </el-form-item>
       </template>
       <template>
         <el-tabs tab-position="left" style="height: 500px;">
@@ -216,8 +211,6 @@ export default {
           transportMode: 0
         }
       },
-      treeType: 0,
-      treeData: [],
       action: '',
       transportMode: transportMode,
       originalId: '',
@@ -225,50 +218,9 @@ export default {
     }
   },
   methods: {
-    handleNodeClick(data) {
-      if (this.treeType === 0) {
-        this.queryParams.primarySupplierId = data.id
-      } else if (this.treeType === 1) {
-        this.queryParams.categoryId = data.id
-      } else if (this.treeType === 2) {
-        this.queryParams.itemBrandId = data.id
-      }
-      this.$refs.listpage.query()
-    },
     modelLoad(model) {
       this.originalId = model.id
       this.originalBarcode = model.barcode
-    },
-    loadTreeData() {
-      let url = ''
-      if (this.treeType === 0) {
-        url = '/api/p/supplier/tree'
-      } else if (this.treeType === 1) {
-        url = '/api/a/category/tree'
-      } else if (this.treeType === 2) {
-        url = '/api/a/brand'
-      }
-      request({
-        url,
-        method: 'get'
-      }).then(response => {
-        if (this.treeType == 2) {
-          this.treeData = response.data.map(b => {
-            return {
-              id: b.id,
-              label: b.name,
-              children: [],
-              level: 1
-            }
-          })
-        } else {
-          this.treeData = response
-        }
-      })
-    },
-    treeTypeChange(type) {
-      this.treeType = type
-      this.loadTreeData()
     }
   },
   created() {
@@ -293,22 +245,22 @@ export default {
         label: '商品类别'
       },
       {
-        prop: 'itemBrandName',
+        prop: 'brandName',
         width: 100,
         label: '商品品牌'
       },
       {
-        prop: 'itemDepartmentName',
+        prop: 'departmentName',
         width: 100,
         label: '商品部门'
       },
       {
-        prop: 'itemUnitName',
+        prop: 'unitName',
         width: 100,
         label: '包装单位'
       },
       {
-        prop: 'primary_supplier_name',
+        prop: 'supplierName',
         width: 150,
         label: '主供应商'
       },
@@ -336,16 +288,6 @@ export default {
         prop: 'deliveryPrice',
         width: 100,
         label: '配送价'
-      },
-      {
-        prop: 'referProfitRate',
-        width: 100,
-        label: '参考利率'
-      },
-      {
-        prop: 'size',
-        width: 100,
-        label: '规格'
       },
       {
         prop: 'transportMode',

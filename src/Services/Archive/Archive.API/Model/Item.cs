@@ -29,14 +29,34 @@ namespace Archive.API.Model
 		public string ShortName { get; set; }
 
 		/// <summary>
-		/// 类别Id
+		/// 一级类别Id
 		/// </summary>
-		public string CategoryId { get; set; }
+		public string CategoryId1 { get; set; }
 
 		/// <summary>
-		/// 类别
+		/// 一级类别
 		/// </summary>
-		public Category Category { get; set; }
+		public Category Category1 { get; set; }
+
+		/// <summary>
+		/// 二级类别Id
+		/// </summary>
+		public string CategoryId2 { get; set; }
+
+		/// <summary>
+		/// 二级类别
+		/// </summary>
+		public Category Category2 { get; set; }
+
+		/// <summary>
+		/// 三级类别Id
+		/// </summary>
+		public string CategoryId3 { get; set; }
+
+		/// <summary>
+		/// 三级类别
+		/// </summary>
+		public Category Category3 { get; set; }
 
 		/// <summary>
 		/// 品牌Id
@@ -66,12 +86,12 @@ namespace Archive.API.Model
 		/// <summary>
 		/// 主供应商Id
 		/// </summary>
-		public string PrimarySupplierId { get; set; }
+		public string SupplierId { get; set; }
 
 		/// <summary>
 		/// 主供应商名称
 		/// </summary>
-		public string PrimarySupplierName { get; set; }
+		public string SupplierName { get; set; }
 
 		/// <summary>
 		/// 状态 0-正常、9-停用

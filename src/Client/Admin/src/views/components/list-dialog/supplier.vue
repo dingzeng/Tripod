@@ -30,20 +30,20 @@
 <script>
 import request from '@/utils/request'
 import mixin from './mixin'
-import { sellWay, settleWay } from '@/utils/enum'
+import { supplierType, settlementMode } from '@/utils/enum'
 export default {
   name: 'SupplierListDialog',
   data() {
     return {
-      uri: '/archive/supplier',
+      uri: '/api/p/supplier',
       columns: [],
       innerQueryParams: {
         keyword: '',
         regionId: ''
       },
       treeData: [],
-      sellWay: sellWay,
-      settleWay: settleWay
+      supplierType: supplierType,
+      settlementMode: settlementMode
     }
   },
   mixins: [mixin],
@@ -55,10 +55,17 @@ export default {
   },
   mounted() {
     request({
-      url: '/archive/supplierRegion/tree',
+      url: '/api/p/supplier-region',
       method: 'get'
     }).then(response => {
-      this.treeData = response.data
+      this.treeData = response.map(i => {
+        return {
+          id: i.id,
+          label: i.name,
+          children: [],
+          level: 1
+        }
+      })
     })
   },
   created() {
@@ -70,31 +77,31 @@ export default {
       },
       {
         prop: 'name',
-        label: '名称',
-        width: 200
+        label: '名称'
       },
       {
-        prop: 'regionId',
+        prop: 'regionName',
         label: '所属区域',
-        width: 200
+        width: 100
       },
       {
-        prop: 'sellWay',
+        prop: 'type',
         type: 'enum',
         label: '经营方式',
         width: 100,
-        enums: sellWay
+        enums: supplierType
       },
       {
-        prop: 'settleWay',
+        prop: 'settlementMode',
         type: 'enum',
         label: '结算方式',
         width: 100,
-        enums: settleWay
+        enums: settlementMode
       },
       {
         prop: 'contactsName',
-        label: '联系人'
+        label: '联系人',
+        width: 100
       }
     ]
   }

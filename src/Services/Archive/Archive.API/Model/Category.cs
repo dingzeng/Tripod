@@ -44,11 +44,5 @@ namespace Archive.API.Model
         /// </summary>
         /// <value></value>
         public string Path { get; set; }
-
-        /// <summary>
-        /// 商品
-        /// </summary>
-        /// <value></value>
-        public IList<Item> Items { get; set; }
     }
 }

@@ -18,12 +18,12 @@
         </el-form-item>
         <el-form-item prop="type">
           <el-select v-model="queryParams.type" placeholder="经营方式" clearable>
-            <el-option v-for="(label,value) in sellWay" :key="value" :label="label" :value="value"></el-option>
+            <el-option v-for="(label,value) in supplierType" :key="value" :label="label" :value="value"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item prop="settlementMode">
           <el-select v-model="queryParams.settlementMode" placeholder="结算方式" clearable>
-            <el-option v-for="(label,value) in settleWay" :key="value" :label="label" :value="value"></el-option>
+            <el-option v-for="(label,value) in settlementMode" :key="value" :label="label" :value="value"></el-option>
           </el-select>
         </el-form-item>
       </template>
@@ -56,10 +56,10 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item prop="sellWay" label="经营方式" required>
-              <el-select v-model="model.sellWay">
+            <el-form-item prop="type" label="经营方式" required>
+              <el-select v-model="model.type">
                 <el-option
-                  v-for="(label,key) in sellWay"
+                  v-for="(label,key) in supplierType"
                   :key="key"
                   :value="Number(key)"
                   :label="label"
@@ -68,10 +68,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item prop="settleWay" label="结算方式" required>
-              <el-select v-model="model.settleWay">
+            <el-form-item prop="settlementMode" label="结算方式" required>
+              <el-select v-model="model.settlementMode">
                 <el-option
-                  v-for="(label,key) in settleWay"
+                  v-for="(label,key) in settlementMode"
                   :key="key"
                   :value="Number(key)"
                   :label="label"
@@ -79,12 +79,12 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col v-if="model.settleWay == 2" :span="8">
+          <el-col v-if="model.settlementMode == 2" :span="8">
             <el-form-item prop="settleDays" label="结算周期天数">
               <el-input-number v-model="model.settleDays"></el-input-number>
             </el-form-item>
           </el-col>
-          <el-col v-if="model.settleWay == 3" :span="8">
+          <el-col v-if="model.settlementMode == 3" :span="8">
             <el-form-item prop="settleDate" label="结算日期">
               <el-input-number v-model="model.settleDate"></el-input-number>
             </el-form-item>
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { sellWay, settleWay } from '@/utils/enum'
+import { supplierType, settlementMode } from '@/utils/enum'
 import request from '@/utils/request'
 import ListPage from '@/views/components/list-page/index'
 import RefInput from '@/views/components/ref-input/index'
@@ -168,13 +168,13 @@ export default {
       },
       columns: [],
       model: {
-        sellWay: 0,
-        settleWay: 0
+        supplierType: 0,
+        settlementMode: 0
       },
       supplierRegionTreeData: [],
       originalId: '',
-      sellWay: sellWay,
-      settleWay: settleWay
+      supplierType: supplierType,
+      settlementMode: settlementMode
     }
   },
   methods: {
@@ -214,18 +214,18 @@ export default {
         width: 150
       },
       {
-        prop: 'sellWay',
+        prop: 'type',
         label: '经营方式',
         type: 'enum',
         width: 100,
-        enums: sellWay
+        enums: supplierType
       },
       {
-        prop: 'settleWay',
+        prop: 'settlementMode',
         label: '结算方式',
         type: 'enum',
         width: 100,
-        enums: settleWay
+        enums: settlementMode
       },
       {
         prop: 'status',
@@ -291,18 +291,18 @@ export default {
         regionId: [
           { required: true, message: '区域不能为空', trigger: 'blur' }
         ],
-        sellWay: [
+        supplierType: [
           { required: true, message: '经营方式不能为空', trigger: 'blur' }
         ],
-        settleWay: [
+        settlementMode: [
           { required: true, message: '结算方式不能为空', trigger: 'blur' }
         ],
         settleDays: [
-          { required: vm.model.settleWay === 2, message: '结算周期天数必填', trigger: 'blur' },
+          { required: vm.model.settlementMode === 2, message: '结算周期天数必填', trigger: 'blur' },
           { type: 'integer', min: 1 }
         ],
         settleDate: [
-          { required: vm.model.settleWay === 3, message: '结算日期必填', trigger: 'blur' },
+          { required: vm.model.settlementMode === 3, message: '结算日期必填', trigger: 'blur' },
           { type: 'integer', min: 1, max: 28 }
         ],
         contactsEmail: [

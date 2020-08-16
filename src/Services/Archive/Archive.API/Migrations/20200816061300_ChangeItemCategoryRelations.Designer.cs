@@ -4,14 +4,16 @@ using Archive.API.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Archive.API.Migrations
 {
     [DbContext(typeof(ArchiveContext))]
-    partial class ArchiveContextModelSnapshot : ModelSnapshot
+    [Migration("20200816061300_ChangeItemCategoryRelations")]
+    partial class ChangeItemCategoryRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,14 +212,23 @@ namespace Archive.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CategoryId1")
+                    b.Property<string>("Category1Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Category2Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Category3Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CategoryId1")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoryId2")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoryId3")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("DeliveryPrice")
                         .HasColumnType("decimal(18,4)");
@@ -233,6 +244,15 @@ namespace Archive.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimarySupplierId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("PrimarySupplierName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -270,15 +290,6 @@ namespace Archive.API.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("SupplierId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("SupplierName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TransportMode")
                         .HasColumnType("int");
 
@@ -293,11 +304,11 @@ namespace Archive.API.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("Category1Id");
 
-                    b.HasIndex("CategoryId2");
+                    b.HasIndex("Category2Id");
 
-                    b.HasIndex("CategoryId3");
+                    b.HasIndex("Category3Id");
 
                     b.HasIndex("DepartmentId");
 
@@ -560,15 +571,15 @@ namespace Archive.API.Migrations
 
                     b.HasOne("Archive.API.Model.Category", "Category1")
                         .WithMany()
-                        .HasForeignKey("CategoryId1");
+                        .HasForeignKey("Category1Id");
 
                     b.HasOne("Archive.API.Model.Category", "Category2")
                         .WithMany()
-                        .HasForeignKey("CategoryId2");
+                        .HasForeignKey("Category2Id");
 
                     b.HasOne("Archive.API.Model.Category", "Category3")
                         .WithMany()
-                        .HasForeignKey("CategoryId3");
+                        .HasForeignKey("Category3Id");
 
                     b.HasOne("Archive.API.Model.Department", "Department")
                         .WithMany("Items")
