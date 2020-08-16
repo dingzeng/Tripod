@@ -34,19 +34,12 @@ namespace Archive.API.Controllers
         [Route("{id}")]
         public async Task<ActionResult<Branch>> GetBranchByIdAsync([FromRoute] string id)
         {
-            if (string.IsNullOrEmpty(id))
+            var entity = await _archiveContext.Branches.Include(b => b.Parent).SingleOrDefaultAsync(b => b.Id == id);
+            if (entity == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            var item = await _archiveContext.Branches.SingleOrDefaultAsync(b => b.Id == id);
-
-            if (item != null)
-            {
-                return Ok(item);
-            }
-
-            return NotFound();
+            return Ok(entity);
         }
 
         /// <summary>
@@ -135,8 +128,11 @@ namespace Archive.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBranchAsync([FromBody] Branch model)
         {
-            var parent = _archiveContext.Branches.First(b => b.Id == model.ParentId);
+            var parent = _archiveContext.Branches.First(b => b.Id == model.Parent.Id);
             model.Path = parent.Path + model.Id + ",";
+
+            model.ParentId = model.Parent.Id;
+            model.Parent = null;
 
             _archiveContext.Branches.Add(model);
             await _archiveContext.SaveChangesAsync();
@@ -153,10 +149,10 @@ namespace Archive.API.Controllers
                 return NotFound();
             }
 
-            var parent = _archiveContext.Branches.First(b => b.Id == model.ParentId);
+            var parent = _archiveContext.Branches.First(b => b.Id == model.Parent.Id);
             model.Path = parent.Path + model.Id + ",";
 
-            branch.ParentId = model.ParentId;
+            branch.ParentId = model.Parent.Id;
             branch.Name = model.Name;
             branch.ShortName = model.ShortName;
             branch.Type = model.Type;
@@ -166,6 +162,7 @@ namespace Archive.API.Controllers
             branch.ContactsEmail = model.ContactsEmail;
             branch.Address = model.Address;
             branch.Memo = model.Memo;
+            model.Parent = null;
 
             _archiveContext.Branches.Update(branch);
             await _archiveContext.SaveChangesAsync();

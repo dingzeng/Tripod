@@ -17,18 +17,15 @@ export function loadBranchTreeData() {
 
 export function getBranchGroupBranchs(branchGroupId) {
   return request({
-    url: '/api/a/branchGroup/branch/' + branchGroupId,
+    url: `/api/a/branch-group/${branchGroupId}/branch/`,
     method: 'get'
   })
 }
 
 export function updateBranchGroupBranchs(branchGroupId, branchIdList) {
   return request({
-    url: '/api/a/branchGroup/branch/',
+    url: `/api/a/branch-group/${branchGroupId}/branch/`,
     method: 'put',
-    data: {
-      branchGroupId,
-      branchIdList
-    }
+    data: branchIdList
   })
 }

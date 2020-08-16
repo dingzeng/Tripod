@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-input
-      v-model="innerLabel"
       clearable
+      :value="text"
       :placeholder="placeholder"
       :disabled="disabled"
       @blur="inputBlur"
       @clear="inputClear"
     >
-      <el-button slot="append" icon="el-icon-menu" @click="clickMore"></el-button>
+      <el-button slot="append" icon="el-icon-menu" @click="showDialog"></el-button>
     </el-input>
     <component
       :is="type"
@@ -32,16 +32,13 @@ export default {
   data() {
     return {
       innerValue: this.value,
-      innerLabel: this.label,
       innerQueryParams: this.queryParams
     }
   },
   props: {
     value: {
-      type: [String, Number],
-      default: () => ''
+      type: [Object, Array]
     },
-    label: String,
     type: {
       type: String,
       required: true
@@ -58,13 +55,9 @@ export default {
       type: Object,
       default: () => {}
     },
-    valueKey: {
+    format: {
       type: String,
-      default: 'id'
-    },
-    labelKey: {
-      type: String,
-      default: 'name'
+      default: '{name}'
     }
   },
   methods: {
@@ -72,22 +65,37 @@ export default {
       // TODO auto search ,if not exist only one then show the list dialog.
     },
     inputClear() {
-      this.innerValue = ''
-      this.innerLabel = ''
+      this.innerValue = null
     },
     setCurrentData(data) {
-      // NOTE 使用ListDialog的ref-input只支持单选
-      if (Array.isArray(data)) {
-        data = data[0]
-      }
-      this.innerValue = data[this.valueKey]
-      this.innerLabel = data[this.labelKey]
-      this.$nextTick(() => {
-        this.dispatch('ElFormItem', 'el.form.blur', [data[this.valueKey]])
-      })
+      this.$emit('selected', data)
+      this.innerValue = data
+      // this.$nextTick(() => {
+      //   this.dispatch('ElFormItem', 'el.form.blur', [data])
+      // })
     },
-    clickMore() {
+    showDialog() {
       this.$refs.dialog.$refs.list.show()
+    }
+  },
+  computed: {
+    text() {
+      // TODO from format
+      const formatText = (format, obj) => {
+        var reg = /\{[a-zA-Z0-9_]*\}/g
+        var arr = [...(format.matchAll(reg))]
+        arr.forEach(item => {
+          const key = item[0].substring(1, item[0].length - 1)
+          format = format.replace(item[0], obj[key])
+        })
+        return format
+      }
+      if (!this.innerValue || this.innerValue.length == 0) return ''
+      if (Array.isArray(this.innerValue)) {
+        return this.innerValue.map(obj => formatText(this.format, obj)).join(';')
+      } else {
+        return formatText(this.format, this.innerValue)
+      }
     }
   },
   watch: {
@@ -99,15 +107,9 @@ export default {
 
       // HACK fixbug:form组件的 resetFields方法对ref-input组件绑定的label属性不会重置
       // （只重置在form-item上写了prop的数据）
-      if (!newValue) {
-        this.innerLabel = ''
-      }
-    },
-    innerLabel(newValue) {
-      this.$emit('update:label', newValue)
-    },
-    label(newValue) {
-      this.innerLabel = newValue
+      // if (!newValue) {
+      //   this.innerLabel = ''
+      // }
     },
     queryParams: {
       handler: function(newValue) {

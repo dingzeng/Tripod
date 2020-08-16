@@ -30,11 +30,10 @@
       <template>
         <el-row>
           <el-col>
-            <el-form-item prop="parentId" label="上级类别">
+            <el-form-item prop="parent" label="上级类别">
               <ref-input
-                v-model="model.parentId"
+                v-model="model.parent"
                 type="category"
-                :label.sync="model.parentName"
                 :disabled="action != 'add'"
                 :queryParams="{level: 2}"
               >

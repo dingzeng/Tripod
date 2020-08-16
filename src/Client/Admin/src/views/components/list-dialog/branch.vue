@@ -39,7 +39,7 @@ export default {
       columns: [],
       innerQueryParams: {
         keyword: '',
-        parentId: ''
+        ancestorId: ''
       },
       branchTreeData: [],
       branchType
@@ -48,7 +48,7 @@ export default {
   mixins: [mixin],
   methods: {
     handleNodeClick(data) {
-      this.innerQueryParams.parentId = data.id
+      this.innerQueryParams.ancestorId = data.id
       this.$refs.list.query()
     }
   },

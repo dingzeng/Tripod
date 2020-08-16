@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Archive.API.Infrastructure;
 using Tripod.Core;
 using Archive.API.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Archive.API.Controllers
 {
@@ -54,7 +55,11 @@ namespace Archive.API.Controllers
             int? status = null,
             TransportMode? transportMode = null)
         {
-            var query = _context.Items.AsQueryable();
+            var query = _context.Items
+                        .Include(i => i.Category3)
+                        .Include(i => i.Brand)
+                        .Include(i => i.Department)
+                        .AsQueryable();
 
             if(!string.IsNullOrEmpty(keyword)) {
                 query = query.Where(i => i.Name.Contains(keyword) || i.Barcode.Contains(keyword));
@@ -101,7 +106,16 @@ namespace Archive.API.Controllers
         [Route("{id}")]
         public IActionResult Get(string id)
         {
-            var entity = _context.Items.FirstOrDefault(i => i.Id == id);
+            var entity = _context.Items
+                    .Include(i => i.Category1)
+                    .Include(i => i.Category2)
+                    .Include(i => i.Category3)
+                    .Include(i => i.Brand)
+                    .Include(i => i.Department)
+                    .Include(i => i.Barcodes)
+                    .Include(i => i.Packages)
+                    .FirstOrDefault(i => i.Id == id);
+
             if(entity == null) {
                 return NotFound();
             }
@@ -112,6 +126,23 @@ namespace Archive.API.Controllers
         [HttpPost]
         public IActionResult Post(Item model)
         {
+            model.DepartmentId = model.Department.Id;
+            model.BrandId = model.Brand.Id;
+
+            var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);
+            if(category.Level != 3) {
+                return BadRequest("only level 3");
+            }
+
+            model.CategoryId1 = category.Parent.ParentId;
+            model.CategoryId2 = category.Parent.Id;
+            model.CategoryId3 = category.Id;
+
+            // HACK
+            model.Category3 = null;
+            model.Brand = null;
+            model.Department = null;
+
             _context.Items.Add(model);
             _context.SaveChanges();
 
@@ -121,6 +152,25 @@ namespace Archive.API.Controllers
         [HttpPut]
         public IActionResult Put(Item model)
         {
+            model.DepartmentId = model.Department.Id;
+            model.BrandId = model.Brand.Id;
+
+            var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);
+            if(category.Level != 3) {
+                return BadRequest("only level 3");
+            }
+
+            model.CategoryId1 = category.Parent.ParentId;
+            model.CategoryId2 = category.Parent.Id;
+            model.CategoryId3 = category.Id;
+
+            // HACK
+            model.Category1 = null;
+            model.Category2 = null;
+            model.Category3 = null;
+            model.Brand = null;
+            model.Department = null;
+
             _context.Items.Update(model);
             _context.SaveChanges();
 

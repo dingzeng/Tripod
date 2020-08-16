@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Archive.API.Infrastructure;
 using Archive.API.Model;
-using Archive.API.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -57,20 +56,15 @@ namespace Archive.API.Controllers
             var data = query.Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .OrderBy(i => i.Id)
-                .Select(c => new CategoryModel(){
-                    Id = c.Id,
-                    Name = c.Name,
-                    ParentId = c.ParentId,
-                    ParentName = c.Parent == null ? "" : c.Parent.Name
-                })
                 .ToList();
 
-            var response = new PaginatedItems<CategoryModel>(
+            var page = new PaginatedItems<Category>(
                 pageIndex: pageIndex,
                 pageSize: pageSize,
                 count: query.Count(),
                 data: data);
-            return Ok(response);
+
+            return Ok(page);
         }
 
         [HttpGet]
@@ -82,46 +76,35 @@ namespace Archive.API.Controllers
                 return NotFound();
             }
 
-            var model = new CategoryModel();
-            model.Id = entity.Id;
-            model.Name = entity.Name;
-            if(entity.Parent != null) {
-                model.ParentId = entity.ParentId;
-                model.ParentName = entity.Parent.Name;
-            }
-
-            return Ok(model);
+            return Ok(entity);
         }
 
         [HttpPost]
-        public IActionResult Post(CategoryModel model)
+        public IActionResult Post(Category model)
         {
-            Category entity = new Category();
-            entity.Id = model.Id;
-            entity.Name = model.Name;
-
             if(!string.IsNullOrEmpty(model.ParentId))
             {
                 var parent = _archiveContext.Categories.First(c => c.Id == model.ParentId);
-                entity.ParentId = model.ParentId;
-                entity.Path = parent.Path + model.Id + ",";
-                entity.Level = parent.Level + 1;
+                model.ParentId = model.ParentId;
+                model.Path = parent.Path + model.Id + ",";
+                model.Level = parent.Level + 1;
             }else {
-                entity.Path = "," + model.Id + ",";
-                entity.Level = 1;
+                model.Path = "," + model.Id + ",";
+                model.Level = 1;
             }
 
-            _archiveContext.Categories.Add(entity);
+            model.Parent = null;
+            _archiveContext.Categories.Add(model);
             var lines = _archiveContext.SaveChanges();
             if(lines != 1) {
                 return BadRequest();
             }
 
-            return Ok(entity);
+            return RedirectToAction(nameof(Get), new { id = model.Id });
         }
 
         [HttpPut]
-        public IActionResult Put(CategoryModel model)
+        public IActionResult Put(Category model)
         {
             var entity = _archiveContext.Categories.FirstOrDefault(c => c.Id == model.Id);
             if(entity == null) {

@@ -56,7 +56,7 @@ export default {
             this.relateBranchDialogVisible = true
             getBranchGroupBranchs(row.id).then(response => {
               this.relateModel.branchGroupId = row.id
-              this.relateModel.branchIdList = response.data.map(b => b.id)
+              this.relateModel.branchIdList = response.map(b => b.id)
             })
           }
         }
@@ -71,7 +71,7 @@ export default {
   },
   mounted() {
     query({ pageSize: 10000 }).then(response => {
-      this.allBranchs = response.data.list.map(b => {
+      this.allBranchs = response.data.map(b => {
         return {
           key: b.id,
           label: `[${b.id}]${b.name}`
@@ -95,12 +95,7 @@ export default {
   methods: {
     confirmRelation() {
       updateBranchGroupBranchs(this.relateModel.branchGroupId, this.relateModel.branchIdList).then(response => {
-        if (!response.data) {
-          this.$message.error('修改失败')
-        } else {
-          this.$message.success('修改成功')
-          this.relateBranchDialogVisible = false
-        }
+        this.relateBranchDialogVisible = false
       })
     }
   }

@@ -16,15 +16,16 @@
           <el-input v-model="queryParams.keyword" placeholder="编码/国际条码/名称"></el-input>
         </el-form-item>
         <el-form-item prop="categoryId">
-          <ref-input v-model="queryParams.categoryId" type="category" placeholder="类别"></ref-input>
+          <ref-input type="category" placeholder="类别" @selected="queryParams.categoryId = $event.id"></ref-input>
         </el-form-item>
         <el-form-item prop="brandId">
-          <ref-input v-model="queryParams.brandId" type="brand" placeholder="品牌"></ref-input>
+          <ref-input type="brand" placeholder="品牌" @selected="queryParams.brandId = $event.id"></ref-input>
         </el-form-item>
         <el-form-item prop="departmentId">
-          <ref-input v-model="queryParams.departmentId" type="department" placeholder="商品部门"></ref-input>
+          <ref-input type="department" placeholder="商品部门" @selected="queryParams.departmentId = $event.id"></ref-input>
         </el-form-item>
       </template>
+
       <template>
         <el-tabs tab-position="left" style="height: 500px;">
           <el-tab-pane label="基础信息">
@@ -41,7 +42,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item prop="status" label="状态">
-                  <!-- TODO  -->
+                  <el-switch v-model="model.status" active-text="启用" inactive-text="禁用" :active-value="0" :inactive-value="9"></el-switch>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -64,25 +65,25 @@
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="categoryId" label="类别" required>
-                  <ref-input v-model="model.categoryId" type="category" :label.sync="model.categoryName"></ref-input>
+                <el-form-item prop="category3" label="类别" required>
+                  <ref-input v-model="model.category3" type="category"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="brandId" label="品牌" required>
-                  <ref-input v-model="model.brandId" type="brand" :label.sync="model.brandName"></ref-input>
+                <el-form-item prop="brand" label="品牌" required>
+                  <ref-input v-model="model.brand" type="brand"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="departmentId" label="商品部门" required>
-                  <ref-input v-model="model.departmentId" type="department" :label.sync="model.departmentName"></ref-input>
+                <el-form-item prop="department" label="商品部门" required>
+                  <ref-input v-model="model.department" type="department"></ref-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="supplierId" label="主供应商" required>
-                  <ref-input v-model="model.supplierId" type="supplier" :label.sync="model.supplierName"></ref-input>
+                <el-form-item prop="supplier" label="主供应商" required>
+                  <ref-input v-model="model.supplier" type="supplier"></ref-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -185,12 +186,6 @@
           <el-tab-pane label="大包装">
 
           </el-tab-pane>
-          <el-tab-pane label="子商品">
-
-          </el-tab-pane>
-          <el-tab-pane label="图片">
-
-          </el-tab-pane>
         </el-tabs>
       </template>
     </list-page>
@@ -207,9 +202,9 @@ export default {
       columns: [],
       queryParams: {},
       model: {
-        item: {
-          transportMode: 0
-        }
+        category3: {},
+        brand: {},
+        department: {}
       },
       action: '',
       transportMode: transportMode,
@@ -240,17 +235,17 @@ export default {
         label: '名称'
       },
       {
-        prop: 'categoryName',
+        prop: 'category3.name',
         width: 100,
         label: '商品类别'
       },
       {
-        prop: 'brandName',
+        prop: 'brand.name',
         width: 100,
         label: '商品品牌'
       },
       {
-        prop: 'departmentName',
+        prop: 'department.name',
         width: 100,
         label: '商品部门'
       },
@@ -266,8 +261,16 @@ export default {
       },
       {
         prop: 'status',
-        width: 100,
-        label: '状态'
+        type: 'tag',
+        label: '状态',
+        tagTypes: {
+          0: 'success',
+          9: 'info'
+        },
+        tagLabels: {
+          0: '启用',
+          9: '禁用'
+        }
       },
       {
         prop: 'retailPrice',
@@ -292,12 +295,14 @@ export default {
       {
         prop: 'transportMode',
         width: 100,
-        label: '物流模式'
+        label: '物流模式',
+        type: 'enum',
+        enums: transportMode
       }
     ]
   },
   mounted() {
-    this.loadTreeData()
+
   },
   computed: {
     modelRules() {
@@ -351,13 +356,13 @@ export default {
           itemUnitId: [
             { required: true, message: '必填', trigger: 'blur' }
           ],
-          categoryId: [
+          category: [
             { required: true, message: '必填', trigger: 'blur' }
           ],
-          itemBrandId: [
+          brand: [
             { required: true, message: '必填', trigger: 'blur' }
           ],
-          itemDepartmentId: [
+          department: [
             { required: true, message: '必填', trigger: 'blur' }
           ],
           supplierId: [

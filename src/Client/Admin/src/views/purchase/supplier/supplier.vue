@@ -232,12 +232,12 @@ export default {
         type: 'tag',
         label: '状态',
         tagTypes: {
-          0: 'info',
-          1: 'success'
+          0: 'success',
+          9: 'info'
         },
         tagLabels: {
-          0: '禁用',
-          1: '启用'
+          0: '启用',
+          9: '禁用'
         }
       },
       {

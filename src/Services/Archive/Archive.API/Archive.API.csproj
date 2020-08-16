@@ -9,9 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Proto\" />
+    <Compile Remove="Proto\**" />
+    <Compile Remove="ViewModel\Branch\**" />
+    <Content Remove="Proto\**" />
+    <Content Remove="ViewModel\Branch\**" />
+    <EmbeddedResource Remove="Proto\**" />
+    <EmbeddedResource Remove="ViewModel\Branch\**" />
+    <None Remove="Proto\**" />
+    <None Remove="ViewModel\Branch\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Grpc\" />
-    <Folder Include="ViewModel\Branch\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>

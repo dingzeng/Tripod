@@ -33,8 +33,14 @@
         <el-divider></el-divider>
         <el-row>
           <el-col :span="8">
-            <el-form-item prop="parentId" label="上级机构">
-              <ref-input v-model="model.parentId" type="branch" :label.sync="model.parentName" :query-params="parentBranchQueryParams" :disabled="model.type == 0" />
+            <el-form-item prop="parent" label="上级机构">
+              <ref-input
+                type="branch"
+                v-model="model.parent"
+                :query-params="parentBranchQueryParams"
+                :disabled="model.type == 0"
+                @selected="branchSelected"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -44,7 +50,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item prop="type" label="机构类型">
-              <el-select v-model="model.type">
+              <el-select v-model="model.type" :disabled="!model.parent || !model.parent.id">
                 <el-option
                   v-for="(label,key) in branchType"
                   :key="key"
@@ -138,7 +144,7 @@ export default {
     modelRules() {
       const vm = this
       return {
-        parentId: [
+        'parent': [
           { required: vm.model.type !== 0, message: '上级机构必填', trigger: 'blur' }
         ],
         id: [
@@ -191,7 +197,10 @@ export default {
       })
     },
     branchTypeDisabled(key) {
-      return key === 0
+      return key == 0
+    },
+    branchSelected(data) {
+      this.model.parent.type = data.type
     }
   },
   mounted() {
