@@ -197,7 +197,7 @@ export default {
       })
     },
     branchTypeDisabled(key) {
-      return key == 0
+      return key === 0
     },
     branchSelected(data) {
       this.model.parent.type = data.type

@@ -6,6 +6,10 @@
 - 列排序
 - 固定列
 - 滚动加载
+- 列设置
+- 关键字录入
+- 自定义工具栏
+- 数据验证
 
 ## 表格属性
 
@@ -40,6 +44,7 @@
 |align|String|left|left/center/right|对齐方式|
 |format|Function|-|-|格式化，参数：row, column, cellValue, index|
 |total|Boolean|false|-|是否进行列的合计|
+|options|Object|-|-|type为select时指定的下拉选项数据|
 
 ## 列类型
 |类型|是否可编辑|说明|编辑组件|

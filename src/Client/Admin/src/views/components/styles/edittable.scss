@@ -1,0 +1,34 @@
+.edit-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #cbcbcb;
+
+    td {
+        border-left: 1px solid #cbcbcb;
+        border-width: 0 0 0 1px;
+        font-size: inherit;
+        margin: 0;
+        overflow: visible;
+        padding: .5em 1em;
+    }
+
+    &-header {
+        background-color: #e0e0e0;
+        color: #000;
+        text-align: left;
+        vertical-align: bottom;
+    }
+    &-body {
+        &-tr {
+            &-hover {
+                background-color: rgb(211, 211, 115);
+            }
+        }
+    }
+    &-footer {
+        background-color: #e0e0e0;
+        color: #000;
+        text-align: left;
+        vertical-align: bottom;
+    }
+}

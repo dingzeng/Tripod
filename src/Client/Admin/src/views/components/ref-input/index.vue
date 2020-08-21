@@ -90,7 +90,7 @@ export default {
         })
         return format
       }
-      if (!this.innerValue || this.innerValue.length == 0) return ''
+      if (!this.innerValue || this.innerValue.length === 0) return ''
       if (Array.isArray(this.innerValue)) {
         return this.innerValue.map(obj => formatText(this.format, obj)).join(';')
       } else {
