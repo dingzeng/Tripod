@@ -181,10 +181,10 @@
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="商品条码">
-
+            <edit-table v-model="model.barcodes" :columns="barcodesColumns"></edit-table>
           </el-tab-pane>
           <el-tab-pane label="大包装">
-
+            <edit-table v-model="model.packages" :columns="packagesColumns"></edit-table>
           </el-tab-pane>
         </el-tabs>
       </template>
@@ -193,18 +193,21 @@
 </template>
 
 <script>
+import EditTable from '@/views/components/edit-table'
 import request from '@/utils/request'
 import { transportMode } from '@/utils/enum'
 export default {
   name: 'Item',
+  components: { EditTable },
   data() {
     return {
       columns: [],
+      barcodesColumns: [],
+      packagesColumns: [],
       queryParams: {},
       model: {
-        category3: {},
-        brand: {},
-        department: {}
+        barcodes: [],
+        packages: []
       },
       action: '',
       transportMode: transportMode,
@@ -217,89 +220,6 @@ export default {
       this.originalId = model.id
       this.originalBarcode = model.barcode
     }
-  },
-  created() {
-    this.columns = [
-      {
-        prop: 'id',
-        width: 100,
-        label: '编码'
-      },
-      {
-        prop: 'barcode',
-        width: 100,
-        label: '国际条码'
-      },
-      {
-        prop: 'name',
-        label: '名称'
-      },
-      {
-        prop: 'category3.name',
-        width: 100,
-        label: '商品类别'
-      },
-      {
-        prop: 'brand.name',
-        width: 100,
-        label: '商品品牌'
-      },
-      {
-        prop: 'department.name',
-        width: 100,
-        label: '商品部门'
-      },
-      {
-        prop: 'unitName',
-        width: 100,
-        label: '包装单位'
-      },
-      {
-        prop: 'supplierName',
-        width: 150,
-        label: '主供应商'
-      },
-      {
-        prop: 'status',
-        type: 'tag',
-        label: '状态',
-        tagTypes: {
-          0: 'success',
-          9: 'info'
-        },
-        tagLabels: {
-          0: '启用',
-          9: '禁用'
-        }
-      },
-      {
-        prop: 'retailPrice',
-        width: 100,
-        label: '零售价'
-      },
-      {
-        prop: 'purchasePrice',
-        width: 100,
-        label: '采购价'
-      },
-      {
-        prop: 'salesPrice',
-        width: 100,
-        label: '批发价'
-      },
-      {
-        prop: 'deliveryPrice',
-        width: 100,
-        label: '配送价'
-      },
-      {
-        prop: 'transportMode',
-        width: 100,
-        label: '物流模式',
-        type: 'enum',
-        enums: transportMode
-      }
-    ]
   },
   mounted() {
 
@@ -410,6 +330,168 @@ export default {
         }
       }
     }
+  },
+  created() {
+    this.columns = [
+      {
+        prop: 'id',
+        width: 100,
+        label: '编码'
+      },
+      {
+        prop: 'barcode',
+        width: 100,
+        label: '国际条码'
+      },
+      {
+        prop: 'name',
+        label: '名称'
+      },
+      {
+        prop: 'category3.name',
+        width: 100,
+        label: '商品类别'
+      },
+      {
+        prop: 'brand.name',
+        width: 100,
+        label: '商品品牌'
+      },
+      {
+        prop: 'department.name',
+        width: 100,
+        label: '商品部门'
+      },
+      {
+        prop: 'unitName',
+        width: 100,
+        label: '包装单位'
+      },
+      {
+        prop: 'supplierName',
+        width: 150,
+        label: '主供应商'
+      },
+      {
+        prop: 'status',
+        type: 'tag',
+        label: '状态',
+        tagTypes: {
+          0: 'success',
+          9: 'info'
+        },
+        tagLabels: {
+          0: '启用',
+          9: '禁用'
+        }
+      },
+      {
+        prop: 'retailPrice',
+        width: 100,
+        label: '零售价'
+      },
+      {
+        prop: 'purchasePrice',
+        width: 100,
+        label: '采购价'
+      },
+      {
+        prop: 'salesPrice',
+        width: 100,
+        label: '批发价'
+      },
+      {
+        prop: 'deliveryPrice',
+        width: 100,
+        label: '配送价'
+      },
+      {
+        prop: 'transportMode',
+        width: 100,
+        label: '物流模式',
+        type: 'enum',
+        enums: transportMode
+      }
+    ]
+
+    this.barcodesColumns = [
+      {
+        prop: 'Barcode',
+        width: 200,
+        label: '条码',
+        editable: true
+      },
+      {
+        prop: 'memo',
+        label: '备注',
+        editable: true
+      }
+    ]
+
+    this.packagesColumns = [
+      {
+        prop: 'barcode',
+        width: 200,
+        label: '条码',
+        editable: true
+      },
+      {
+        prop: 'unitName',
+        width: 100,
+        label: '单位',
+        editable: true
+      },
+      {
+        prop: 'factorQty',
+        width: 100,
+        label: '包装系数',
+        editable: true
+      },
+      {
+        prop: 'purchasePrice',
+        width: 150,
+        label: '采购价',
+        editable: true
+      },
+      {
+        prop: 'deliveryPrice',
+        width: 150,
+        label: '配送价',
+        editable: true
+      },
+      {
+        prop: 'salesPrice',
+        width: 150,
+        label: '批发价',
+        editable: true
+      },
+      {
+        prop: 'retailPrice',
+        width: 150,
+        label: '零售价',
+        editable: true
+      },
+      {
+        prop: 'isDefaultPurchaseUnit',
+        width: 150,
+        type: 'checkbox',
+        label: '默认采购单位',
+        editable: true
+      },
+      {
+        prop: 'isDefaultDeliveryUnit',
+        width: 150,
+        type: 'checkbox',
+        label: '默认配送单位',
+        editable: true
+      },
+      {
+        prop: 'memo',
+        width: 150,
+        label: '备注',
+        editable: true
+      }
+    ]
   }
 }
 </script>
