@@ -1,4 +1,8 @@
+.edit-table-wrapper {
+    overflow-x: auto;
+}
 .edit-table {
+    table-layout: fixed;
     border-collapse: collapse;
     border-spacing: 0;
     border: 1px solid #cbcbcb;
@@ -6,10 +10,11 @@
     td {
         border-left: 1px solid #cbcbcb;
         border-width: 0 0 0 1px;
-        font-size: inherit;
         margin: 0;
-        overflow: visible;
-        padding: .5em 1em;
+        height: 32px;
+        input, select {
+            width: 100%;
+        }
     }
 
     &-header {

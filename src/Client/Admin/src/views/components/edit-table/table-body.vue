@@ -14,7 +14,7 @@
     >
       <template v-if="index === editRowIndex">
         <template v-for="col in columns">
-          <td class="edit-table-body-cell" :key="col.prop">
+          <td class="edit-table-body-cell" :key="col.prop" :style="getTdStyles(col)">
             <template v-if="col.type == 'index'">
               {{ index + 1 }}
             </template>
@@ -86,6 +86,17 @@ export default {
     },
     rowMouseover(event, row, index) {
       this.currentRowIndex = index
+    },
+    getTdStyles(col) {
+      const styles = { }
+      if (col.width) {
+        if (typeof col.width === 'number') {
+          styles.width = col.width + 'px'
+        } else {
+          styles.width = col.width
+        }
+      }
+      return styles
     }
   },
   computed: {

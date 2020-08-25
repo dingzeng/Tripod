@@ -1,27 +1,29 @@
 <template>
   <div>
     <div class="edit-table-toolbar">
-      <button @click="addNewRow">新增行</button>
-      <button @click="deleteAll">清空</button>
+      <button @click.stop.prevent="addNewRow">新增行</button>
+      <button @click.stop.prevent="deleteAll">清空</button>
       <slot name="toolbar"></slot>
     </div>
-    <table :border="border" :width="width" class="edit-table">
-      <table-header
-        :columns="columns"
-      >
-      </table-header>
-      <table-body
-        :columns="columns"
-        v-model="data"
-      >
-      </table-body>
-      <table-footer
-        v-if="showTotal"
-        :columns="columns"
-        :totalData="totalData"
-      >
-      </table-footer>
-    </table>
+    <div class="edit-table-wrapper">
+      <table :border="border" class="edit-table" :style="tableStyles">
+        <table-header
+          :columns="columns"
+        >
+        </table-header>
+        <table-body
+          :columns="columns"
+          v-model="data"
+        >
+        </table-body>
+        <table-footer
+          v-if="showTotal"
+          :columns="columns"
+          :totalData="totalData"
+        >
+        </table-footer>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -74,6 +76,11 @@ export default {
     totalData() {
       // TODO
       return {}
+    },
+    tableStyles() {
+      return {
+        width: this.width
+      }
     }
   },
   watch: {

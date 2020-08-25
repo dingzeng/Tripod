@@ -1,13 +1,13 @@
 <template>
   <thead class="edit-table-header">
     <tr>
-      <td
+      <th
         v-for="col in columns"
         :key="col.prop"
-        :style="getStyles(col)"
+        :style="getThStyles(col)"
       >
         {{ col.label }}
-      </td>
+      </th>
     </tr>
   </thead>
 </template>
@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    getStyles(col) {
+    getThStyles(col) {
       const styles = { }
       if (col.width) {
         if (typeof col.width === 'number') {
