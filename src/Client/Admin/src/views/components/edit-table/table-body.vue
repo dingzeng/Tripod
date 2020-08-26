@@ -88,10 +88,10 @@ export default {
       this.currentRowIndex = index
     },
     cellClick(event, row, index, col) {
-      if (this.editRowIndex != index) {
+      if (this.editRowIndex !== index) {
         this.editRowIndex = index
         this.$nextTick(() => {
-          if (event.currentTarget.firstChild && event.currentTarget.firstChild.nodeName == 'INPUT') {
+          if (event.currentTarget.firstChild && event.currentTarget.firstChild.nodeName === 'INPUT') {
             event.currentTarget.firstChild.focus()
           }
         })
