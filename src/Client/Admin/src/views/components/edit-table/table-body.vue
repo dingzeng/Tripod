@@ -14,35 +14,35 @@
     >
       <template v-if="index === editRowIndex">
         <template v-for="col in columns">
-          <td class="edit-table-body-cell" :key="col.prop" :style="getTdStyles(col)">
+          <td class="edit-table-body-cell" :key="col.prop" :style="getTdStyles(col)" @click.stop="cellClick($event, row, index, col)">
             <template v-if="col.type == 'index'">
               {{ index + 1 }}
             </template>
             <template v-else-if="col.type == 'checkbox'">
-              <input type="checkbox" v-model="row[col.prop]">
+              <el-checkbox v-model="row[col.prop]"></el-checkbox>
             </template>
             <template v-else-if="col.type == 'select'">
-              <select v-model="row[col.prop]">
-                <option v-for="(value, key) in col.options" :key="key" :value="key">{{ value }}</option>
-              </select>
+              <el-select v-model="row[col.prop]">
+                <el-option v-for="(value, key) in col.options" :key="key" :value="key" :label="value"></el-option>
+              </el-select>
             </template>
             <template v-else-if="col.type == 'date'">
-              <input type="date" v-model="row[col.prop]">
+              <el-date-picker v-model="row[col.prop]" type="date"></el-date-picker>
             </template>
             <template v-else>
-              <input type="text" v-model="row[col.prop]">
+              <el-input v-model="row[col.prop]"></el-input>
             </template>
           </td>
         </template>
       </template>
       <template v-else>
         <template v-for="col in columns">
-          <td class="edit-table-body-cell" :key="col.prop">
+          <td class="edit-table-body-cell" :key="col.prop" :style="getTdStyles(col)" @click.stop="cellClick($event, row, index, col)">
             <template v-if="col.type == 'index'">
               {{ index + 1 }}
             </template>
             <template v-else-if="col.type == 'checkbox'">
-              <input type="checkbox" v-model="row[col.prop]" readonly>
+              <el-checkbox v-model="row[col.prop]" disabled></el-checkbox>
             </template>
             <template v-else-if="col.type == 'select'">
               {{ col.options[row[col.prop]] }}
@@ -82,10 +82,20 @@ export default {
   },
   methods: {
     rowClick(event, row, index) {
-      this.editRowIndex = index
+
     },
     rowMouseover(event, row, index) {
       this.currentRowIndex = index
+    },
+    cellClick(event, row, index, col) {
+      if (this.editRowIndex != index) {
+        this.editRowIndex = index
+        this.$nextTick(() => {
+          if (event.currentTarget.firstChild && event.currentTarget.firstChild.nodeName == 'INPUT') {
+            event.currentTarget.firstChild.focus()
+          }
+        })
+      }
     },
     getTdStyles(col) {
       const styles = { }

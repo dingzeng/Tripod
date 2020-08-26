@@ -4,24 +4,23 @@
 .edit-table {
     table-layout: fixed;
     border-collapse: collapse;
-    border-spacing: 0;
-    border: 1px solid #cbcbcb;
+    border: 1px solid #ebeef5;
+    font-size: 14px;
+    color: #606266;
+
+    th {
+        font-weight: 700;
+    }
 
     td {
-        border-left: 1px solid #cbcbcb;
-        border-width: 0 0 0 1px;
-        margin: 0;
-        height: 32px;
+        height: 40px;
         input, select {
             width: 100%;
         }
     }
 
     &-header {
-        background-color: #e0e0e0;
-        color: #000;
-        text-align: left;
-        vertical-align: bottom;
+        color: #909399;
     }
     &-body {
         &-tr {
@@ -31,9 +30,6 @@
         }
     }
     &-footer {
-        background-color: #e0e0e0;
-        color: #000;
-        text-align: left;
-        vertical-align: bottom;
+        background-color: #eee;
     }
 }

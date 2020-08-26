@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-table v-model="data" :columns="columns"></edit-table>
+    <edit-table v-model="data" :columns="columns" style="width: 600px;margin-left: 10px;"></edit-table>
     <button @click="logData">Log Data</button>
   </div>
 </template>

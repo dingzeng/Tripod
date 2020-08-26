@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="edit-table-toolbar">
-      <button @click.stop.prevent="addNewRow">新增行</button>
-      <button @click.stop.prevent="deleteAll">清空</button>
+      <el-button-group>
+        <el-button @click="addNewRow" size="small" icon="el-icon-plus"></el-button>
+        <el-button @click="deleteAll" size="small" icon="el-icon-delete"></el-button>
+      </el-button-group>
       <slot name="toolbar"></slot>
     </div>
     <div class="edit-table-wrapper">
