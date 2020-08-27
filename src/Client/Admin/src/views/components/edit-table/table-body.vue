@@ -23,7 +23,7 @@
             </template>
             <template v-else-if="col.type == 'select'">
               <el-select v-model="row[col.prop]">
-                <el-option v-for="(value, key) in col.options" :key="key" :value="key" :label="value"></el-option>
+                <el-option v-for="option in col.options" :key="option.value" :value="option.value" :label="option.label"></el-option>
               </el-select>
             </template>
             <template v-else-if="col.type == 'date'">
@@ -45,10 +45,10 @@
               <el-checkbox v-model="row[col.prop]" disabled></el-checkbox>
             </template>
             <template v-else-if="col.type == 'select'">
-              {{ col.options[row[col.prop]] }}
+              {{ col.options.find(o => o.value == row[col.prop]).label }}
             </template>
             <template v-else-if="col.type == 'date'">
-              {{ row[col.prop] }}
+              {{ formatTime(row[col.prop]) }}
             </template>
             <template v-else>
               {{ row[col.prop] }}
@@ -61,10 +61,12 @@
 </template>
 
 <script>
+import { formatTime } from '../../../utils/index'
 export default {
   name: 'EditTableBody',
   data() {
     return {
+      formatTime,
       data: this.value,
       editRowIndex: -1,
       currentRowIndex: -1
@@ -91,8 +93,10 @@ export default {
       if (this.editRowIndex !== index) {
         this.editRowIndex = index
         this.$nextTick(() => {
-          if (event.currentTarget.firstChild && event.currentTarget.firstChild.nodeName === 'INPUT') {
-            event.currentTarget.firstChild.focus()
+          if (event.currentTarget.firstChild 
+            && event.currentTarget.firstChild.firstElementChild
+            && event.currentTarget.firstChild.firstElementChild.nodeName === 'INPUT') {
+            event.currentTarget.firstChild.firstElementChild.focus()
           }
         })
       }

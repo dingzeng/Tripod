@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-table v-model="data" :columns="columns" style="width: 600px;margin-left: 10px;"></edit-table>
+    <edit-table v-model="data" :columns="columns" style="width: 800px;margin-left: 10px;"></edit-table>
     <button @click="logData">Log Data</button>
   </div>
 </template>
@@ -39,12 +39,19 @@ export default {
         prop: 'gender',
         label: '性别',
         type: 'select',
-        options: {
-          0: '女',
-          1: '男'
-        },
+        options: [
+          { value: 0, label: '女' },
+          { value: 1, label: '男' }
+        ],
         editable: true,
         width: 100
+      },
+      {
+        prop: 'birthday',
+        label: '生日',
+        type: 'date',
+        width: 220,
+        editable: true
       },
       {
         prop: 'name',
