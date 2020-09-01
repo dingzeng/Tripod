@@ -36,15 +36,17 @@
 |---|---|---|---|---|
 |label|String|-|-|列标题|
 |prop|String|-|-|列的键|
-|type|String|text|index/text/select|列类型|
+|type|String|text|index/text/select/checkbox/hander|列类型|
 |width|Number|-|-|列宽|
 |editable|Boolean|false|-|是否可编辑|
+|placeholder|String|-|-||
 |fixed|String|-|left/right|固定列|
 |sortable|Boolean|false|-|是否可排序|
 |align|String|left|left/center/right|对齐方式|
+|theadAlign|String|left|left/center/right|标题对齐方式|
 |format|Function|-|-|格式化，参数：row, column, cellValue, index|
 |total|Boolean|false|-|是否进行列的合计|
-|options|Object|-|-|type为select时指定的下拉选项数据|
+|options|Array|-|-|type为select时指定的下拉选项数据,eg:[{value: 1, label: '未付款'}]|
 
 ## 列类型
 |类型|是否可编辑|说明|编辑组件|
@@ -54,8 +56,16 @@
 |checkbox|true|复选框|checkbox|
 |select|true|下拉框|select|
 |date|true|日期选择框|-|
+|hander|false|操作处理|-|
 
 ## TODO
-- 美化表格样式
-- 点击单元格时自动聚焦当前单元格中的输入框
+- 列排序
+- 列设置
+- 大数据量性能优化
+- 选择带入
+- 录入搜索带入
+- 固定列
+- 合计
+- 数据验证
+- 行删除&自定义行操作
 

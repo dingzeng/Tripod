@@ -14,7 +14,12 @@
     >
       <template v-if="index === editRowIndex">
         <template v-for="col in columns">
-          <td class="edit-table-body-cell" :key="col.prop" :style="getTdStyles(col)" @click.stop="cellClick($event, row, index, col)">
+          <td 
+            class="edit-table-body-cell" 
+            :key="col.prop" 
+            :align="col.align || alignDefaults[col.type || 'text']"
+            :style="getTdStyles(col)" 
+            @click.stop="cellClick($event, row, index, col)">
             <template v-if="col.type == 'index'">
               {{ index + 1 }}
             </template>
@@ -22,33 +27,48 @@
               <el-checkbox v-model="row[col.prop]"></el-checkbox>
             </template>
             <template v-else-if="col.type == 'select'">
-              <el-select v-model="row[col.prop]">
+              <el-select v-model="row[col.prop]" :placeholder="col.placeholder || '请选择'">
                 <el-option v-for="option in col.options" :key="option.value" :value="option.value" :label="option.label"></el-option>
               </el-select>
             </template>
             <template v-else-if="col.type == 'date'">
-              <el-date-picker v-model="row[col.prop]" type="date"></el-date-picker>
+              <el-date-picker v-model="row[col.prop]" type="date" :placeholder="col.placeholder || '选择日期'"></el-date-picker>
+            </template>
+            <template v-else-if="col.type == 'handler'">
+              <template v-for="(action, index) in col.actions">
+                <template v-if="typeof action === 'string' && action === 'delete'">
+                  <el-button :key="index" @click="deleteRow(index)" icon="el-icon-delete">删除</el-button>
+                </template>
+              </template>
             </template>
             <template v-else>
-              <el-input v-model="row[col.prop]"></el-input>
+              <el-input v-model="row[col.prop]" :placeholder="col.placeholder || '请输入'"></el-input>
             </template>
           </td>
         </template>
       </template>
       <template v-else>
         <template v-for="col in columns">
-          <td class="edit-table-body-cell" :key="col.prop" :style="getTdStyles(col)" @click.stop="cellClick($event, row, index, col)">
+          <td 
+            class="edit-table-body-cell" 
+            :key="col.prop" 
+            :align="col.align || alignDefaults[col.type || 'text']"
+            :style="getTdStyles(col)" 
+            @click.stop="cellClick($event, row, index, col)">
             <template v-if="col.type == 'index'">
               {{ index + 1 }}
             </template>
             <template v-else-if="col.type == 'checkbox'">
-              <el-checkbox v-model="row[col.prop]" disabled></el-checkbox>
+              <el-checkbox v-model="row[col.prop]"></el-checkbox>
             </template>
             <template v-else-if="col.type == 'select'">
-              {{ col.options.find(o => o.value == row[col.prop]).label }}
+              {{ getSelectLabel(col.options, row[col.prop]) }}
             </template>
             <template v-else-if="col.type == 'date'">
-              {{ formatTime(row[col.prop]) }}
+              {{ formatDate(row[col.prop], 'yyyy-MM-dd') }}
+            </template>
+            <template v-else-if="col.type == 'handler'">
+              
             </template>
             <template v-else>
               {{ row[col.prop] }}
@@ -61,15 +81,23 @@
 </template>
 
 <script>
-import { formatTime } from '../../../utils/index'
+const alignDefaults = {
+  'text': 'left',
+  'index': 'center',
+  'checkbox': 'center',
+  'select': 'left',
+  'date': 'left'
+}
+import { formatDate } from '../../../utils/index'
 export default {
   name: 'EditTableBody',
   data() {
     return {
-      formatTime,
+      formatDate,
       data: this.value,
       editRowIndex: -1,
-      currentRowIndex: -1
+      currentRowIndex: -1,
+      alignDefaults,
     }
   },
   props: {
@@ -111,6 +139,10 @@ export default {
         }
       }
       return styles
+    },
+    getSelectLabel(options, value) {
+      const option = options.find(o => o.value == value)
+      return option ? option.label : ''
     }
   },
   computed: {

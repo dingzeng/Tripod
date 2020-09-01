@@ -4,6 +4,7 @@
       <th
         v-for="col in columns"
         :key="col.prop"
+        :align="col.theadAlign || alignDefaults[col.type || 'text']"
         :style="getThStyles(col)"
       >
         {{ col.label }}
@@ -13,11 +14,18 @@
 </template>
 
 <script>
+const alignDefaults = {
+  'text': 'left',
+  'index': 'center',
+  'checkbox': 'center',
+  'select': 'left',
+  'date': 'left'
+}
 export default {
   name: 'EditTableHeader',
   data() {
     return {
-
+      alignDefaults
     }
   },
   props: {

@@ -2,8 +2,8 @@
   <div>
     <div class="edit-table-toolbar">
       <el-button-group>
-        <el-button @click="addNewRow" size="small" icon="el-icon-plus"></el-button>
-        <el-button @click="deleteAll" size="small" icon="el-icon-delete"></el-button>
+        <el-button @click="addNewRow" size="small" icon="el-icon-plus">新增行</el-button>
+        <el-button @click="deleteAll" size="small" icon="el-icon-delete">清空</el-button>
       </el-button-group>
       <slot name="toolbar"></slot>
     </div>

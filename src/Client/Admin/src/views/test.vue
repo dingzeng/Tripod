@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-table v-model="data" :columns="columns" style="width: 800px;margin-left: 10px;"></edit-table>
+    <edit-table v-model="data" :columns="columns"></edit-table>
     <button @click="logData">Log Data</button>
   </div>
 </template>
@@ -21,6 +21,20 @@ export default {
   methods: {
     logData() {
       console.log(this.data)
+    },
+    randomData() {
+      let data = []
+      const count = 10
+      for (let index = 0; index < count; index++) {
+        let row = {}
+        row.id = 'A00' + index
+        row.name = 'aaa' + index
+        row.gender = index % 2
+        row.birthday = new Date()
+        row.isAdult = index % 2 === 1
+        data.push(row)
+      }
+      return data
     }
   },
   created() {
@@ -34,6 +48,11 @@ export default {
         prop: 'id',
         label: '编号',
         width: 200
+      },
+      {
+        prop: 'name',
+        label: '名称',
+        editable: true
       },
       {
         prop: 'gender',
@@ -54,25 +73,35 @@ export default {
         editable: true
       },
       {
-        prop: 'name',
-        label: '名称',
+        prop: 'isAdult',
+        label: '已成年',
+        type: 'checkbox',
+        width: 150,
         editable: true
+      },
+      {
+        label: '操作',
+        type: 'handler',
+        width: 100,
+        actions: [
+          'delete',
+          {
+            type: 'text',
+            label: '查看',
+            icon: 'el-icon-view',
+            visible: function(row) {
+              return row.gender === 0
+            },
+            click: function(row) {
+              console.log(row)
+            }
+          }
+        ]
       }
     ]
   },
   mounted() {
-    this.data = [
-      {
-        id: '001',
-        name: '科比',
-        gender: 1
-      },
-      {
-        id: '002',
-        name: '勒布朗',
-        gender: 1
-      }
-    ]
+    this.data = this.randomData()
   }
 }
 </script>
