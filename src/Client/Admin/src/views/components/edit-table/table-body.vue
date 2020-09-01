@@ -9,6 +9,7 @@
       :key="index"
       :style="rowStyles"
       @click="rowClick($event, row, index)"
+      @keydown="rowKeydown($event, row, index)"
       @mouseover="rowMouseover($event, row, index)"
       @mouseout="currentRowIndex = -1"
     >
@@ -37,7 +38,17 @@
             <template v-else-if="col.type == 'handler'">
               <template v-for="(action, index) in col.actions">
                 <template v-if="typeof action === 'string' && action === 'delete'">
-                  <el-button :key="index" @click="deleteRow(index)" icon="el-icon-delete">删除</el-button>
+                  <el-button :key="index" type="text" @click="deleteRow(index)" icon="el-icon-delete" size="mini"></el-button>
+                </template>
+                <template v-else>
+                  <el-button 
+                    v-if="!action.visible || action.visible(row)" 
+                    :key="index" 
+                    :type="action.type" 
+                    :icon="action.icon"
+                    @click="action.click(row)">
+                      {{action.label}}
+                    </el-button>
                 </template>
               </template>
             </template>
@@ -68,7 +79,21 @@
               {{ formatDate(row[col.prop], 'yyyy-MM-dd') }}
             </template>
             <template v-else-if="col.type == 'handler'">
-              
+              <template v-for="(action, index) in col.actions">
+                <template v-if="typeof action === 'string' && action === 'delete'">
+                  <el-button :key="index" type="text" @click="deleteRow(index)" icon="el-icon-delete" size="mini"></el-button>
+                </template>
+                <template v-else>
+                  <el-button 
+                    v-if="!action.visible || action.visible(row)" 
+                    :key="index" 
+                    :type="action.type" 
+                    :icon="action.icon"
+                    @click="action.click(row)">
+                      {{action.label}}
+                    </el-button>
+                </template>
+              </template>
             </template>
             <template v-else>
               {{ row[col.prop] }}
@@ -86,7 +111,8 @@ const alignDefaults = {
   'index': 'center',
   'checkbox': 'center',
   'select': 'left',
-  'date': 'left'
+  'date': 'left',
+  'handler': 'center'
 }
 import { formatDate } from '../../../utils/index'
 export default {
@@ -113,6 +139,19 @@ export default {
   methods: {
     rowClick(event, row, index) {
 
+    },
+    rowKeydown(event, row, index) {
+      console.log(event, row, index)
+      if(event.code === 'ArrowDown') {
+        if(this.editRowIndex === this.data.length - 1) {
+          this.data.push({})
+        }
+        this.editRowIndex += 1
+      }else if(event.code === 'ArrowUp') {
+        if(this.editRowIndex > 0) {
+          this.editRowIndex -= 1
+        }
+      }
     },
     rowMouseover(event, row, index) {
       this.currentRowIndex = index
@@ -143,6 +182,9 @@ export default {
     getSelectLabel(options, value) {
       const option = options.find(o => o.value == value)
       return option ? option.label : ''
+    },
+    deleteRow(index) {
+      this.data.splice(index, 1)
     }
   },
   computed: {

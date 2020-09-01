@@ -87,7 +87,6 @@ export default {
           'delete',
           {
             type: 'text',
-            label: '查看',
             icon: 'el-icon-view',
             visible: function(row) {
               return row.gender === 0
