@@ -5,10 +5,24 @@
 </style>
 <template>
   <tbody class="edit-table-body">
+    <tr class="edit-table-body-tr">
+      <td :colspan="columnsCount">
+        <div style="float: left;">
+          <el-button-group>
+            <el-button icon="el-icon-plus"></el-button>
+            <el-button icon="el-icon-delete"></el-button>
+          </el-button-group>
+        </div>
+        <div style="float: right;">
+          <el-input v-model="keyword" placeholder="请输入" style="width: 300px;"></el-input>
+          <el-button @click="search" type="primary">确定</el-button>
+        </div>
+      </td>
+    </tr>
     <tr
       class="edit-table-body-tr"
       :class="[{
-        'edit-table-body-tr-hover': index == currentRowIndex
+        'edit-table-body-tr-hover': index === currentRowIndex || index === editRowIndex
       }]"
       v-for="(row, index) in data"
       :key="index"
@@ -31,11 +45,11 @@
             :style="getTdStyles(col)" 
             @click.stop="handleCellClick($event, row, index, col)">
             <template v-if="col.type == 'boolean'">
-              <el-checkbox 
+              <el-switch 
                 :disabled="!col.editable"
                 v-model="row[col.prop]" 
                 @change="validateCell(row, col)">
-              </el-checkbox>
+              </el-switch>
             </template>
             <template v-else-if="col.type == 'enum'">
               <el-select 
@@ -95,7 +109,7 @@
             :style="getTdStyles(col)" 
             @click.stop="handleCellClick($event, row, index, col)">
             <template v-if="col.type == 'boolean'">
-              <el-checkbox v-model="row[col.prop]"></el-checkbox>
+              <el-switch disabled v-model="row[col.prop]"></el-switch>
             </template>
             <template v-else-if="col.type == 'enum'">
               {{ getSelectLabel(col.options, row[col.prop]) }}
@@ -142,6 +156,7 @@ export default {
       currentRowIndex: -1,
       alignDefaults,
       validateStatus: {}, // 编辑行的验证状态
+      keyword: ''
     }
   },
   props: {
@@ -336,12 +351,22 @@ export default {
         }
       })
       return descriptor
+    },
+    search() {
+
     }
   },
   computed: {
     rowStyles() {
       const styles = {}
       return styles
+    },
+    columnsCount() {
+      let count = this.columns.length + 1 // 1为操作列
+      if(this.indexed) {
+        count += 1
+      }
+      return count
     }
   },
   watch: {

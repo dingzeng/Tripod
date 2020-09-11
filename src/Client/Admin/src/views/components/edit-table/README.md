@@ -58,7 +58,7 @@
 
 |类型|说明|渲染类型|
 |---|---|---|
-|boolean|布尔|Checkbox|
+|boolean|布尔|Switch|
 |enum|枚举|Select|
 |date|日期|DatePicker|
 |string|字符串|Input|
