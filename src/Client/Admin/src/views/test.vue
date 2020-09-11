@@ -1,6 +1,8 @@
 <template>
   <div>
-    <edit-table v-model="data" :columns="columns"></edit-table>
+    <edit-table v-model="data" :columns="columns" :actions="actions" indexed>
+
+    </edit-table>
     <button @click="logData">Log Data</button>
   </div>
 </template>
@@ -12,7 +14,19 @@ export default {
   data() {
     return {
       data: [],
-      columns: []
+      columns: [],
+      actions: [
+        {
+          type: 'text',
+          icon: 'el-icon-view',
+          visible: function(row) {
+            return row.gender === 0
+          },
+          click: function(row) {
+            console.log(row)
+          }
+        }
+      ]
     }
   },
   components: {
@@ -40,11 +54,6 @@ export default {
   created() {
     this.columns = [
       {
-        type: 'index',
-        label: '序号',
-        width: 100
-      },
-      {
         prop: 'id',
         label: '编号',
         width: 200
@@ -52,17 +61,20 @@ export default {
       {
         prop: 'name',
         label: '名称',
-        editable: true
+        type: 'string',
+        editable: true,
+        required: true
       },
       {
         prop: 'gender',
         label: '性别',
-        type: 'select',
+        type: 'enum',
         options: [
           { value: 0, label: '女' },
           { value: 1, label: '男' }
         ],
         editable: true,
+        required: true,
         width: 100
       },
       {
@@ -75,27 +87,53 @@ export default {
       {
         prop: 'isAdult',
         label: '已成年',
-        type: 'checkbox',
+        type: 'boolean',
         width: 150,
         editable: true
       },
       {
-        label: '操作',
-        type: 'handler',
-        width: 100,
-        actions: [
-          'delete',
-          {
-            type: 'text',
-            icon: 'el-icon-view',
-            visible: function(row) {
-              return row.gender === 0
-            },
-            click: function(row) {
-              console.log(row)
-            }
-          }
+        prop: 'age',
+        label: '年龄',
+        type: 'integer',
+        width: 150,
+        editable: true,
+        required: true,
+        min: 10, 
+        max: 120
+      },
+      {
+        prop: 'company',
+        label: '球队',
+        type: 'enum',
+        width: 150,
+        editable: true,
+        options: [
+          { value: '1', label: '湖人' },
+          { value: '2', label: '火箭' }
         ]
+      },
+      {
+        prop: 'sales',
+        label: '薪水',
+        type: 'number',
+        width: 150,
+        editable: true,
+        required: true,
+        validator(value, row) {
+          if(value < 100) {
+            return new Error('太低了吧')
+          }
+          return true
+        }
+        // asyncValidator(value, row, callback) {
+        //   setTimeout(() => {
+        //     if(value < 100) {
+        //       callback(new Error('涅球少?'))
+        //     }else {
+        //       callback()
+        //     }
+        //   }, 1000)
+        // }
       }
     ]
   },

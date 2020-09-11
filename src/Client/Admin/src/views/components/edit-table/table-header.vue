@@ -1,26 +1,23 @@
 <template>
   <thead class="edit-table-header">
     <tr>
+      <th v-if="indexed" style="width: 60px;">序号</th>
       <th
         v-for="col in columns"
         :key="col.prop"
-        :align="col.theadAlign || alignDefaults[col.type || 'text']"
+        :align="col.theadAlign || alignDefaults[col.type || 'string']"
         :style="getThStyles(col)"
       >
         {{ col.label }}
+        <span v-if="col.required" style="color: #f56c6c;">*</span>
       </th>
+      <th>操作</th>
     </tr>
   </thead>
 </template>
 
 <script>
-const alignDefaults = {
-  'text': 'left',
-  'index': 'center',
-  'checkbox': 'center',
-  'select': 'left',
-  'date': 'left'
-}
+import { alignDefaults } from './defaults'
 export default {
   name: 'EditTableHeader',
   data() {
@@ -32,6 +29,10 @@ export default {
     columns: {
       type: Array,
       default: () => []
+    },
+    indexed: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
