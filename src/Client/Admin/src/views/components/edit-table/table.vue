@@ -11,10 +11,13 @@
       <table :border="border" class="edit-table" :style="tableStyles">
         <table-header
           :columns="columns"
+          :indexed="indexed"
         >
         </table-header>
         <table-body
           :columns="columns"
+          :actions="actions"
+          :indexed="indexed"
           v-model="data"
         >
         </table-body>
@@ -61,6 +64,14 @@ export default {
     width: {
       type: [Number, String],
       default: '100%'
+    },
+    indexed: {
+      type: Boolean,
+      default: false
+    },
+    actions: {
+      type: Array,
+      default: () => []
     }
   },
   methods: {
