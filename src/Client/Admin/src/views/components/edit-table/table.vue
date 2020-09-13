@@ -1,11 +1,16 @@
 <template>
   <div>
     <div class="edit-table-toolbar">
-      <el-button-group>
-        <el-button @click="addNewRow" size="small" icon="el-icon-plus">新增行</el-button>
-        <el-button @click="deleteAll" size="small" icon="el-icon-delete">清空</el-button>
-      </el-button-group>
-      <slot name="toolbar"></slot>
+      <div style="float: left;">
+        <el-button @click="addNewRow" size="mini" icon="el-icon-plus" plain>新增行</el-button>
+        <el-button @click="deleteAll" size="mini" icon="el-icon-delete" plain>清 空</el-button>
+        <slot name="toolbar"></slot>
+      </div>
+      <div style="float: right;">
+        <el-input v-model="keyword" placeholder="请输入，按回车添加到表格" size="mini" style="width: 300px;"></el-input>
+        <el-button @click="searchAndAppend" type="primary" size="mini">确定</el-button>
+      </div>
+      <div style="clear: both;"></div>
     </div>
     <div class="edit-table-wrapper">
       <table :border="border" class="edit-table" :style="tableStyles">
@@ -45,7 +50,8 @@ export default {
   },
   data() {
     return {
-      data: this.value
+      data: this.value,
+      keyword: ''
     }
   },
   props: {
@@ -80,6 +86,9 @@ export default {
     },
     deleteAll() {
       this.data = []
+    },
+    searchAndAppend() {
+
     }
   },
   computed: {

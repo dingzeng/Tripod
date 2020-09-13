@@ -191,5 +191,25 @@ namespace Archive.API.Controllers
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route("exists-id/{id}")]
+        public IActionResult ExistsId(string id)
+        {
+            var exists = _context.Items.Count(i => i.Id == id) > 0;
+
+            return Ok(exists);
+        }
+
+        [HttpGet]
+        [Route("exists-barcode/{barcode}")]
+        public IActionResult ExistsBarcode(string barcode)
+        {
+            var exists = _context.Items.Count(i => i.Barcode == barcode) > 0;
+
+            exists |= _context.ItemBarcodes.Count(i => i.Barcode == barcode) > 0;
+
+            return Ok(exists);
+        }
     }
 }

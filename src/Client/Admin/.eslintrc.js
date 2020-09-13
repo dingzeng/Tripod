@@ -67,7 +67,7 @@ module.exports = {
       'afterColon': true
     }],
     'keyword-spacing': [2, {
-      'before': true,
+      'before': false,
       'after': true
     }],
     'new-cap': [2, {

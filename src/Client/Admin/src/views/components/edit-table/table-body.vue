@@ -5,20 +5,6 @@
 </style>
 <template>
   <tbody class="edit-table-body">
-    <tr class="edit-table-body-tr">
-      <td :colspan="columnsCount">
-        <div style="float: left;">
-          <el-button-group>
-            <el-button icon="el-icon-plus"></el-button>
-            <el-button icon="el-icon-delete"></el-button>
-          </el-button-group>
-        </div>
-        <div style="float: right;">
-          <el-input v-model="keyword" placeholder="请输入" style="width: 300px;"></el-input>
-          <el-button @click="search" type="primary">确定</el-button>
-        </div>
-      </td>
-    </tr>
     <tr
       class="edit-table-body-tr"
       :class="[{
@@ -37,64 +23,71 @@
       <!-- 编辑行 -->
       <template v-if="index === editRowIndex">
         <template v-for="col in columns">
-          <td 
-            class="edit-table-body-cell" 
+          <td
+            class="edit-table-body-cell"
             :class="[{ 'is-error': validateStatus[col.prop] === false }]"
-            :key="col.prop" 
+            :key="col.prop"
             :align="col.align || alignDefaults[col.type || 'string']"
-            :style="getTdStyles(col)" 
-            @click.stop="handleCellClick($event, row, index, col)">
+            :style="getTdStyles(col)"
+            @click.stop="handleCellClick($event, row, index, col)"
+          >
             <template v-if="col.type == 'boolean'">
-              <el-switch 
+              <el-switch
                 :disabled="!col.editable"
-                v-model="row[col.prop]" 
-                @change="validateCell(row, col)">
+                v-model="row[col.prop]"
+                @change="validateCell(row, col)"
+              >
               </el-switch>
             </template>
             <template v-else-if="col.type == 'enum'">
-              <el-select 
+              <el-select
                 v-if="col.editable"
-                v-model="row[col.prop]" 
-                :placeholder="col.placeholder || '请选择'" 
-                @change="validateCell(row, col)">
-                <el-option 
-                  v-for="option in col.options" 
-                  :key="option.value" 
-                  :value="option.value" 
-                  :label="option.label">
+                v-model="row[col.prop]"
+                :placeholder="col.placeholder || '请选择'"
+                @change="validateCell(row, col)"
+              >
+                <el-option
+                  v-for="option in col.options"
+                  :key="option.value"
+                  :value="option.value"
+                  :label="option.label"
+                >
                 </el-option>
               </el-select>
               <span v-else>
-                {{getSelectLabel(col.options, row[col.prop])}}
+                {{ getSelectLabel(col.options, row[col.prop]) }}
               </span>
             </template>
             <template v-else-if="col.type == 'date'">
-              <el-date-picker 
-                v-model="row[col.prop]" 
-                type="date" 
+              <el-date-picker
+                v-model="row[col.prop]"
+                type="date"
                 :readonly="!col.editable"
-                :placeholder="col.placeholder || '选择日期'" 
-                @change="validateCell(row, col)">
+                :placeholder="col.placeholder || '选择日期'"
+                @change="validateCell(row, col)"
+              >
               </el-date-picker>
             </template>
             <template v-else>
               <template v-if="col.editable">
-                <el-input 
+                <el-input
                   v-if="col.type == 'number' || col.type == 'integer' || col.type == 'float'"
-                  v-model.number="row[col.prop]" 
+                  v-model.number="row[col.prop]"
                   :placeholder="col.placeholder || '请输入'"
-                  @blur="validateCell(row, col)">
+                  @blur="validateCell(row, col)"
+                >
                 </el-input>
                 <!-- string、url、email -->
-                <el-input 
+                <el-input
                   v-else
-                  v-model.trim="row[col.prop]" 
+                  v-model.trim="row[col.prop]"
                   :placeholder="col.placeholder || '请输入'"
-                  @blur="validateCell(row, col)">
+                  @blur="validateCell(row, col)"
+                >
                 </el-input>
               </template>
               <span v-else>
-                {{row[col.prop]}}
+                {{ row[col.prop] }}
               </span>
             </template>
           </td>
@@ -102,12 +95,13 @@
       </template>
       <template v-else>
         <template v-for="col in columns">
-          <td 
-            class="edit-table-body-cell" 
-            :key="col.prop" 
+          <td
+            class="edit-table-body-cell"
+            :key="col.prop"
             :align="col.align || alignDefaults[col.type || 'string']"
-            :style="getTdStyles(col)" 
-            @click.stop="handleCellClick($event, row, index, col)">
+            :style="getTdStyles(col)"
+            @click.stop="handleCellClick($event, row, index, col)"
+          >
             <template v-if="col.type == 'boolean'">
               <el-switch disabled v-model="row[col.prop]"></el-switch>
             </template>
@@ -127,15 +121,16 @@
       <!-- TODO 操作列的宽度处理 -->
       <td align="center" style="width: 100px">
         <el-button type="text" @click="deleteRow(index)" icon="el-icon-delete" size="mini"></el-button>
-        <template v-for="(action, index) in actions">
-          <el-button 
-            v-if="!action.visible || action.visible(row)" 
-            :key="index" 
-            :type="action.type" 
+        <template v-for="(action, indexKey) in actions">
+          <el-button
+            v-if="!action.visible || action.visible(row)"
+            :key="indexKey"
+            :type="action.type"
             :icon="action.icon"
-            @click="action.click(row)">
-              {{action.label}}
-            </el-button>
+            @click="action.click(row)"
+          >
+            {{ action.label }}
+          </el-button>
         </template>
       </td>
     </tr>
@@ -143,8 +138,8 @@
 </template>
 
 <script>
-import { alignDefaults } from './defaults'
-import { formatDate } from '../../../utils/index'
+import { alignDefaults }from './defaults'
+import { formatDate }from '../../../utils/index'
 import Schema from 'async-validator'
 export default {
   name: 'EditTableBody',
@@ -183,14 +178,14 @@ export default {
       if (col.width) {
         if (typeof col.width === 'number') {
           styles.width = col.width + 'px'
-        } else {
+        }else {
           styles.width = col.width
         }
       }
       return styles
     },
     getSelectLabel(options, value) {
-      const option = options.find(o => o.value == value)
+      const option = options.find(o => o.value === value)
       return option ? option.label : ''
     },
     handleRowClick(event, row, index) {
@@ -198,13 +193,13 @@ export default {
     },
     handleRowKeydown(event, row, index) {
       console.log(event, row, index)
-      if(event.code === 'ArrowDown') {
-        if(this.editRowIndex === this.data.length - 1) {
+      if (event.code === 'ArrowDown') {
+        if (this.editRowIndex === this.data.length - 1) {
           this.data.push({})
         }
         this.changeEditRowIndex(this.editRowIndex + 1)
-      }else if(event.code === 'ArrowUp') {
-        if(this.editRowIndex > 0) {
+      }else if (event.code === 'ArrowUp') {
+        if (this.editRowIndex > 0) {
           this.changeEditRowIndex(this.editRowIndex - 1)
         }
       }
@@ -216,23 +211,23 @@ export default {
       this.changeEditRowIndex(index, () => {
         // auto focus
         this.$nextTick(() => {
-          if (event.target 
-            && event.target.firstChild 
-            && event.target.firstChild.firstElementChild
-            && event.target.firstChild.firstElementChild.nodeName === 'INPUT') {
+          if (event.target &&
+            event.target.firstChild &&
+            event.target.firstChild.firstElementChild &&
+            event.target.firstChild.firstElementChild.nodeName === 'INPUT') {
             event.target.firstChild.firstElementChild.focus()
           }
         })
       })
     },
     changeEditRowIndex(index, callback) {
-      if (this.editRowIndex == index) return
-      if(this.editRowIndex == -1) {
+      if (this.editRowIndex === index)return
+      if (this.editRowIndex === -1) {
         this.editRowIndex = index
         callback()
       }else {
         this.validateRow(this.data[this.editRowIndex], (rowPasswd) => {
-          if(rowPasswd) {
+          if (rowPasswd) {
             this.editRowIndex = index
             this.validateStatus = {}
             callback()
@@ -241,23 +236,23 @@ export default {
       }
     },
     deleteRow(index) {
-      if(index === this.editRowIndex) {
+      if (index === this.editRowIndex) {
         this.editRowIndex = -1
         this.validateStatus = {}
       }
       this.data.splice(index, 1)
     },
     validateRow(row, callback) {
-      if(!row) return
-      let descriptor = this.getRowValidateDescriptor(row)
+      if (!row)return
+      const descriptor = this.getRowValidateDescriptor(row)
       const validator = new Schema(descriptor)
       let rowPasswd = true
       validator.validate(row, { firstFields: true }, (errors, fields) => {
-        if(errors) {
+        if (errors) {
           this.columns.filter(col => col.editable).forEach(col => {
             const passed = !fields.hasOwnProperty(col.prop)
             this.$set(this.validateStatus, col.prop, passed)
-            if(!passed) {
+            if (!passed) {
               rowPasswd = false
             }
           })
@@ -266,14 +261,14 @@ export default {
       })
     },
     validateCell(row, col) {
-      let descriptor = {}
+      const descriptor = {}
       descriptor[col.prop] = this.getColumnValidateRules(row, col)
       const validator = new Schema(descriptor)
       validator.validate(row, { firstFields: true }, (errors, fields) => {
         let passed = true
-        if(errors) {
+        if (errors) {
           errors.forEach(error => {
-            this.$message({message: error.message, type: 'warning'})
+            this.$message({ message: error.message, type: 'warning' })
           })
           passed = false
         }
@@ -281,60 +276,60 @@ export default {
       })
     },
     getColumnValidateRules(row, column) {
-      let rules = []
+      const rules = []
       function isNeedValidateType(type) {
         return type === 'number' || type === 'integer' || type === 'string'
       }
-      if(isNeedValidateType(column.type)) {
-        rules.push({type: column.type, message: `${column.label}类型错误`})
+      if (isNeedValidateType(column.type)) {
+        rules.push({ type: column.type, message: `${column.label}类型错误` })
       }
-      if(column.required) {
-        rules.push({required: true, message: `${column.label}必填`})
+      if (column.required) {
+        rules.push({ required: true, message: `${column.label}必填` })
       }
-      if(column.pattern) {
-        rules.push({pattern: column.pattern, message: `${column.label}格式错误`})
+      if (column.pattern) {
+        rules.push({ pattern: column.pattern, message: `${column.label}格式错误` })
       }
-      let isNumberType = function(type) {
-        return type == 'number' || type == 'integer' || type == 'float'
+      const isNumberType = function(type) {
+        return type === 'number' || type === 'integer' || type === 'float'
       }
-      if(column.hasOwnProperty('min') && column.hasOwnProperty('max')) {
-        if(isNumberType(column.type)) {
-          rules.push({type: column.type, min: column.min, max: column.max, message: `${column.label}必须在${column.min}~${column.max}范围内` })
+      if (column.hasOwnProperty('min') && column.hasOwnProperty('max')) {
+        if (isNumberType(column.type)) {
+          rules.push({ type: column.type, min: column.min, max: column.max, message: `${column.label}必须在${column.min}~${column.max}范围内` })
         }else {
-          rules.push({type: column.type, min: column.min, max: column.max, message: `${column.label}长度必须在${column.min}~${column.max}范围内` })
+          rules.push({ type: column.type, min: column.min, max: column.max, message: `${column.label}长度必须在${column.min}~${column.max}范围内` })
         }
       }else {
-        if(column.hasOwnProperty('min')) {
-          if(isNumberType(column.type)) {
-            rules.push({type: column.type, min: column.min, message: `${column.label}不能小于${column.min}` })
+        if (column.hasOwnProperty('min')) {
+          if (isNumberType(column.type)) {
+            rules.push({ type: column.type, min: column.min, message: `${column.label}不能小于${column.min}` })
           }else {
-            rules.push({type: column.type, min: column.min, message: `${column.label}长度不能小于${column.min}` })
+            rules.push({ type: column.type, min: column.min, message: `${column.label}长度不能小于${column.min}` })
           }
         }
-        if(column.hasOwnProperty('max')) {
-          if(isNumberType(column.type)) {
-            rules.push({type: column.type, max: column.max, message: `${column.label}不能大于${column.max}` })
+        if (column.hasOwnProperty('max')) {
+          if (isNumberType(column.type)) {
+            rules.push({ type: column.type, max: column.max, message: `${column.label}不能大于${column.max}` })
           }else {
-            rules.push({type: column.type, max: column.max, message: `${column.label}长度不能大于${column.max}` })
+            rules.push({ type: column.type, max: column.max, message: `${column.label}长度不能大于${column.max}` })
           }
         }
       }
-      if(column.hasOwnProperty('len')) {
-        rules.push({type: column.type, len: column.len, message: `${column.label}长度必须为${column.max}` })
+      if (column.hasOwnProperty('len')) {
+        rules.push({ type: column.type, len: column.len, message: `${column.label}长度必须为${column.max}` })
       }
-      if(column.type == 'enum') {
-        let labels = column.options.map(option => option.label).join('、')
-        let message = `${column.label}必须选择${labels}中的一个`
-        rules.push({type: 'enum', enum: column.options.map(option => option.value), message: message })
+      if (column.type === 'enum') {
+        const labels = column.options.map(option => option.label).join('、')
+        const message = `${column.label}必须选择${labels}中的一个`
+        rules.push({ type: 'enum', enum: column.options.map(option => option.value), message: message })
       }
-      if(column.hasOwnProperty('validator')) {
-        let validatorRule = function(rule, value) {
+      if (column.hasOwnProperty('validator')) {
+        const validatorRule = function(rule, value) {
           return column.validator(value, row)
         }
         rules.push({ validator: validatorRule })
       }
-      if(column.hasOwnProperty('asyncValidator')) {
-        let asyncValidatorRule = function(rule, value, callback) {
+      if (column.hasOwnProperty('asyncValidator')) {
+        const asyncValidatorRule = function(rule, value, callback) {
           column.asyncValidator(value, row, callback)
         }
         rules.push({ asyncValidator: asyncValidatorRule })
@@ -342,31 +337,21 @@ export default {
       return rules
     },
     getRowValidateDescriptor(row) {
-      let descriptor = { }
+      const descriptor = { }
       this.columns.forEach(column => {
-        if(!column.editable) return
-        let rules = this.getColumnValidateRules(row, column)
-        if(rules.length) {
+        if (!column.editable)return
+        const rules = this.getColumnValidateRules(row, column)
+        if (rules.length) {
           descriptor[column.prop] = rules
         }
       })
       return descriptor
-    },
-    search() {
-
     }
   },
   computed: {
     rowStyles() {
       const styles = {}
       return styles
-    },
-    columnsCount() {
-      let count = this.columns.length + 1 // 1为操作列
-      if(this.indexed) {
-        count += 1
-      }
-      return count
     }
   },
   watch: {

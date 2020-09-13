@@ -195,7 +195,7 @@
 <script>
 import EditTable from '@/views/components/edit-table'
 import request from '@/utils/request'
-import { transportMode } from '@/utils/enum'
+import { transportMode }from '@/utils/enum'
 export default {
   name: 'Item',
   components: { EditTable },
@@ -228,106 +228,104 @@ export default {
     modelRules() {
       const vm = this
       return {
-        item: {
-          id: [
-            { required: true, message: '必填', trigger: 'blur' },
-            { type: 'string', pattern: /^[0-9]{5,20}$/, message: '必须为5~20位数字字符', trigger: 'blur' },
-            {
-              validator(rule, value, callback) {
-                request({
-                  url: '/archive/item/exists/id/' + value,
-                  method: 'get'
-                }).then(response => {
-                  if (response && vm.originalId !== value) {
-                    callback(new Error('编码已存在'))
-                  } else {
-                    callback()
-                  }
-                })
-              }
+        id: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { type: 'string', pattern: /^[0-9]{5,20}$/, message: '必须为5~20位数字字符', trigger: 'blur' },
+          {
+            validator(rule, value, callback) {
+              request({
+                url: '/api/a/item/exists-id/' + value,
+                method: 'get'
+              }).then(response => {
+                if (response && vm.originalId !== value) {
+                  callback(new Error('编码已存在'))
+                }else {
+                  callback()
+                }
+              })
             }
-          ],
-          barcode: [
-            { required: true, message: '必填', trigger: 'blur' },
-            { type: 'string', pattern: /^[0-9]{5,20}$/, message: '必须为5~20位数字字符', trigger: 'blur' },
-            {
-              validator(rule, value, callback) {
-                request({
-                  url: '/archive/item/exists/barcode/' + value,
-                  method: 'get'
-                }).then(response => {
-                  if (response && vm.originalBarcode !== value) {
-                    callback(new Error('国际条码已存在'))
-                  } else {
-                    callback()
-                  }
-                })
-              }
+          }
+        ],
+        barcode: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { type: 'string', pattern: /^[0-9]{5,20}$/, message: '必须为5~20位数字字符', trigger: 'blur' },
+          {
+            validator(rule, value, callback) {
+              request({
+                url: '/api/a/item/exists-barcode/' + value,
+                method: 'get'
+              }).then(response => {
+                if (response && vm.originalBarcode !== value) {
+                  callback(new Error('国际条码已存在'))
+                }else {
+                  callback()
+                }
+              })
             }
-          ],
-          name: [
-            { required: true, message: '必填', trigger: 'blur' },
-            { type: 'string', max: 20, message: '长度不能超过20位字符', trigger: 'blur' }
-          ],
-          shortName: [
-            { required: true, message: '必填', trigger: 'blur' },
-            { type: 'string', max: 10, message: '长度不能超过10位字符', trigger: 'blur' }
-          ],
-          itemUnitId: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          category: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          brand: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          department: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          supplierId: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          purchasePrice: [
-            { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
-          ],
-          retailPrice: [
-            { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
-          ],
-          salesPrice: [
-            { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
-          ],
-          deliveryPrice: [
-            { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
-          ],
-          referProfitRate: [
-            { type: 'float', message: '格式错误', trigger: 'blur' },
-            { type: 'float', range: [0, 1], message: '必须为0~1之间的小数', trigger: 'blur' }
-          ],
-          transportMode: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          leastDeliveryQty: [
-            { type: 'integer', min: 1, message: '必须为正整数', trigger: 'blur' }
-          ],
-          qualityDays: [
-            { type: 'integer', min: 1, message: '必须为正整数', trigger: 'blur' }
-          ],
-          warningDays: [
-            { type: 'integer', min: 1, message: '必须为正整数', trigger: 'blur' }
-          ],
-          purchaseTaxRate: [
-            { type: 'float', message: '格式错误', trigger: 'blur' },
-            { type: 'float', range: [0, 1], message: '必须为0~1之间的小数', trigger: 'blur' }
-          ],
-          salesTaxRate: [
-            { type: 'float', message: '格式错误', trigger: 'blur' },
-            { type: 'float', range: [0, 1], message: '必须为0~1之间的小数', trigger: 'blur' }
-          ],
-          memo: [
-            { type: 'string', max: 100, message: '长度不能超过100个字符', trigger: 'blur' }
-          ]
-        }
+          }
+        ],
+        name: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { type: 'string', max: 20, message: '长度不能超过20位字符', trigger: 'blur' }
+        ],
+        shortName: [
+          { required: true, message: '必填', trigger: 'blur' },
+          { type: 'string', max: 10, message: '长度不能超过10位字符', trigger: 'blur' }
+        ],
+        itemUnitId: [
+          { required: true, message: '必填', trigger: 'blur' }
+        ],
+        category: [
+          { required: true, message: '必填', trigger: 'blur' }
+        ],
+        brand: [
+          { required: true, message: '必填', trigger: 'blur' }
+        ],
+        department: [
+          { required: true, message: '必填', trigger: 'blur' }
+        ],
+        supplierId: [
+          { required: true, message: '必填', trigger: 'blur' }
+        ],
+        purchasePrice: [
+          { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
+        ],
+        retailPrice: [
+          { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
+        ],
+        salesPrice: [
+          { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
+        ],
+        deliveryPrice: [
+          { pattern: /^-?\d+\.?\d*$/, message: '只能为数值', trigger: 'blur' }
+        ],
+        referProfitRate: [
+          { type: 'float', message: '格式错误', trigger: 'blur' },
+          { type: 'float', range: [0, 1], message: '必须为0~1之间的小数', trigger: 'blur' }
+        ],
+        transportMode: [
+          { required: true, message: '必填', trigger: 'blur' }
+        ],
+        leastDeliveryQty: [
+          { type: 'integer', min: 1, message: '必须为正整数', trigger: 'blur' }
+        ],
+        qualityDays: [
+          { type: 'integer', min: 1, message: '必须为正整数', trigger: 'blur' }
+        ],
+        warningDays: [
+          { type: 'integer', min: 1, message: '必须为正整数', trigger: 'blur' }
+        ],
+        purchaseTaxRate: [
+          { type: 'float', message: '格式错误', trigger: 'blur' },
+          { type: 'float', range: [0, 1], message: '必须为0~1之间的小数', trigger: 'blur' }
+        ],
+        salesTaxRate: [
+          { type: 'float', message: '格式错误', trigger: 'blur' },
+          { type: 'float', range: [0, 1], message: '必须为0~1之间的小数', trigger: 'blur' }
+        ],
+        memo: [
+          { type: 'string', max: 100, message: '长度不能超过100个字符', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -419,7 +417,8 @@ export default {
         prop: 'Barcode',
         width: 200,
         label: '条码',
-        editable: true
+        editable: true,
+        required: true
       },
       {
         prop: 'memo',
@@ -433,55 +432,68 @@ export default {
         prop: 'barcode',
         width: 200,
         label: '条码',
-        editable: true
+        editable: true,
+        required: true
       },
       {
         prop: 'unitName',
         width: 100,
         label: '单位',
-        editable: true
+        editable: true,
+        required: true
       },
       {
         prop: 'factorQty',
         width: 100,
         label: '包装系数',
-        editable: true
+        type: 'integer',
+        min: 1,
+        editable: true,
+        required: true
       },
       {
         prop: 'purchasePrice',
         width: 150,
         label: '采购价',
+        type: 'number',
+        min: 0,
         editable: true
       },
       {
         prop: 'deliveryPrice',
         width: 150,
         label: '配送价',
+        type: 'number',
+        min: 0,
         editable: true
       },
       {
         prop: 'salesPrice',
         width: 150,
         label: '批发价',
+        type: 'number',
+        min: 0,
         editable: true
       },
       {
         prop: 'retailPrice',
         width: 150,
         label: '零售价',
+        type: 'number',
+        min: 0,
         editable: true
       },
       {
         prop: 'isDefaultPurchaseUnit',
         width: 150,
-        type: 'checkbox',
+        type: 'boolean',
         label: '默认采购单位',
         editable: true
       },
       {
         prop: 'isDefaultDeliveryUnit',
         width: 150,
-        type: 'checkbox',
+        type: 'boolean',
         label: '默认配送单位',
         editable: true
       },
