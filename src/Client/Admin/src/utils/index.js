@@ -3,13 +3,13 @@
  */
 
 export function formatDate(date, fmt) {
-  if (typeof date == 'string') {
-    return date;
+  if (typeof date === 'string') {
+    return date
   }
 
-  if (!fmt) fmt = "yyyy-MM-dd hh:mm:ss";
+  if (!fmt) fmt = 'yyyy-MM-dd hh:mm:ss'
 
-  if (!date || date == null) return null;
+  if (!date || date == null) return null
   var o = {
     'M+': date.getMonth() + 1, // 月份
     'd+': date.getDate(), // 日

@@ -138,8 +138,8 @@
 </template>
 
 <script>
-import { alignDefaults }from './defaults'
-import { formatDate }from '../../../utils/index'
+import { alignDefaults } from './defaults'
+import { formatDate } from '../../../utils/index'
 import Schema from 'async-validator'
 export default {
   name: 'EditTableBody',
@@ -178,7 +178,7 @@ export default {
       if (col.width) {
         if (typeof col.width === 'number') {
           styles.width = col.width + 'px'
-        }else {
+        } else {
           styles.width = col.width
         }
       }
@@ -198,7 +198,7 @@ export default {
           this.data.push({})
         }
         this.changeEditRowIndex(this.editRowIndex + 1)
-      }else if (event.code === 'ArrowUp') {
+      } else if (event.code === 'ArrowUp') {
         if (this.editRowIndex > 0) {
           this.changeEditRowIndex(this.editRowIndex - 1)
         }
@@ -221,11 +221,11 @@ export default {
       })
     },
     changeEditRowIndex(index, callback) {
-      if (this.editRowIndex === index)return
+      if (this.editRowIndex === index) return
       if (this.editRowIndex === -1) {
         this.editRowIndex = index
         callback()
-      }else {
+      } else {
         this.validateRow(this.data[this.editRowIndex], (rowPasswd) => {
           if (rowPasswd) {
             this.editRowIndex = index
@@ -243,7 +243,7 @@ export default {
       this.data.splice(index, 1)
     },
     validateRow(row, callback) {
-      if (!row)return
+      if (!row) return
       const descriptor = this.getRowValidateDescriptor(row)
       const validator = new Schema(descriptor)
       let rowPasswd = true
@@ -295,21 +295,21 @@ export default {
       if (column.hasOwnProperty('min') && column.hasOwnProperty('max')) {
         if (isNumberType(column.type)) {
           rules.push({ type: column.type, min: column.min, max: column.max, message: `${column.label}必须在${column.min}~${column.max}范围内` })
-        }else {
+        } else {
           rules.push({ type: column.type, min: column.min, max: column.max, message: `${column.label}长度必须在${column.min}~${column.max}范围内` })
         }
-      }else {
+      } else {
         if (column.hasOwnProperty('min')) {
           if (isNumberType(column.type)) {
             rules.push({ type: column.type, min: column.min, message: `${column.label}不能小于${column.min}` })
-          }else {
+          } else {
             rules.push({ type: column.type, min: column.min, message: `${column.label}长度不能小于${column.min}` })
           }
         }
         if (column.hasOwnProperty('max')) {
           if (isNumberType(column.type)) {
             rules.push({ type: column.type, max: column.max, message: `${column.label}不能大于${column.max}` })
-          }else {
+          } else {
             rules.push({ type: column.type, max: column.max, message: `${column.label}长度不能大于${column.max}` })
           }
         }
@@ -339,7 +339,7 @@ export default {
     getRowValidateDescriptor(row) {
       const descriptor = { }
       this.columns.forEach(column => {
-        if (!column.editable)return
+        if (!column.editable) return
         const rules = this.getColumnValidateRules(row, column)
         if (rules.length) {
           descriptor[column.prop] = rules

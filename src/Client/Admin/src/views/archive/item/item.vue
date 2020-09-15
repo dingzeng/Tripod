@@ -195,7 +195,7 @@
 <script>
 import EditTable from '@/views/components/edit-table'
 import request from '@/utils/request'
-import { transportMode }from '@/utils/enum'
+import { transportMode } from '@/utils/enum'
 export default {
   name: 'Item',
   components: { EditTable },
@@ -239,7 +239,7 @@ export default {
               }).then(response => {
                 if (response && vm.originalId !== value) {
                   callback(new Error('编码已存在'))
-                }else {
+                } else {
                   callback()
                 }
               })
@@ -257,7 +257,7 @@ export default {
               }).then(response => {
                 if (response && vm.originalBarcode !== value) {
                   callback(new Error('国际条码已存在'))
-                }else {
+                } else {
                   callback()
                 }
               })

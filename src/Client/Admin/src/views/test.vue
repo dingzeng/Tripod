@@ -37,10 +37,10 @@ export default {
       console.log(this.data)
     },
     randomData() {
-      let data = []
+      const data = []
       const count = 10
       for (let index = 0; index < count; index++) {
-        let row = {}
+        const row = {}
         row.id = 'A00' + index
         row.name = 'aaa' + index
         row.gender = index % 2
@@ -98,7 +98,7 @@ export default {
         width: 150,
         editable: true,
         required: true,
-        min: 10, 
+        min: 10,
         max: 120
       },
       {
@@ -120,7 +120,7 @@ export default {
         editable: true,
         required: true,
         validator(value, row) {
-          if(value < 100) {
+          if (value < 100) {
             return new Error('太低了吧')
           }
           return true

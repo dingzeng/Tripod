@@ -1,11 +1,6 @@
-<style>
-  .el-dialog__body {
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
-</style>
 <template>
   <div>
+    <!-- list -->
     <list-layout>
       <template slot="topLeft">
         <el-form :inline="true" :model="queryParams" class="query-form-inline" size="small">
@@ -38,6 +33,7 @@
         <Pagination v-if="isPaging" :total="totalCount" :page.sync="pageIndex" :limit.sync="pageSize" @pagination="handlePaging" />
       </template>
     </list-layout>
+    <!-- info -->
     <el-dialog
       :title="title"
       :visible.sync="dialogVisible"
@@ -64,6 +60,7 @@
         <el-button type="primary" size="small" @click="doSave">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- save confirm -->
     <el-dialog
       title="提示"
       width="300px"
@@ -82,12 +79,12 @@
 </template>
 
 <script>
-import qs from 'qs'
 import request from '@/utils/request'
 import DataMaintain from '@/views/components/list-page/data-maintain'
 import ListLayout from '@/views/components/list-layout/index'
 import Pagination from '@/components/Pagination/index'
 import DataTable from '@/views/components/data-table/index'
+import api from '@/api/common.js'
 export default {
   name: 'ListPage',
   components: { DataMaintain, ListLayout, Pagination, DataTable },
@@ -100,12 +97,6 @@ export default {
       type: String,
       default: 'id'
     },
-    queryDelegate: Function,
-    getDelegate: Function,
-    initDelegate: Function,
-    addDelegate: Function,
-    updateDelegate: Function,
-    deleteDelegate: Function,
     columns: {
       type: Array,
       required: true
@@ -118,6 +109,10 @@ export default {
       type: Object,
       default: () => {}
     },
+    isPaging: {
+      type: Boolean,
+      default: true
+    },
     model: {
       type: Object,
       default: () => {}
@@ -125,10 +120,6 @@ export default {
     modelRules: {
       type: Object,
       default: () => {}
-    },
-    isPaging: {
-      type: Boolean,
-      default: true
     },
     dialogTitle: {
       type: String,
@@ -175,6 +166,7 @@ export default {
       dialogVisible: false,
       confirmDialogVisible: false,
       innerModel: this.model,
+      initialModel: this.model,
       innerAction: this.action, // add | edit
       modelChanged: false,
       innerPage: {}
@@ -195,66 +187,6 @@ export default {
       }
       const star = this.modelChanged ? '*' : ''
       return `${actionText}${this.dialogTitle} ${star}`
-    },
-    queryFn() {
-      if (this.queryDelegate) return this.queryDelegate
-      return function(query) {
-        const obj = Object.assign({}, query.params, {
-          pageIndex: query.pageIndex,
-          pageSize: query.pageSize
-        })
-        const querystring = qs.stringify(obj)
-        return request({
-          url: this.uri + '?' + querystring,
-          method: 'get'
-        })
-      }.bind(this)
-    },
-    getFn() {
-      if (this.getDelegate) return this.getDelegate
-      return function(id) {
-        return request({
-          url: this.uri + '/' + id,
-          method: 'get'
-        })
-      }.bind(this)
-    },
-    initFn() {
-      if (this.initDelegate) return this.initDelegate
-      return function() {
-        return new Promise(function(resolve, reject) {
-          resolve({})
-        })
-      }
-    },
-    addFn() {
-      if (this.addDelegate) return this.addDelegate
-      return function(model) {
-        return request({
-          url: this.uri,
-          method: 'post',
-          data: model
-        })
-      }.bind(this)
-    },
-    updateFn() {
-      if (this.updateDelegate) return this.updateDelegate
-      return function(model) {
-        return request({
-          url: this.uri,
-          method: 'put',
-          data: model
-        })
-      }.bind(this)
-    },
-    deleteFn() {
-      if (this.deleteDelegate) return this.deleteDelegate
-      return function(id) {
-        return request({
-          url: this.uri + '/' + id,
-          method: 'delete'
-        })
-      }.bind(this)
     },
     listPageColumns() {
       const buttons = [
@@ -326,7 +258,7 @@ export default {
         request.pageIndex = this.pageIndex
         request.pageSize = this.pageSize
       }
-      this.queryFn(request).then(response => {
+      api.queryApi(this.uri, request).then(response => {
         if (this.isPaging) {
           this.data = response.data
           this.totalCount = response.count
@@ -338,17 +270,13 @@ export default {
     handleAdd() {
       this.innerAction = 'add'
       this.dialogVisible = true
-      this.initFn().then(response => {
-        this.innerModel = Object.assign({}, this.model, response)
-        this.$nextTick(() => {
-          this.modelChanged = false
-        })
-      })
+      this.innerModel = Object.assign({}, this.initialModel)
+      this.modelChanged = false
     },
     handleEdit(row, column, event) {
       this.innerAction = 'edit'
       this.dialogVisible = true
-      this.getFn(row[this.pk]).then(response => {
+      api.getApi(this.uri, row[this.pk]).then(response => {
         this.innerModel = response
         this.$nextTick(() => {
           this.modelChanged = false
@@ -358,7 +286,7 @@ export default {
     },
     handleDelete(index, row) {
       this.$confirm('确定要删除吗？', '提示').then(() => {
-        this.deleteFn(row[this.pk]).then(response => {
+        api.deleteApi(this.uri, row[this.pk]).then(response => {
           this.$message.success('删除成功')
           this.$emit('on-delete')
           this.query()
@@ -389,8 +317,8 @@ export default {
           }
           const promise =
             this.innerAction === 'add'
-              ? this.addFn(this.innerModel)
-              : this.updateFn(this.innerModel)
+              ? api.postApi(this.uri, this.innerModel)
+              : api.putApi(this.uri, this.innerModel)
 
           promise.then(response => {
             this.$message.success('保存成功')
@@ -408,6 +336,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .el-dialog__body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
   .query-form-inline {
     // 抵消form-item默认的外边距
     margin-bottom: -18px;

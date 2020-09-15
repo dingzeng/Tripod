@@ -16,7 +16,12 @@ namespace Archive.API.Controllers
     {
         private readonly ArchiveContext _archiveContext;
         private readonly ILogger<CategoryController> _logger;
-
+        
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="logger"></param>
         public CategoryController(ArchiveContext context, ILogger<CategoryController> logger)
         {
             _archiveContext = context;
@@ -100,7 +105,7 @@ namespace Archive.API.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(Get), new { id = model.Id });
+            return Get(model.Id);
         }
 
         [HttpPut]

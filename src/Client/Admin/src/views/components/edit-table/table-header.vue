@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { alignDefaults }from './defaults'
+import { alignDefaults } from './defaults'
 export default {
   name: 'EditTableHeader',
   data() {
@@ -41,7 +41,7 @@ export default {
       if (col.width) {
         if (typeof col.width === 'number') {
           styles.width = col.width + 'px'
-        }else {
+        } else {
           styles.width = col.width
         }
       }
