@@ -251,9 +251,7 @@ export default {
   },
   methods: {
     query() {
-      const request = {
-        params: this.queryParams
-      }
+      const request = Object.assign({}, this.queryParams)
       if (this.isPaging) {
         request.pageIndex = this.pageIndex
         request.pageSize = this.pageSize

@@ -243,7 +243,8 @@ export default {
                   callback()
                 }
               })
-            }
+            },
+            trigger: 'blur'
           }
         ],
         barcode: [
@@ -261,7 +262,8 @@ export default {
                   callback()
                 }
               })
-            }
+            },
+            trigger: 'blur'
           }
         ],
         name: [

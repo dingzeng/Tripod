@@ -8,6 +8,7 @@ using Archive.API.Infrastructure;
 using Tripod.Core;
 using Archive.API.Model;
 using Microsoft.EntityFrameworkCore;
+using Archive.API.ViewModel.Item;
 
 namespace Archive.API.Controllers
 {
@@ -120,58 +121,76 @@ namespace Archive.API.Controllers
                 return NotFound();
             }
 
-            return Ok(entity);
+            var model = ItemModel.FromEntity(entity);
+
+            return Ok(model);
         }
 
         [HttpPost]
-        public IActionResult Post(Item model)
+        public IActionResult Post(ItemModel model)
         {
-            model.DepartmentId = model.Department.Id;
-            model.BrandId = model.Brand.Id;
+            var entity = ItemModel.ToEntity(model);
 
+            // Category
             var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);
             if(category.Level != 3) {
                 return BadRequest("only level 3");
             }
+            entity.CategoryId1 = category.Parent.ParentId;
+            entity.CategoryId2 = category.Parent.Id;
+            entity.CategoryId3 = category.Id;
 
-            model.CategoryId1 = category.Parent.ParentId;
-            model.CategoryId2 = category.Parent.Id;
-            model.CategoryId3 = category.Id;
+            // Brand
+            var brand = _context.Brands.First(b => b.Id == model.Brand.Id);
+            if(brand == null) {
+                return BadRequest("指定的品牌不存在");
+            }
 
-            // HACK
-            model.Category3 = null;
-            model.Brand = null;
-            model.Department = null;
+            // Department
+            var department = _context.Departments.First(d => d.Id == model.Department.Id);
+            if(department == null) {
+                return BadRequest("指定的部门不存在");
+            }
 
-            _context.Items.Add(model);
+            // TODO remote call and then validate
+            // Supplier 
+
+            _context.Items.Add(entity);
             _context.SaveChanges();
 
             return Ok(model);
         }
 
         [HttpPut]
-        public IActionResult Put(Item model)
+        public IActionResult Put(ItemModel model)
         {
-            model.DepartmentId = model.Department.Id;
-            model.BrandId = model.Brand.Id;
+            var entity = ItemModel.ToEntity(model);
 
+            // Category
             var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);
             if(category.Level != 3) {
                 return BadRequest("only level 3");
             }
+            entity.CategoryId1 = category.Parent.ParentId;
+            entity.CategoryId2 = category.Parent.Id;
+            entity.CategoryId3 = category.Id;
 
-            model.CategoryId1 = category.Parent.ParentId;
-            model.CategoryId2 = category.Parent.Id;
-            model.CategoryId3 = category.Id;
+            // Brand
+            var brand = _context.Brands.First(b => b.Id == model.Brand.Id);
+            if(brand == null) {
+                return BadRequest("指定的品牌不存在");
+            }
 
-            // HACK
-            model.Category1 = null;
-            model.Category2 = null;
-            model.Category3 = null;
-            model.Brand = null;
-            model.Department = null;
+            // Department
+            var department = _context.Departments.First(d => d.Id == model.Department.Id);
+            if(department == null) {
+                return BadRequest("指定的部门不存在");
+            }
 
-            _context.Items.Update(model);
+            // TODO remote call and then validate
+            // Supplier 
+
+            _context.Items.Update(entity);
             _context.SaveChanges();
 
             return Ok(model);

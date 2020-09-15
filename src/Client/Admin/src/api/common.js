@@ -1,11 +1,12 @@
 import request from '@/utils/request'
+import qs from 'qs'
 
 const api = {}
 
 api.queryApi = (uri, data) => {
+  const querystring = qs.stringify(data)
   return request({
-    url: uri,
-    data: data,
+    url: uri + '?' + querystring,
     method: 'get'
   })
 }
