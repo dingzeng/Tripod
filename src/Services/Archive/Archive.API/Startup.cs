@@ -20,6 +20,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using FluentValidation.AspNetCore;
+using Archive.API.Validator;
+using AutoMapper;
+using FluentValidation;
+using System.Globalization;
+using System.ComponentModel;
 
 namespace Archive.API
 {
@@ -52,7 +58,8 @@ namespace Archive.API
             services
                 .AddCustomMVC(Configuration)
                 .AddSwagger(Configuration)
-                .AddCustomDbContext(Configuration);
+                .AddCustomDbContext(Configuration)
+                .AddAutoMapper(Assembly.GetEntryAssembly());
         }
 
         /// <summary>
@@ -123,6 +130,22 @@ namespace Archive.API
         {
             // 添加MVC控制器服务
             services.AddControllers()
+                .AddFluentValidation(fv => {
+                    fv.RegisterValidatorsFromAssemblyContaining<ItemModelValidator>();
+                    fv.ValidatorOptions.CascadeMode = CascadeMode.Continue;
+                    fv.ValidatorOptions.LanguageManager.Culture = new CultureInfo("zh-CN");
+                    fv.ValidatorOptions.DisplayNameResolver = (type, memberInfo, lambdaExpression) => {
+                        var attr = memberInfo.GetCustomAttribute<DisplayNameAttribute>();
+                        if(attr != null) {
+                            return attr.DisplayName;
+                        }else {
+                            return memberInfo.Name.First().ToString().ToLower() + memberInfo.Name.Substring(1);
+                        }
+                    };
+                    fv.ValidatorOptions.PropertyNameResolver = (type, memberInfo, lambdaExpression) => {
+                        return memberInfo.Name.First().ToString().ToLower() + memberInfo.Name.Substring(1);
+                    };
+                })
                 .AddNewtonsoftJson(option => {
                     option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });

@@ -7,45 +7,7 @@ namespace Purchase.API.ViewModel
 	/// 供应商
 	/// </summary>
 	public class SupplierModel
-	{
-		/// <summary>
-		/// Ctor
-		/// </summary>
-		public SupplierModel()
-		{
-			
-		}
-
-		/// <summary>
-		/// Ctor
-		/// </summary>
-		/// <param name="entity"></param>
-		public SupplierModel(Supplier entity)
-		{
-			Id = entity.Id;
-			Name = entity.Name;
-
-			RegionId = entity.RegionId;
-			if(entity.Region != null) {
-				RegionName = entity.Region.Name;
-			}
-
-			Type = entity.Type;
-			SettlementMode = entity.SettlementMode;
-			SettleDays = entity.SettleDays;
-			SettleDate = entity.SettleDate;
-			Status = entity.Status;
-			ContactsName = entity.ContactsName;
-			ContactsMobile = entity.ContactsMobile;
-			ContactsTel = entity.ContactsTel;
-			ContactsEmail = entity.ContactsEmail;
-			AccountBank = entity.AccountBank;
-			AccountNo = entity.AccountNo;
-			TaxRegistrationNo = entity.TaxRegistrationNo;
-			BusinessLicenseNo = entity.BusinessLicenseNo;
-			Memo = entity.Memo;
-		}
-
+	{	
 		/// <summary>
 		/// 供应商编码
 		/// </summary>
@@ -57,14 +19,9 @@ namespace Purchase.API.ViewModel
 		public string Name { get; set; }
 
 		/// <summary>
-		/// 所属区域id
+		/// 所属区域
 		/// </summary>
-		public int RegionId { get; set; }
-
-		/// <summary>
-		/// 供应商区域
-		/// </summary>
-		public string RegionName { get; set; }
+		public SupplierRegion Region { get; set; }
 
 		/// <summary>
 		/// 经营方式
@@ -136,28 +93,54 @@ namespace Purchase.API.ViewModel
 		/// </summary>
 		public string Memo { get; set; }
 
-		public Supplier ToEntity()
+		public static Supplier ToEntity(SupplierModel model)
 		{
 			return new Supplier() 
 			{
-				Id = this.Id,
-				Name = this.Name,
-				RegionId = this.RegionId,
-				Type = this.Type,
-				SettlementMode = this.SettlementMode,
-				SettleDays = this.SettleDays,
-				SettleDate = this.SettleDate,
-				Status = this.Status,
-				ContactsName = this.ContactsName,
-				ContactsMobile = this.ContactsMobile,
-				ContactsTel = this.ContactsTel,
-				ContactsEmail = this.ContactsEmail,
-				AccountBank = this.AccountBank,
-				AccountNo = this.AccountNo,
-				TaxRegistrationNo = this.TaxRegistrationNo,
-				BusinessLicenseNo = this.BusinessLicenseNo,
-				Memo = this.Memo,
+				Id = model.Id,
+				Name = model.Name,
+				RegionId = model.Region.Id,
+				Type = model.Type,
+				SettlementMode = model.SettlementMode,
+				SettleDays = model.SettleDays,
+				SettleDate = model.SettleDate,
+				Status = model.Status,
+				ContactsName = model.ContactsName,
+				ContactsMobile = model.ContactsMobile,
+				ContactsTel = model.ContactsTel,
+				ContactsEmail = model.ContactsEmail,
+				AccountBank = model.AccountBank,
+				AccountNo = model.AccountNo,
+				TaxRegistrationNo = model.TaxRegistrationNo,
+				BusinessLicenseNo = model.BusinessLicenseNo,
+				Memo = model.Memo,
 			};
+		}
+
+		public static SupplierModel FromEntity(Supplier entity)
+		{
+			var model = new SupplierModel();
+			model.Region = new SupplierRegion();
+
+			model.Id = entity.Id;
+			model.Name = entity.Name;
+			model.Region.Id = entity.RegionId;
+			model.Type = entity.Type;
+			model.SettlementMode = entity.SettlementMode;
+			model.SettleDays = entity.SettleDays;
+			model.SettleDate = entity.SettleDate;
+			model.Status = entity.Status;
+			model.ContactsName = entity.ContactsName;
+			model.ContactsMobile = entity.ContactsMobile;
+			model.ContactsTel = entity.ContactsTel;
+			model.ContactsEmail = entity.ContactsEmail;
+			model.AccountBank = entity.AccountBank;
+			model.AccountNo = entity.AccountNo;
+			model.TaxRegistrationNo = entity.TaxRegistrationNo;
+			model.BusinessLicenseNo = entity.BusinessLicenseNo;
+			model.Memo = entity.Memo;
+
+			return model;
 		}
 	}
 }

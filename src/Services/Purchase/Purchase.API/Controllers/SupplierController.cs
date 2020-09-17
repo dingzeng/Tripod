@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,22 +20,27 @@ namespace Purchase.API.Controllers
 
         private readonly ILogger<SupplierController> _logger;
 
-        public SupplierController(ILogger<SupplierController> logger, PurchaseContext contetxt)
+        private readonly IMapper _mapper;
+
+        public SupplierController(ILogger<SupplierController> logger, PurchaseContext contetxt, IMapper mapper)
         {
-            this._logger = logger;
-            this._context = contetxt;
+            _logger = logger;
+            _context = contetxt;
+            _mapper = mapper;
         }
         
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(string id)
         {
-            var entity = _context.Suppliers.FirstOrDefault(i => i.Id == id);
+            var entity = _context.Suppliers.Include(i => i.Region).FirstOrDefault(i => i.Id == id);
             if(entity == null) {
                 return BadRequest();
             }
 
-            return Ok(new SupplierModel(entity));
+            var model = _mapper.Map<SupplierModel>(entity);
+
+            return Ok(model);
         }
 
         [HttpGet]
@@ -46,13 +52,11 @@ namespace Purchase.API.Controllers
 				query = query.Where(i => i.Name.Contains(keyword) || i.Id.Contains(keyword));
 			}
 
-            var data = query.Select(s => new SupplierModel(s));
-
-			var page = new Tripod.Core.PaginatedItems<SupplierModel>(
+			var page = new Tripod.Core.PaginatedItems<Supplier>(
 				pageIndex: pageIndex,
 				pageSize: pageSize,
 				count: query.Count(),
-				data: data);
+				data: query);
 
             return Ok(page);
         }
@@ -60,7 +64,7 @@ namespace Purchase.API.Controllers
         [HttpPost]
         public IActionResult Post(SupplierModel model)
         {
-            var entity = model.ToEntity();
+            var entity = _mapper.Map<Supplier>(model);
 
             _context.Suppliers.Add(entity);
             _context.SaveChanges();
@@ -71,7 +75,7 @@ namespace Purchase.API.Controllers
         [HttpPut]
         public IActionResult Put(SupplierModel model)
         {
-            var entity = model.ToEntity();
+            var entity = _mapper.Map<Supplier>(model);
 
             _context.Suppliers.Update(entity);
             _context.SaveChanges();

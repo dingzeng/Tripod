@@ -154,12 +154,12 @@ namespace Archive.API.Model
 		public string ProductionPlace { get; set; }
 
 		/// <summary>
-		/// 进项税
+		/// 进项税税率
 		/// </summary>
 		public decimal? PurchaseTaxRate { get; set; }
 
 		/// <summary>
-		/// 销项税
+		/// 销项税税率
 		/// </summary>
 		public decimal? SalesTaxRate { get; set; }
 

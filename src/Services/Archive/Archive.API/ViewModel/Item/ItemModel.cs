@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Archive.API.Model;
+using System.Diagnostics.Contracts;
+using System.ComponentModel;
 
 namespace Archive.API.ViewModel.Item
 {
@@ -8,6 +10,7 @@ namespace Archive.API.ViewModel.Item
 		/// <summary>
 		/// 商品编码
 		/// </summary>
+		[DisplayName("商品编码")]
 		public string Id { get; set; }
 
 		/// <summary>
@@ -111,12 +114,12 @@ namespace Archive.API.ViewModel.Item
 		public string ProductionPlace { get; set; }
 
 		/// <summary>
-		/// 进项税
+		/// 进项税税率
 		/// </summary>
 		public decimal? PurchaseTaxRate { get; set; }
 
 		/// <summary>
-		/// 销项税
+		/// 销项税税率
 		/// </summary>
 		public decimal? SalesTaxRate { get; set; }
 
@@ -136,80 +139,6 @@ namespace Archive.API.ViewModel.Item
         /// </summary>
         /// <value></value>
         public IList<ItemPackage> Packages { get; set; }
-
-		public static ItemModel FromEntity(Model.Item entity)
-		{
-			var model = new ItemModel();
-			model.Supplier = new SupplierModel();
-
-			model.Id = entity.Id;
-			model.Category3 = entity.Category3;
-            model.Brand = entity.Brand;
-            model.Department = entity.Department;
-            model.Supplier.Id = entity.SupplierId;
-            model.Supplier.Name = entity.SupplierName;  
-
-            model.Barcode = entity.Barcode;
-            model.Name = entity.Name;
-            model.ShortName = entity.ShortName;
-            model.UnitName = entity.UnitName;
-            model.Status = entity.Status;
-            model.RetailPrice = entity.RetailPrice;
-            model.PurchasePrice = entity.PurchasePrice;
-            model.SalesPrice = entity.SalesPrice;
-            model.DeliveryPrice = entity.DeliveryPrice;
-            model.ReferProfitRate = entity.ReferProfitRate;
-            model.Size = entity.Size;
-            model.TransportMode = entity.TransportMode;
-            model.QualityDays = entity.QualityDays;
-            model.WarningDays = entity.WarningDays;
-            model.LeastDeliveryQty = entity.LeastDeliveryQty;
-            model.ProductionPlace = entity.ProductionPlace;
-            model.PurchaseTaxRate = entity.PurchaseTaxRate;
-            model.SalesTaxRate = entity.SalesTaxRate;
-            model.Memo = entity.Memo;
-
-            model.Barcodes = entity.Barcodes;
-            model.Packages = entity.Packages;
-
-			return model;
-		}
-
-		public static Model.Item ToEntity(ItemModel model)
-		{
-			var entity = new Model.Item();
-			entity.Id = model.Id;
-            entity.CategoryId3 = model.Category3.Id;
-            entity.BrandId = model.Brand.Id;
-            entity.DepartmentId = model.Department.Id;
-            entity.SupplierId = model.Supplier.Id;
-            entity.SupplierName = model.Supplier.Name;  
-
-            entity.Barcode = model.Barcode;
-            entity.Name = model.Name;
-            entity.ShortName = model.ShortName;
-            entity.UnitName = model.UnitName;
-            entity.Status = model.Status;
-            entity.RetailPrice = model.RetailPrice;
-            entity.PurchasePrice = model.PurchasePrice;
-            entity.SalesPrice = model.SalesPrice;
-            entity.DeliveryPrice = model.DeliveryPrice;
-            entity.ReferProfitRate = model.ReferProfitRate;
-            entity.Size = model.Size;
-            entity.TransportMode = model.TransportMode;
-            entity.QualityDays = model.QualityDays;
-            entity.WarningDays = model.WarningDays;
-            entity.LeastDeliveryQty = model.LeastDeliveryQty;
-            entity.ProductionPlace = model.ProductionPlace;
-            entity.PurchaseTaxRate = model.PurchaseTaxRate;
-            entity.SalesTaxRate = model.SalesTaxRate;
-            entity.Memo = model.Memo;
-
-            entity.Barcodes = model.Barcodes;
-            entity.Packages = model.Packages;
-
-			return entity;
-		}
 	}
 
 	public class SupplierModel

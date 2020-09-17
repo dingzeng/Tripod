@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using AutoMapper;
 
 namespace Purchase.API
 {
@@ -52,7 +53,8 @@ namespace Purchase.API
             services
                 .AddCustomMVC(Configuration)
                 .AddSwagger(Configuration)
-                .AddCustomDbContext(Configuration);
+                .AddCustomDbContext(Configuration)
+                .AddAutoMapper(Assembly.GetEntryAssembly());
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using Tripod.Core;
 using Archive.API.Model;
 using Microsoft.EntityFrameworkCore;
 using Archive.API.ViewModel.Item;
+using AutoMapper;
 
 namespace Archive.API.Controllers
 {
@@ -21,16 +22,19 @@ namespace Archive.API.Controllers
     {
         private ArchiveContext _context;
         private readonly ILogger<ItemController> _logger;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="context"></param>
         /// <param name="logger"></param>
-        public ItemController(ArchiveContext context, ILogger<ItemController> logger)
+        /// <param name="mapper"></param>
+        public ItemController(ArchiveContext context, ILogger<ItemController> logger, IMapper mapper)
         {
-            this._context = context;
-            this._logger = logger;
+            _context = context;
+            _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -121,7 +125,7 @@ namespace Archive.API.Controllers
                 return NotFound();
             }
 
-            var model = ItemModel.FromEntity(entity);
+            var model = _mapper.Map<ItemModel>(entity);
 
             return Ok(model);
         }
@@ -129,7 +133,7 @@ namespace Archive.API.Controllers
         [HttpPost]
         public IActionResult Post(ItemModel model)
         {
-            var entity = ItemModel.ToEntity(model);
+            var entity = _mapper.Map<Item>(model);
 
             // Category
             var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);
@@ -164,7 +168,7 @@ namespace Archive.API.Controllers
         [HttpPut]
         public IActionResult Put(ItemModel model)
         {
-            var entity = ItemModel.ToEntity(model);
+            var entity = _mapper.Map<Item>(model);
 
             // Category
             var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);

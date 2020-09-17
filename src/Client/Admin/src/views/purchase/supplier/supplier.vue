@@ -49,8 +49,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item prop="regionId" label="区域">
-              <ref-input v-model="model.regionId" type="supplierRegion" :label.sync="model.regionName"></ref-input>
+            <el-form-item prop="region" label="区域">
+              <ref-input v-model="model.region" type="supplierRegion"></ref-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -168,7 +168,7 @@ export default {
       },
       columns: [],
       model: {
-        supplierType: 0,
+        type: 0,
         settlementMode: 0
       },
       supplierRegionTreeData: [],

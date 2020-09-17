@@ -31,12 +31,12 @@
           <el-tab-pane label="基础信息">
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="id" label="编码" required>
+                <el-form-item prop="id" label="编码">
                   <el-input v-model="model.id" :disabled="action != 'add'"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="barcode" label="国际条码" required>
+                <el-form-item prop="barcode" label="国际条码">
                   <el-input v-model="model.barcode" :disabled="action != 'add'"></el-input>
                 </el-form-item>
               </el-col>
@@ -82,7 +82,7 @@
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="supplier" label="主供应商" required>
+                <el-form-item prop="supplier" label="主供应商">
                   <ref-input v-model="model.supplier" type="supplier"></ref-input>
                 </el-form-item>
               </el-col>

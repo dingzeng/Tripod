@@ -87,10 +87,10 @@ namespace Archive.API.Controllers
         [HttpPost]
         public IActionResult Post(Category model)
         {
-            if(!string.IsNullOrEmpty(model.ParentId))
+            if(model.Parent != null && !string.IsNullOrEmpty(model.Parent.Id))
             {
-                var parent = _archiveContext.Categories.First(c => c.Id == model.ParentId);
-                model.ParentId = model.ParentId;
+                var parent = _archiveContext.Categories.First(c => c.Id == model.Parent.Id);
+                model.ParentId = model.Parent.Id;
                 model.Path = parent.Path + model.Id + ",";
                 model.Level = parent.Level + 1;
             }else {
