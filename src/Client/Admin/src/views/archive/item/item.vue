@@ -228,25 +228,25 @@ export default {
     modelRules() {
       const vm = this
       return {
-        id: [
-          { required: true, message: '必填', trigger: 'blur' },
-          { type: 'string', pattern: /^[0-9]{5,20}$/, message: '必须为5~20位数字字符', trigger: 'blur' },
-          {
-            validator(rule, value, callback) {
-              request({
-                url: '/api/a/item/exists-id/' + value,
-                method: 'get'
-              }).then(response => {
-                if (response && vm.originalId !== value) {
-                  callback(new Error('编码已存在'))
-                } else {
-                  callback()
-                }
-              })
-            },
-            trigger: 'blur'
-          }
-        ],
+        // id: [
+        //   { required: true, message: '必填', trigger: 'blur' },
+        //   { type: 'string', pattern: /^[0-9]{5,20}$/, message: '必须为5~20位数字字符', trigger: 'blur' },
+        //   {
+        //     validator(rule, value, callback) {
+        //       request({
+        //         url: '/api/a/item/exists-id/' + value,
+        //         method: 'get'
+        //       }).then(response => {
+        //         if (response && vm.originalId !== value) {
+        //           callback(new Error('编码已存在'))
+        //         } else {
+        //           callback()
+        //         }
+        //       })
+        //     },
+        //     trigger: 'blur'
+        //   }
+        // ],
         barcode: [
           { required: true, message: '必填', trigger: 'blur' },
           { type: 'string', pattern: /^[0-9]{5,20}$/, message: '必须为5~20位数字字符', trigger: 'blur' },

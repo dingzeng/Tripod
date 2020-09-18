@@ -26,6 +26,7 @@ using AutoMapper;
 using FluentValidation;
 using System.Globalization;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Archive.API
 {
@@ -127,7 +128,7 @@ namespace Archive.API
         /// <param name="configuration"></param>
         /// <returns></returns>
         public static IServiceCollection AddCustomMVC(this IServiceCollection services, IConfiguration configuration)
-        {
+        {   
             // 添加MVC控制器服务
             services.AddControllers()
                 .AddFluentValidation(fv => {
@@ -144,6 +145,18 @@ namespace Archive.API
                     };
                     fv.ValidatorOptions.PropertyNameResolver = (type, memberInfo, lambdaExpression) => {
                         return memberInfo.Name.First().ToString().ToLower() + memberInfo.Name.Substring(1);
+                    };
+                })
+                .ConfigureApiBehaviorOptions(option => {
+                    option.InvalidModelStateResponseFactory = (context) => {
+                        var errors = new Dictionary<string,List<string>>();
+                        // Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary+ModelStateNode
+
+                        foreach (var entry in context.ModelState.Values)
+                        {
+                            var type = entry.GetType().FullName;
+                        }
+                        return new BadRequestObjectResult(context.ModelState.Values);
                     };
                 })
                 .AddNewtonsoftJson(option => {
