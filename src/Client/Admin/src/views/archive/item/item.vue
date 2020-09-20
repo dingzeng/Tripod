@@ -16,13 +16,13 @@
           <el-input v-model="queryParams.keyword" placeholder="编码/国际条码/名称"></el-input>
         </el-form-item>
         <el-form-item prop="categoryId">
-          <ref-input type="category" placeholder="类别" @selected="queryParams.categoryId = $event.id"></ref-input>
+          <picker type="category" placeholder="类别" v-model="queryParams.categoryId"></picker>
         </el-form-item>
         <el-form-item prop="brandId">
-          <ref-input type="brand" placeholder="品牌" @selected="queryParams.brandId = $event.id"></ref-input>
+          <picker type="brand" placeholder="品牌" v-model="queryParams.brandId"></picker>
         </el-form-item>
         <el-form-item prop="departmentId">
-          <ref-input type="department" placeholder="商品部门" @selected="queryParams.departmentId = $event.id"></ref-input>
+          <picker type="department" placeholder="商品部门" v-model="queryParams.departmentId"></picker>
         </el-form-item>
       </template>
 
@@ -65,25 +65,25 @@
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="category3" label="类别" required>
-                  <ref-input v-model="model.category3" type="category"></ref-input>
+                <el-form-item prop="categoryId3" label="类别" required>
+                  <picker v-model="model.categoryId3" :label.sync="model.categoryName3" type="category"></picker>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item prop="brand" label="品牌" required>
-                  <ref-input v-model="model.brand" type="brand"></ref-input>
+                <el-form-item prop="brandId" label="品牌" required>
+                  <picker v-model="model.brandId" :label.sync="model.brandName" type="brand"></picker>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item prop="department" label="商品部门" required>
-                  <ref-input v-model="model.department" type="department"></ref-input>
+                  <picker v-model="model.department" type="department"></picker>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item prop="supplier" label="主供应商">
-                  <ref-input v-model="model.supplier" type="supplier"></ref-input>
+                <el-form-item prop="supplierId" label="主供应商">
+                  <picker v-model="model.supplierId" :label.sync="model.supplierName" type="supplier"></picker>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -416,7 +416,7 @@ export default {
 
     this.barcodesColumns = [
       {
-        prop: 'Barcode',
+        prop: 'barcode',
         width: 200,
         label: '条码',
         editable: true,

@@ -34,11 +34,9 @@
 </template>
 
 <script>
-import ListPage from '@/views/components/list-page/index'
 import { query, getBranchGroupBranchs, updateBranchGroupBranchs } from '@/api/branch'
 export default {
   name: 'ArchiveBranchGroup',
-  components: { ListPage },
   data() {
     return {
       queryParams: { },

@@ -27,6 +27,7 @@ using FluentValidation;
 using System.Globalization;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Tripod.Core;
 
 namespace Archive.API
 {
@@ -129,6 +130,10 @@ namespace Archive.API
         /// <returns></returns>
         public static IServiceCollection AddCustomMVC(this IServiceCollection services, IConfiguration configuration)
         {   
+            Func<MemberInfo,string> initialToLower = (memberInfo) => {
+                return memberInfo.Name.First().ToString().ToLower() + memberInfo.Name.Substring(1);
+            };
+
             // 添加MVC控制器服务
             services.AddControllers()
                 .AddFluentValidation(fv => {
@@ -140,23 +145,25 @@ namespace Archive.API
                         if(attr != null) {
                             return attr.DisplayName;
                         }else {
-                            return memberInfo.Name.First().ToString().ToLower() + memberInfo.Name.Substring(1);
+                            return initialToLower(memberInfo);
                         }
                     };
                     fv.ValidatorOptions.PropertyNameResolver = (type, memberInfo, lambdaExpression) => {
-                        return memberInfo.Name.First().ToString().ToLower() + memberInfo.Name.Substring(1);
+                        return initialToLower(memberInfo);
                     };
                 })
                 .ConfigureApiBehaviorOptions(option => {
                     option.InvalidModelStateResponseFactory = (context) => {
-                        var errors = new Dictionary<string,List<string>>();
-                        // Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary+ModelStateNode
-
-                        foreach (var entry in context.ModelState.Values)
+                        var errors = new Dictionary<string,IEnumerable<string>>();
+                        foreach (var entry in context.ModelState)
                         {
-                            var type = entry.GetType().FullName;
+                            errors.Add(entry.Key, entry.Value.Errors.Select(i => i.ErrorMessage));
                         }
-                        return new BadRequestObjectResult(context.ModelState.Values);
+                        var message = context.ModelState.First().Value.Errors.First().ErrorMessage;
+                        return new BadRequestObjectResult(new {
+                            Errors = errors,
+                            Message = message
+                        });
                     };
                 })
                 .AddNewtonsoftJson(option => {

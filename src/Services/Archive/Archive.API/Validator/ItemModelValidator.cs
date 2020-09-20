@@ -19,43 +19,43 @@ namespace Archive.API.Validator
             // Barcode
             RuleFor(x => x.Barcode).NotNull();
             RuleFor(x => x.Barcode).MaximumLength(20);
-            RuleFor(x => x.Barcode).Matches("^/d*$");
+            RuleFor(x => x.Barcode).Matches("\\d*$");
 
-            // // Name
-            // RuleFor(x => x.Name).NotNull();
-            // RuleFor(x => x.Name).MaximumLength(20);
+            // Name
+            RuleFor(x => x.Name).NotNull();
+            RuleFor(x => x.Name).MaximumLength(20);
 
-            // // ShortName
-            // RuleFor(x => x.ShortName).NotNull();
-            // RuleFor(x => x.ShortName).MaximumLength(20);
+            // ShortName
+            RuleFor(x => x.ShortName).NotNull();
+            RuleFor(x => x.ShortName).MaximumLength(20);
 
-            // // Category3
-            // RuleFor(x => x.Category3.Id).NotNull();
+            // Category3
+            RuleFor(x => x.CategoryId3).NotNull();
             
-            // // Brand
-            // RuleFor(x => x.Brand.Id).NotNull();
+            // Brand
+            RuleFor(x => x.BrandId).NotNull();
 
-            // // Department
-            // RuleFor(x => x.Department.Id).NotNull();
+            // Department
+            RuleFor(x => x.DepartmentId).NotNull();
 
-            // // Supplier
-            // RuleFor(x => x.Supplier.Id).NotNull();
+            // Supplier
+            RuleFor(x => x.SupplierId).NotNull();
 
-            // // UnitName
-            // RuleFor(x => x.UnitName).NotNull();
-            // RuleFor(x => x.UnitName).MaximumLength(2);
+            // UnitName
+            RuleFor(x => x.UnitName).NotNull();
+            RuleFor(x => x.UnitName).MaximumLength(2);
 
-            // // Status
-            // RuleFor(x => x.Status).Must(x => x == 0 || x == 9);
+            // Status
+            RuleFor(x => x.Status).Must(x => x == 0 || x == 9);
 
-            // // TransportMode
-            // RuleFor(x => x.TransportMode).IsInEnum();
+            // TransportMode
+            RuleFor(x => x.TransportMode).IsInEnum();
 
-            // // Barcodes
-            // RuleForEach(x => x.Barcodes).SetValidator(new ItemBarcodeValidator());
+            // Barcodes
+            RuleForEach(x => x.Barcodes).SetValidator(new ItemBarcodeValidator());
 
             // Packages
-
+            RuleForEach(x => x.Packages).SetValidator(new ItemPackageValidator());
         }
     }
 }

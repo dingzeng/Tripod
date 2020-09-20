@@ -26,10 +26,8 @@
 </template>
 
 <script>
-import ListPage from '@/views/components/list-page/index'
 export default {
   name: 'Department',
-  components: { ListPage },
   data() {
     return {
       columns: [],

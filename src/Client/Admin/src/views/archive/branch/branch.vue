@@ -34,9 +34,10 @@
         <el-row>
           <el-col :span="8">
             <el-form-item prop="parent" label="上级机构">
-              <ref-input
+              <picker
                 type="branch"
-                v-model="model.parent"
+                v-model="model.parentId"
+                :label.sync="model.parentName"
                 :query-params="parentBranchQueryParams"
                 :disabled="model.type == 0"
                 @selected="branchSelected"
@@ -116,13 +117,10 @@
 
 <script>
 import request from '@/utils/request'
-import ListPage from '@/views/components/list-page/index'
-import RefInput from '@/views/components/ref-input/index'
 import { branchType } from '@/utils/enum'
 import { loadBranchTreeData } from '@/api/branch'
 export default {
   name: 'ArchiveBranch',
-  components: { ListPage, RefInput },
   data() {
     return {
       queryParams: {

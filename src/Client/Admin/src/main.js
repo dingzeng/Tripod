@@ -19,10 +19,10 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import ListPage from '@/views/components/list-page/'
-import RefInput from '@/views/components/ref-input'
+import Picker from '@/views/components/Picker/index'
 
 Vue.component('ListPage', ListPage)
-Vue.component('RefInput', RefInput)
+Vue.component('Picker', Picker)
 
 import * as filters from './filters' // global filters
 

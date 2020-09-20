@@ -49,8 +49,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item prop="region" label="区域">
-              <ref-input v-model="model.region" type="supplierRegion"></ref-input>
+            <el-form-item prop="regionId" label="区域">
+              <picker v-model="model.regionId" :label.sync="model.regionName" type="supplierRegion"></picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -156,11 +156,8 @@
 <script>
 import { supplierType, settlementMode } from '@/utils/enum'
 import request from '@/utils/request'
-import ListPage from '@/views/components/list-page/index'
-import RefInput from '@/views/components/ref-input/index'
 export default {
   name: 'Supplier',
-  components: { ListPage, RefInput },
   data: () => {
     return {
       queryParams: {

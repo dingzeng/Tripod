@@ -17,7 +17,7 @@
       </template>
       <template>
         <el-form-item prop="branchId" label="所属机构">
-          <ref-input v-model="model.branchId" type="branch" :label.sync="model.branchName" />
+          <picker v-model="model.branchId" type="branch" :label.sync="model.branchName" />
         </el-form-item>
         <el-form-item prop="username" label="用户名">
           <el-input v-model="model.username" />
@@ -47,13 +47,10 @@
 </template>
 
 <script>
-import RefInput from '@/views/components/ref-input/index'
-import ListPage from '@/views/components/list-page/index'
 import { getRoles } from '@/api/role'
 import { getUserRoles, updateUserRoles } from '@/api/user'
 export default {
   name: 'SystemUser',
-  components: { ListPage, RefInput },
   data() {
     return {
       queryParams: {},

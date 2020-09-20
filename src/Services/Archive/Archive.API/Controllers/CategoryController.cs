@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Tripod.Core;
+using AutoMapper;
+using Archive.API.ViewModel;
 
 namespace Archive.API.Controllers
 {
@@ -16,16 +18,18 @@ namespace Archive.API.Controllers
     {
         private readonly ArchiveContext _archiveContext;
         private readonly ILogger<CategoryController> _logger;
+        private readonly IMapper _mapper;
         
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="context"></param>
         /// <param name="logger"></param>
-        public CategoryController(ArchiveContext context, ILogger<CategoryController> logger)
+        public CategoryController(ArchiveContext context, ILogger<CategoryController> logger,IMapper mapper)
         {
             _archiveContext = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -81,35 +85,35 @@ namespace Archive.API.Controllers
                 return NotFound();
             }
 
-            return Ok(entity);
+            var model = _mapper.Map<CategoryModel>(entity);
+
+            return Ok(model);
         }
 
         [HttpPost]
-        public IActionResult Post(Category model)
+        public IActionResult Post(CategoryModel model)
         {
-            if(model.Parent != null && !string.IsNullOrEmpty(model.Parent.Id))
+            var entity = _mapper.Map<Category>(model);
+            
+            if(!string.IsNullOrEmpty(model.ParentId))
             {
-                var parent = _archiveContext.Categories.First(c => c.Id == model.Parent.Id);
-                model.ParentId = model.Parent.Id;
-                model.Path = parent.Path + model.Id + ",";
-                model.Level = parent.Level + 1;
+                var parent = _archiveContext.Categories.First(c => c.Id == model.ParentId);
+                entity.ParentId = model.ParentId;
+                entity.Path = parent.Path + model.Id + ",";
+                entity.Level = parent.Level + 1;
             }else {
                 model.Path = "," + model.Id + ",";
                 model.Level = 1;
             }
 
-            model.Parent = null;
-            _archiveContext.Categories.Add(model);
-            var lines = _archiveContext.SaveChanges();
-            if(lines != 1) {
-                return BadRequest();
-            }
+            _archiveContext.Categories.Add(entity);
+            _archiveContext.SaveChanges();
 
             return Get(model.Id);
         }
 
         [HttpPut]
-        public IActionResult Put(Category model)
+        public IActionResult Put(CategoryModel model)
         {
             var entity = _archiveContext.Categories.FirstOrDefault(c => c.Id == model.Id);
             if(entity == null) {
@@ -120,10 +124,7 @@ namespace Archive.API.Controllers
             entity.Name = model.Name;
 
             _archiveContext.Categories.Update(entity);
-            var lines = _archiveContext.SaveChanges();
-            if(lines != 1) {
-                return BadRequest();
-            }
+            _archiveContext.SaveChanges();
 
             return Ok(entity);
         }
@@ -150,10 +151,11 @@ namespace Archive.API.Controllers
 
             var root = new TreeNode();
             root.Id = null;
+            root.Label = "全部类别";
             root.Children = new List<TreeNode>();
             BuildTree(root, list);
 
-            return Ok(root.Children);
+            return Ok(new List<TreeNode>() { root });
         }
 
         private void BuildTree(TreeNode node, IEnumerable<Category> list)

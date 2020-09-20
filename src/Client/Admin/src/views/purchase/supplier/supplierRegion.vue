@@ -18,10 +18,8 @@
 </template>
 
 <script>
-import ListPage from '@/views/components/list-page/index'
 export default {
   name: 'SupplierRegion',
-  components: { ListPage },
   data: () => {
     return {
       columns: [],

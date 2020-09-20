@@ -9,16 +9,13 @@ namespace Archive.API.MapperProfile
     {
         public ItemModelProfile()
         {
-            CreateMap<Item,ItemModel>();
+            CreateMap<Item,ItemModel>()
+                .ForMember(dest => dest.CategoryName3, opt => opt.MapFrom(src => src.Category3.Name))
+                .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
+                ;
 
-            CreateMap<ItemModel,Item>()
-                .ForMember(dest => dest.Category1, opt => opt.Ignore())
-                .ForMember(dest => dest.Category2, opt => opt.Ignore())
-                .ForMember(dest => dest.Category3, opt => opt.Ignore())
-                .ForMember(dest => dest.Brand, opt => opt.Ignore())
-                .ForMember(dest => dest.Department, opt => opt.Ignore())
-                .ForMember(dest => dest.SupplierId, opt => opt.MapFrom(src => src.Supplier.Id))
-                .ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.Supplier.Name));
+            CreateMap<ItemModel,Item>();
         }
     }
 }

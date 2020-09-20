@@ -31,13 +31,14 @@
         <el-row>
           <el-col>
             <el-form-item prop="parent" label="上级类别">
-              <ref-input
-                v-model="model.parent"
+              <picker
+                v-model="model.parentId"
+                :label.sync="model.parentName"
                 type="category"
                 :disabled="action != 'add'"
                 :queryParams="{level: 2}"
               >
-              </ref-input>
+              </picker>
             </el-form-item>
           </el-col>
           <el-col>
@@ -58,11 +59,8 @@
 
 <script>
 import request from '@/utils/request'
-import ListPage from '@/views/components/list-page/index'
-
 export default {
   name: 'Category',
-  components: { ListPage },
   data() {
     return {
       action: '',

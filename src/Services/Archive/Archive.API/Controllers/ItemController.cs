@@ -136,7 +136,7 @@ namespace Archive.API.Controllers
             var entity = _mapper.Map<Item>(model);
 
             // Category
-            var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);
+            var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.CategoryId3);
             if(category.Level != 3) {
                 return BadRequest("only level 3");
             }
@@ -145,13 +145,13 @@ namespace Archive.API.Controllers
             entity.CategoryId3 = category.Id;
 
             // Brand
-            var brand = _context.Brands.First(b => b.Id == model.Brand.Id);
+            var brand = _context.Brands.First(b => b.Id == model.BrandId);
             if(brand == null) {
                 return BadRequest("指定的品牌不存在");
             }
 
             // Department
-            var department = _context.Departments.First(d => d.Id == model.Department.Id);
+            var department = _context.Departments.First(d => d.Id == model.DepartmentId);
             if(department == null) {
                 return BadRequest("指定的部门不存在");
             }
@@ -171,7 +171,7 @@ namespace Archive.API.Controllers
             var entity = _mapper.Map<Item>(model);
 
             // Category
-            var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.Category3.Id);
+            var category = _context.Categories.Include(c => c.Parent).First(c => c.Id == model.CategoryId3);
             if(category.Level != 3) {
                 return BadRequest("only level 3");
             }
@@ -180,13 +180,13 @@ namespace Archive.API.Controllers
             entity.CategoryId3 = category.Id;
 
             // Brand
-            var brand = _context.Brands.First(b => b.Id == model.Brand.Id);
+            var brand = _context.Brands.First(b => b.Id == model.BrandId);
             if(brand == null) {
                 return BadRequest("指定的品牌不存在");
             }
 
             // Department
-            var department = _context.Departments.First(d => d.Id == model.Department.Id);
+            var department = _context.Departments.First(d => d.Id == model.DepartmentId);
             if(department == null) {
                 return BadRequest("指定的部门不存在");
             }

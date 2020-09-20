@@ -21,7 +21,12 @@ namespace Purchase.API.ViewModel
 		/// <summary>
 		/// 所属区域
 		/// </summary>
-		public SupplierRegion Region { get; set; }
+		public int RegionId { get; set; }
+
+		/// <summary>
+		/// 所属区域
+		/// </summary>
+		public string RegionName { get; set; }
 
 		/// <summary>
 		/// 经营方式
@@ -92,55 +97,5 @@ namespace Purchase.API.ViewModel
 		/// 备注
 		/// </summary>
 		public string Memo { get; set; }
-
-		public static Supplier ToEntity(SupplierModel model)
-		{
-			return new Supplier() 
-			{
-				Id = model.Id,
-				Name = model.Name,
-				RegionId = model.Region.Id,
-				Type = model.Type,
-				SettlementMode = model.SettlementMode,
-				SettleDays = model.SettleDays,
-				SettleDate = model.SettleDate,
-				Status = model.Status,
-				ContactsName = model.ContactsName,
-				ContactsMobile = model.ContactsMobile,
-				ContactsTel = model.ContactsTel,
-				ContactsEmail = model.ContactsEmail,
-				AccountBank = model.AccountBank,
-				AccountNo = model.AccountNo,
-				TaxRegistrationNo = model.TaxRegistrationNo,
-				BusinessLicenseNo = model.BusinessLicenseNo,
-				Memo = model.Memo,
-			};
-		}
-
-		public static SupplierModel FromEntity(Supplier entity)
-		{
-			var model = new SupplierModel();
-			model.Region = new SupplierRegion();
-
-			model.Id = entity.Id;
-			model.Name = entity.Name;
-			model.Region.Id = entity.RegionId;
-			model.Type = entity.Type;
-			model.SettlementMode = entity.SettlementMode;
-			model.SettleDays = entity.SettleDays;
-			model.SettleDate = entity.SettleDate;
-			model.Status = entity.Status;
-			model.ContactsName = entity.ContactsName;
-			model.ContactsMobile = entity.ContactsMobile;
-			model.ContactsTel = entity.ContactsTel;
-			model.ContactsEmail = entity.ContactsEmail;
-			model.AccountBank = entity.AccountBank;
-			model.AccountNo = entity.AccountNo;
-			model.TaxRegistrationNo = entity.TaxRegistrationNo;
-			model.BusinessLicenseNo = entity.BusinessLicenseNo;
-			model.Memo = entity.Memo;
-
-			return model;
-		}
 	}
 }

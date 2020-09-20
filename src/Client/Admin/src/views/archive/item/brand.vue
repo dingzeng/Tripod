@@ -35,10 +35,8 @@
 
 <script>
 import request from '@/utils/request'
-import ListPage from '@/views/components/list-page/index'
 export default {
   name: 'Brand',
-  components: { ListPage },
   data() {
     return {
       queryParams: {},

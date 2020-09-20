@@ -9,11 +9,10 @@ namespace Purchase.API.MapperProfile
     {
         public SupplierModelProfile()
         {
-            CreateMap<Supplier,SupplierModel>();
+            CreateMap<Supplier,SupplierModel>()
+                .ForMember(dest => dest.RegionName, opt => opt.MapFrom(src => src.Region.Name));
 
-            CreateMap<SupplierModel,Supplier>()
-                .ForMember(dest => dest.Region, opt => opt.Ignore())
-                .ForMember(dest => dest.RegionId, opt => opt.MapFrom(src => src.Region.Id));
+            CreateMap<SupplierModel,Supplier>();
         }
     }
 }

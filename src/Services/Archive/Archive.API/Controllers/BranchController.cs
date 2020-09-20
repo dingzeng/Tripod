@@ -5,6 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Archive.API.Infrastructure;
 using Archive.API.Model;
+using Archive.API.ViewModel;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,11 +20,13 @@ namespace Archive.API.Controllers
     {
         private readonly ArchiveContext _archiveContext;
         private readonly ILogger<BranchController> _logger;
+        private readonly IMapper _mapper;
 
-        public BranchController(ArchiveContext context, ILogger<BranchController> logger)
+        public BranchController(ArchiveContext context, ILogger<BranchController> logger, IMapper mapper)
         {
             _archiveContext = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -32,13 +36,15 @@ namespace Archive.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Branch>> GetBranchByIdAsync([FromRoute] string id)
+        public async Task<ActionResult<Branch>> Get([FromRoute] string id)
         {
             var entity = await _archiveContext.Branches.Include(b => b.Parent).SingleOrDefaultAsync(b => b.Id == id);
             if (entity == null)
             {
                 return NotFound();
             }
+
+            var model = _mapper.Map<BranchModel>(entity);
             return Ok(entity);
         }
 
@@ -54,7 +60,7 @@ namespace Archive.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(PaginatedItems<Branch>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetBranchesAsync(
+        public async Task<IActionResult> Get(
             int pageSize = 10,
             int pageIndex = 1,
             string keyword = "",
@@ -126,22 +132,21 @@ namespace Archive.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBranchAsync([FromBody] Branch model)
+        public async Task<IActionResult> Post([FromBody] BranchModel model)
         {
-            var parent = _archiveContext.Branches.First(b => b.Id == model.Parent.Id);
-            model.Path = parent.Path + model.Id + ",";
+            var entity = _mapper.Map<Branch>(model);
 
-            model.ParentId = model.Parent.Id;
-            model.Parent = null;
+            var parent = _archiveContext.Branches.First(b => b.Id == model.ParentId);
+            entity.Path = parent.Path + model.Id + ",";
 
-            _archiveContext.Branches.Add(model);
+            _archiveContext.Branches.Add(entity);
             await _archiveContext.SaveChangesAsync();
             
-            return Ok(model);
+            return Ok(entity);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBranchAsync([FromBody] Branch model)
+        public async Task<IActionResult> Put([FromBody] BranchModel model)
         {
             var branch = await _archiveContext.Branches.FirstOrDefaultAsync(b => b.Id == model.Id);
             if (branch == null)
@@ -149,30 +154,20 @@ namespace Archive.API.Controllers
                 return NotFound();
             }
 
-            var parent = _archiveContext.Branches.First(b => b.Id == model.Parent.Id);
-            model.Path = parent.Path + model.Id + ",";
+            var entity = _mapper.Map<Branch>(model);
 
-            branch.ParentId = model.Parent.Id;
-            branch.Name = model.Name;
-            branch.ShortName = model.ShortName;
-            branch.Type = model.Type;
-            branch.ContactsName = model.ContactsName;
-            branch.ContactsMobile = model.ContactsMobile;
-            branch.ContactsTel = model.ContactsTel;
-            branch.ContactsEmail = model.ContactsEmail;
-            branch.Address = model.Address;
-            branch.Memo = model.Memo;
-            model.Parent = null;
+            var parent = _archiveContext.Branches.First(b => b.Id == model.ParentId);
+            entity.Path = parent.Path + model.Id + ",";
 
-            _archiveContext.Branches.Update(branch);
+            _archiveContext.Branches.Update(entity);
             await _archiveContext.SaveChangesAsync();
 
-            return Ok(model);
+            return Ok(entity);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteBranchAsync([FromRoute] string id)
+        public async Task<IActionResult> Delete([FromRoute] string id)
         {
             var branch = await _archiveContext.Branches.FirstOrDefaultAsync(b => b.Id == id);
             if (branch == null)

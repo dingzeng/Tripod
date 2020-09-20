@@ -2,7 +2,7 @@
   <div>
     <el-input
       clearable
-      :value="text"
+      :value="innerLabel"
       :placeholder="placeholder"
       :disabled="disabled"
       @blur="inputBlur"
@@ -24,7 +24,7 @@
 import ListDialogs from '@/views/components/list-dialog'
 import emitter from 'element-ui/src/mixins/emitter'
 export default {
-  name: 'RefInput',
+  name: 'Picker',
   mixins: [emitter],
   components: {
     ...ListDialogs
@@ -32,16 +32,26 @@ export default {
   data() {
     return {
       innerValue: this.value,
+      innerLabel: this.label,
       innerQueryParams: this.queryParams
     }
   },
   props: {
     value: {
-      type: [Object, Array]
+      type: [String, Number]
     },
+    label: String,
     type: {
       type: String,
       required: true
+    },
+    valueKey: {
+      type: String,
+      default: 'id'
+    },
+    labelKey: {
+      type: String,
+      default: 'name'
     },
     placeholder: {
       type: String,
@@ -66,13 +76,14 @@ export default {
     },
     inputClear() {
       this.innerValue = null
+      this.innerLabel = null
     },
     setCurrentData(data) {
       this.$emit('selected', data)
-      this.innerValue = data
-      // this.$nextTick(() => {
-      //   this.dispatch('ElFormItem', 'el.form.blur', [data])
-      // })
+      if (!Array.isArray(data)) {
+        this.innerValue = data[this.valueKey]
+        this.innerLabel = data[this.labelKey]
+      }
     },
     showDialog() {
       this.$refs.dialog.$refs.list.show()
@@ -99,17 +110,17 @@ export default {
     }
   },
   watch: {
-    innerValue(newValue) {
-      this.$emit('input', newValue)
+    innerValue(value) {
+      this.$emit('input', value)
     },
-    value(newValue) {
-      this.innerValue = newValue
-
-      // HACK fixbug:form组件的 resetFields方法对ref-input组件绑定的label属性不会重置
-      // （只重置在form-item上写了prop的数据）
-      // if (!newValue) {
-      //   this.innerLabel = ''
-      // }
+    value(value) {
+      this.innerValue = value
+    },
+    innerLabel(value) {
+      this.$emit('update:label', value)
+    },
+    label(value) {
+      this.innerLabel = value
     },
     queryParams: {
       handler: function(newValue) {

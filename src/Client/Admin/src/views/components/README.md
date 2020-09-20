@@ -3,7 +3,7 @@
 
 ## 组件关系
 
-- ref-input
+- Picker
     - list-dialog
         - list-layout
         - data-table

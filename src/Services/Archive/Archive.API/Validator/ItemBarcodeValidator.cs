@@ -15,7 +15,7 @@ namespace Archive.API.Validator
             // Barcode
             RuleFor(x => x.Barcode).NotNull();
             RuleFor(x => x.Barcode).MaximumLength(20);
-            RuleFor(x => x.Barcode).Matches("^/d*$");
+            RuleFor(x => x.Barcode).Matches("^\\d*$");
 
             // Memo
             RuleFor(x => x.Memo).MaximumLength(100);
